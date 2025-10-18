@@ -124,9 +124,15 @@ dialog::backdrop{background:rgba(0,0,0,.45)}
           <option>北投區</option><option>內湖區</option><option>南港區</option><option>文山區</option>
         </select>
       </label>
-      <label class="field"><span>星期</span>
-        <select id="weekday"><option value="">全部</option><option value="0">日</option><option value="1">一</option><option value="2">二</option><option value="3">三</option><option value="4">四</option><option value="5">五</option><option value="6">六</option></select>
-      </label>
+      <label class="field"><span>日期（可多選）</span>
+  <div style="display:flex;gap:8px;flex-wrap:wrap">
+    <input id="pickDate" type="date" />
+    <button id="addDate" class="btn">加入</button>
+    <button id="clearDates" class="btn">清空</button>
+  </div>
+  <div id="dateChips" class="switch" style="flex-wrap:wrap"></div>
+</label>
+
       <label class="field"><span>最大距離（公里）</span><input id="maxKm" type="number" min="0" step="0.5" placeholder="不限制"></label>
       <label class="switch"><input type="checkbox" id="useGeo"> 顯示與我距離</label>
       <div class="actions"><button id="btnLoad" class="btn primary">載入 events.json</button><button id="btnFilter" class="btn">套用篩選</button></div>
