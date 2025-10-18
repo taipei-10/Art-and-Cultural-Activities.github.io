@@ -125,7 +125,7 @@ input::placeholder { color: #9aa3af; }
 .switch {
   display: flex;
   align-items: center;
-  gap: 2px;              /* 原本是 10px */
+  gap: 1px;              /* 原本是 10px */
   white-space: nowrap;   /* 防止換行 */
   margin: var(--space-2) 0 var(--space-4);
   font-size: var(--fz-14);
