@@ -103,6 +103,11 @@ dialog::backdrop{background:rgba(0,0,0,.45)}
 .toolbar .btn{padding:8px 10px; font-size:var(--fz-12)}
 .leaflet-control-container .leaflet-control{border-radius:10px; overflow:hidden}
 </style>
+
+<!-- 覆寫：讓 checkbox 與文字更靠近 -->
+<style>
+.sidebar .switch{gap:4px}
+</style>
 </head>
 <body>
 <div class="shell">
@@ -438,7 +443,7 @@ function openDetail(ev){
   if (ev.organizers?.length) extra.push(`主辦：${ev.organizers.join('、')}`);
   if (ev.performers?.length) extra.push(`講者/演出：${ev.performers.join('、')}`);
   if (ev.age_limit) extra.push(`年齡：${ev.age_limit}`);
-  if (ev.accessibility?.length) extra.push(`無障礙：${(Array.isArray(ev.accessibility)?ev.accessibility:[ev.accessibility]).join('、')}`);
+  if (ev.accessibility){ const arr=Array.isArray(ev.accessibility)?ev.accessibility:[ev.accessibility]; if(arr.length) extra.push(`無障礙：${arr.join('、')}`); }
   if (ev.opening_hours) extra.push(`開放：${ev.opening_hours}`);
   if (ev.source) extra.push(`來源：${ev.source}`);
   if (ev.updated_at) extra.push(`更新：${ev.updated_at}`);
