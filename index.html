@@ -104,18 +104,11 @@ dialog::backdrop{background:rgba(0,0,0,.45)}
 .leaflet-control-container .leaflet-control{border-radius:10px; overflow:hidden}
 </style>
 
-<!-- 覆寫：1) checkbox 與文字靠左且更近 2) 套用篩選置中並放大 -->
+<!-- 覆寫：1) checkbox 與文字更近且不換行 2) 套用篩選置中並放大 -->
 <style>
-.sidebar .switch{
-  gap:4px;
-  white-space:nowrap;
-  justify-content:flex-start;   /* 靠左 */
-  align-self:flex-start;        /* 元素自身靠左 */
-}
-.sidebar .switch input{ margin:0; }
-
-.actions{ justify-content:center; }
-.actions .btn{ font-size:18px; padding:12px 20px; }
+.sidebar .switch{gap:1px; white-space:nowrap}
+.actions{justify-content:center}
+.actions .btn{font-size:18px; padding:12px 20px}
 </style>
 </head>
 <body>
@@ -151,11 +144,7 @@ dialog::backdrop{background:rgba(0,0,0,.45)}
         <div id="dateChips" class="switch" style="flex-wrap:wrap"></div>
       </label>
       <label class="field"><span>最大距離（公里）</span><input id="maxKm" type="number" min="0" step="0.5" placeholder="不限制"></label>
-      <div style="text-align: center; margin-top: 10px;">
-  <label class="switch">
-    <input type="checkbox" id="useGeo"> 顯示與我距離
-  </label>
-</div>
+      <label class="switch"><input type="checkbox" id="useGeo"> 顯示與我距離</label>
       <div class="actions"><button id="btnFilter" class="btn">套用篩選</button></div>
     </div>
     <div class="foot">© Taipei Open Culture • Leaflet + OSM</div>
