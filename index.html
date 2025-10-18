@@ -56,7 +56,7 @@ input::placeholder{color:#9aa3af}
 .btn{padding:10px 14px; border-radius:10px; border:1px solid var(--border); background:var(--panel); cursor:pointer; font-weight:700; font-size:var(--fz-14)}
 .btn.primary{background:var(--brand); border-color:var(--brand); color:#fff}
 .btn.link{display:inline-flex; align-items:center; gap:6px; border-color:transparent; background:var(--accent); color:var(--brand-ink)}
-.help{font-size:var(--fz-12); color:var(--ink-2); margin:8px 0 0}
+.help{font-size:var(--fz-12); color:var(--ink-2)}
 .foot{font-size:var(--fz-12); color:var(--ink-2)}
 .main{padding:28px min(5vw,40px)}
 .hero{position:relative; overflow:hidden; border-radius:var(--radius); padding:36px; background:
@@ -104,9 +104,11 @@ dialog::backdrop{background:rgba(0,0,0,.45)}
 .leaflet-control-container .leaflet-control{border-radius:10px; overflow:hidden}
 </style>
 
-<!-- 覆寫：讓 checkbox 與文字更靠近 -->
+<!-- 覆寫：1) checkbox 與文字更近且不換行 2) 套用篩選置中並放大 -->
 <style>
-.sidebar .switch{gap:4px}
+.sidebar .switch{gap:4px; white-space:nowrap}
+.actions{justify-content:center}
+.actions .btn{font-size:18px; padding:12px 20px}
 </style>
 </head>
 <body>
@@ -535,3 +537,4 @@ boot();
 </script>
 </body>
 </html>
+
