@@ -1,18 +1,15 @@
+```html
 <!doctype html>
 <html lang="zh-Hant">
 <head>
 <meta charset="utf-8" />
 <title>臺北藝文活動搜尋</title>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<!-- 字體 -->
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300..800&family=Noto+Sans+TC:wght@300;400;500;700;900&display=swap" rel="stylesheet">
-<!-- Leaflet -->
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <style>
-/* ===== Tokens ===== */
 :root{
   --brand:#3a86ff; --brand-ink:#0b57d0; --accent:#eef4ff;
   --bg:#f7f8fb; --panel:#ffffff; --ink:#0f1420; --ink-2:#5b6475;
@@ -39,24 +36,17 @@ body{
   font-size:var(--fz-16); line-height:1.65;
 }
 a{color:inherit}
-
-/* ===== Layout ===== */
 .shell{display:grid; grid-template-columns: min(360px, 92vw) 1fr; gap:0; min-height:100dvh}
 @media (max-width: 760px){ .shell{grid-template-columns: 1fr} }
-
 .sidebar{
   position: sticky; top:0; align-self:start; height:100dvh; overflow:auto;
   background:var(--panel); border-right:1px solid var(--border); padding:24px; display:grid; grid-template-rows:auto auto 1fr auto; gap:18px;
 }
 @media (max-width:760px){ .sidebar{position: static; height:auto; border-right:0; border-bottom:1px solid var(--border)} }
-
 .brand{display:flex; align-items:center; gap:12px}
-.logo{inline-size:48px; block-size:48px; border-radius:14px; display:grid; place-items:center; font-weight:900; letter-spacing:1px;
-  background:linear-gradient(135deg,var(--brand),var(--brand-ink)); color:#fff; box-shadow:var(--shadow)}
+.logo{inline-size:48px; block-size:48px; border-radius:14px; display:grid; place-items:center; font-weight:900; letter-spacing:1px; background:linear-gradient(135deg,var(--brand),var(--brand-ink)); color:#fff; box-shadow:var(--shadow)}
 .brand .t1{font-size:var(--fz-22); font-weight:850; letter-spacing:.5px}
-
-.panel{background:linear-gradient(180deg,var(--panel),color-mix(in oklab,var(--panel),var(--accent) 10%));
-  border:1px solid var(--border); border-radius:var(--radius); padding:18px; box-shadow:var(--shadow)}
+.panel{background:linear-gradient(180deg,var(--panel),color-mix(in oklab,var(--panel),var(--accent) 10%)); border:1px solid var(--border); border-radius:var(--radius); padding:18px; box-shadow:var(--shadow)}
 .h2{font-size:var(--fz-18); margin:0 0 10px; font-weight:800}
 .field{display:grid; gap:6px; margin:12px 0}
 .field>span{font-size:var(--fz-12); color:var(--ink-2); letter-spacing:.4px; text-transform:uppercase}
@@ -69,21 +59,14 @@ input::placeholder{color:#9aa3af}
 .btn.link{display:inline-flex; align-items:center; gap:6px; border-color:transparent; background:var(--accent); color:var(--brand-ink)}
 .help{font-size:var(--fz-12); color:var(--ink-2); margin:8px 0 0}
 .foot{font-size:var(--fz-12); color:var(--ink-2)}
-
-/* ===== Main ===== */
 .main{padding:28px min(5vw,40px)}
-.hero{
-  position:relative; overflow:hidden; border-radius:var(--radius); padding:36px;
-  background:
-    radial-gradient(1000px 400px at 70% -20%, #60a5fa33, transparent 60%),
-    linear-gradient(160deg, color-mix(in oklab, var(--brand), #fff 65%), var(--panel));
-  border:1px solid var(--border); box-shadow:var(--shadow); margin-bottom:24px;
-}
+.hero{position:relative; overflow:hidden; border-radius:var(--radius); padding:36px; background:
+  radial-gradient(1000px 400px at 70% -20%, #60a5fa33, transparent 60%),
+  linear-gradient(160deg, color-mix(in oklab, var(--brand), #fff 65%), var(--panel));
+  border:1px solid var(--border); box-shadow:var(--shadow); margin-bottom:24px}
 .hero h1{margin:0 0 6px; font-size:var(--fz-40); font-weight:900; letter-spacing:.4px}
 .hero p{margin:0; font-size:var(--fz-18); color:var(--ink-2)}
 .map{width:100%; height:380px; margin:22px 0; border-radius:var(--radius); overflow:hidden; border:1px solid var(--border); box-shadow:var(--shadow)}
-
-/* ===== Cards ===== */
 .grid{display:grid; grid-template-columns: repeat(12, 1fr); gap:var(--gap)}
 .card{grid-column: span 4; background:var(--panel); border:1px solid var(--border); border-radius:var(--radius); overflow:hidden; box-shadow:var(--shadow); transition:.15s transform}
 @media (max-width:1200px){ .card{grid-column: span 6} }
@@ -99,8 +82,6 @@ input::placeholder{color:#9aa3af}
 .sub{margin:0 0 6px; color:color-mix(in oklab,var(--ink),#000 12%)}
 .actions-row{display:flex; gap:8px}
 .card .btn{font-weight:700}
-
-/* ===== Detail dialog + Prose ===== */
 dialog#detail{border:0; padding:0; max-width:900px; width:min(96vw,900px); border-radius:18px; box-shadow:var(--shadow)}
 dialog::backdrop{background:rgba(0,0,0,.45)}
 .detail{background:var(--panel); color:var(--ink); border:1px solid var(--border); border-radius:18px; overflow:hidden}
@@ -121,7 +102,6 @@ dialog::backdrop{background:rgba(0,0,0,.45)}
 .price{font-weight:800; margin-top:8px}
 .toolbar{display:flex; gap:8px; margin-top:10px}
 .toolbar .btn{padding:8px 10px; font-size:var(--fz-12)}
-
 .leaflet-control-container .leaflet-control{border-radius:10px; overflow:hidden}
 </style>
 </head>
@@ -129,10 +109,8 @@ dialog::backdrop{background:rgba(0,0,0,.45)}
 <div class="shell">
   <aside class="sidebar">
     <div class="brand">
-      <div class="logo">TA</div>
-      <div class="t1">藝文活動搜尋</div>
+      <div class="logo">TA</div><div class="t1">藝文活動搜尋</div>
     </div>
-
     <div class="panel">
       <div class="h2">搜尋與篩選</div>
       <label class="field"><span>關鍵字</span><input id="q" type="search" placeholder="輸入活動或場館關鍵字"></label>
@@ -152,25 +130,21 @@ dialog::backdrop{background:rgba(0,0,0,.45)}
       </label>
       <label class="field"><span>最大距離（公里）</span><input id="maxKm" type="number" min="0" step="0.5" placeholder="不限制"></label>
       <label class="switch"><input type="checkbox" id="useGeo"> 顯示與我距離</label>
-      <div class="actions"><button id="btnLoad" class="btn primary">載入資料</button><button id="btnFilter" class="btn">套用篩選</button></div>
-      <p class="help">最佳化版面與字級階層，卡片含封面圖。點卡片或圖標可開啟詳細視窗。</p>
+      <div class="actions"><button id="btnLoad" class="btn primary">載入 events.json</button><button id="btnFilter" class="btn">套用篩選</button></div>
+      <p class="help">資料來源：<code>events.json</code>。自動清洗票價、去重、限制台北市行政區。</p>
     </div>
-
     <div class="foot">© Taipei Open Culture • Leaflet + OSM</div>
   </aside>
 
   <main class="main">
     <section class="hero">
-      <h1>發現本週的藝文靈感</h1>
-      <p>精準篩選，瀏覽地圖，閱讀精編內文。</p>
+      <h1>發現本週的藝文靈感</h1><p>精準篩選，地圖導覽，詳細資訊一鍵到位。</p>
     </section>
-
     <div id="map" class="map"></div>
     <section id="list" class="grid" aria-live="polite"></section>
   </main>
 </div>
 
-<!-- 詳細 -->
 <dialog id="detail" aria-labelledby="d-title">
   <article class="detail">
     <div class="detail-head">
@@ -181,72 +155,36 @@ dialog::backdrop{background:rgba(0,0,0,.45)}
           <button id="d-close" class="btn x" aria-label="關閉">關閉</button>
         </div>
         <div class="d-chips">
-          <span class="badge" id="d-type"></span>
-          <span class="chip" id="d-district"></span>
+          <span class="badge" id="d-type"></span><span class="chip" id="d-district"></span>
         </div>
         <p class="dline" id="d-time"></p>
         <p class="dline" id="d-venue"></p>
         <p class="dline" id="d-addr"></p>
         <div class="toolbar">
           <a id="d-url" class="btn link" target="_blank" rel="noopener">前往活動頁</a>
-          <button id="btnShare" class="btn">分享</button>
-          <button id="btnCopy" class="btn">複製連結</button>
+          <button id="btnShare" class="btn">分享</button><button id="btnCopy" class="btn">複製連結</button>
         </div>
       </div>
     </div>
-    <div class="detail-body">
-      <div class="prose">
-        <p id="d-desc"></p>
-        <p class="price" id="d-price"></p>
-      </div>
-    </div>
+    <div class="detail-body"><div class="prose">
+      <p id="d-desc"></p><p class="price" id="d-price"></p>
+    </div></div>
   </article>
 </dialog>
 
-<!-- 內嵌資料 -->
+<!-- 本地預設（僅作為後備） -->
 <script type="application/json" id="seed">
-{
-  "results": [
-    {
-      "title": "城市光影—短片巡演",
-      "desc": "精選本地創作者短片放映暨映後談。",
-      "type": "電影",
-      "start_at": "2025-10-18T19:00:00",
-      "end_at": "2025-10-18T21:00:00",
-      "url": "https://example.com/event/film",
-      "price_min": 0,
-      "price_max": 200,
-      "venue": { "name": "台北市中山堂 光點廳", "district": "中正區", "lat": 25.0435, "lng": 121.5167 }
-    },
-    {
-      "title": "王大閎建築劇場「登月：氣味與聲音劇場」",
-      "desc": "跨感官的建築與聲音裝置展演。",
-      "type": "展覽",
-      "start_at": "2025-10-21T00:00:00",
-      "end_at": "2025-12-21T23:59:59",
-      "url": "https://www.tfam.museum/",
-      "price_min": null,
-      "price_max": null,
-      "venue": { "name": "臺北市立美術館", "district": "中山區", "lat": 25.0723, "lng": 121.5249 }
-    },
-    {
-      "title": "2025自綠生活節",
-      "desc": "戶外主題市集與永續生活展。",
-      "type": "市集",
-      "start_at": "2025-10-18T00:00:00",
-      "end_at": "2025-10-19T23:59:59",
-      "url": "https://www.huashan1914.com/",
-      "price_min": null,
-      "price_max": null,
-      "venue": { "name": "華山1914文化創意產業園區", "district": "中正區", "lat": 25.0447, "lng": 121.5299 }
-    }
-  ]
-}
+{"results":[
+ {"title":"城市光影—短片巡演","desc":"精選本地創作者短片放映暨映後談。","type":"電影","start_at":"2025-10-18T19:00:00","end_at":"2025-10-18T21:00:00","url":"https://example.com/event/film","price_min":0,"price_max":200,"venue":{"name":"台北市中山堂 光點廳","district":"中正區","lat":25.0435,"lng":121.5167}},
+ {"title":"王大閎建築劇場「登月：氣味與聲音劇場」","desc":"跨感官的建築與聲音裝置展演。","type":"展覽","start_at":"2025-10-21T00:00:00","end_at":"2025-12-21T23:59:59","url":"https://www.tfam.museum/","price_min":null,"price_max":null,"venue":{"name":"臺北市立美術館","district":"中山區","lat":25.0723,"lng":121.5249}},
+ {"title":"2025自綠生活節","desc":"戶外主題市集與永續生活展。","type":"市集","start_at":"2025-10-18T00:00:00","end_at":"2025-10-19T23:59:59","url":"https://www.huashan1914.com/","price_min":null,"price_max":null,"venue":{"name":"華山1914文化創意產業園區","district":"中正區","lat":25.0447,"lng":121.5299}}
+]}
 </script>
 
 <script>
 /* ===== 地圖與狀態 ===== */
 const TAIPEI_CENTER=[25.0419,121.5654];
+const TAIPEI_DISTRICTS=new Set(["中正區","大同區","中山區","松山區","大安區","萬華區","信義區","士林區","北投區","內湖區","南港區","文山區"]);
 const map=L.map('map',{scrollWheelZoom:false}).setView(TAIPEI_CENTER,12);
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'&copy; OpenStreetMap'}).addTo(map);
 let meMarker=null,myPos=null,markers=L.layerGroup().addTo(map);
@@ -254,12 +192,46 @@ let allEvents=[];
 
 /* ===== 工具 ===== */
 const toRad=d=>d*Math.PI/180;
-const haversineKm=(a,b)=>{const R=6371,dLat=toRad(b[0]-a[0]),dLon=toRad(b[1]-a[1]);const s=Math.sin(dLat/2)**2+Math.cos(toRad(a[0]))*Math.cos(toRad(b[0]))*Math.sin(dLon/2)**2;return 2*R*Math.asin(Math.sqrt(s));};
+const haversineKm=(a,b)=>{const R=6371,dLat=toRad(b[0]-a[0]),dLon=toRad(b[1]-a[1]);const s=Math.sin(dLat/2)**2+Math.cos(toRad(a[0]))*Math.cos(toRad(b[0]))*Math.sin(Math.min(1,Math.max(-1,Math.sin(dLon/2)))**2);return 2*R*Math.asin(Math.sqrt(Math.sin(dLat/2)**2+Math.cos(toRad(a[0]))*Math.cos(toRad(b[0]))*Math.sin(dLon/2)**2));};
 const fmtKm=k=>k==null?'—':(k<1?`${(k*1000|0)} m`:`${k.toFixed(1)} km`);
-const weekdayOf=iso=>new Date(iso).getDay();
-const fmtPrice=(min,max)=>{if(min==null&&max==null)return'票價未提供';if(min==null)return`最高 ${max} 元`;if(max==null)return`最低 ${min} 元`;if(min===0&&max===0)return'免費';if(min===0&&max>0)return`免費～${max} 元`;return`${min}～${max} 元`;};
 const pad=n=>String(n).padStart(2,'0');
-/* 封面：若無 image 欄位，用 SVG 產生佔位圖（依類型配色＋首字） */
+const clamp = (v,min,max)=>Math.max(min,Math.min(max,v));
+const parseNum = v => {const n=parseFloat(v); return Number.isFinite(n)?n:null;};
+
+/* 日期與票價 */
+function fmtDateTime(iso){
+  if(!iso) return '時間未定';
+  const d=new Date(iso);
+  if(Number.isNaN(+d)) return '時間未定';
+  return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())} ${pad(d.getHours())}:${pad(d.getMinutes())}`;
+}
+function extractPrices(rawMin, rawMax, rawStr){
+  const nums=[];
+  const pushNum=v=>{const n=parseNum(v); if(n!=null) nums.push(n);};
+  pushNum(rawMin); pushNum(rawMax);
+  if(typeof rawStr==='string'){ (rawStr.match(/\d+(\.\d+)?/g)||[]).forEach(s=>nums.push(parseFloat(s))); }
+  if(nums.length===0) return {min:null,max:null,label:'票價未提供'};
+  const mn=Math.min(...nums), mx=Math.max(...nums);
+  if(mn===0 && mx===0) return {min:0,max:0,label:'免費'};
+  if(mn===0 && mx>0) return {min:0,max:mx,label:`免費～${mx} 元`};
+  if(mn===mx) return {min:mn,max:mn,label:`${mn} 元`};
+  return {min:mn,max:mx,label:`${mn}～${mx} 元`};
+}
+function occursOnWeekday(ev, want){
+  if(want===''||want==null) return true;
+  const w=parseInt(want,10);
+  const s=ev.start_at?new Date(ev.start_at):null;
+  if(!s||Number.isNaN(+s)) return false;
+  const e=ev.end_at?new Date(ev.end_at):s;
+  const maxSpanDays=clamp(Math.ceil((e - s)/(86400000))+1,1,400);
+  for(let i=0;i<maxSpanDays;i++){
+    const d=new Date(s.getFullYear(),s.getMonth(),s.getDate()+i);
+    if(d.getDay()===w) return true;
+  }
+  return false;
+}
+
+/* 封面：無 image 則用 SVG 佔位 */
 function coverFor(ev){
   const T={展覽:'#8b5cf6', 表演:'#f97316', 講座:'#22c55e', 電影:'#0ea5e9', 市集:'#eab308', 其他:'#94a3b8'};
   const c=T[ev.type]||T['其他']; const txt=(ev.type||'活').slice(0,1);
@@ -267,21 +239,52 @@ function coverFor(ev){
   return `data:image/svg+xml;charset=UTF-8,${t(svg)}`;
 }
 
-/* ===== 載入資料 ===== */
-function loadSeed(){
+/* ===== 載入與清洗 ===== */
+function normalizeRow(row){
+  const typeMap = new Map([['演出','表演'],['音樂會','表演'],['音樂','表演'],['talk','講座']]);
+  const t=(row.type||'').trim();
+  const type=typeMap.get(t)||t||'其他';
+  const venue=row.venue||{};
+  const district=(venue.district||'').trim();
+  const lat=parseNum(venue.lat), lng=parseNum(venue.lng);
+  const img=row.image||row.cover||null;
+  const priceStr=row.price||row.fee||null;
+  const prices=extractPrices(row.price_min,row.price_max,priceStr);
+  return {
+    id: row.id || `evt_${crypto.randomUUID?.()||Math.random().toString(36).slice(2)}`,
+    title: (row.title||'').trim(),
+    type, desc: (row.desc||row.description||'').trim(),
+    start_at: row.start_at||row.start||null,
+    end_at: row.end_at||row.end||null,
+    url: row.url||row.link||'',
+    price_min: prices.min, price_max: prices.max, price_label: prices.label,
+    venue:{name:venue.name||'', address:venue.address||'', district},
+    lat, lng,
+    image: img
+  };
+}
+function dedupeTaipei(rows){
+  const seen=new Set();
+  const out=[];
+  for(const r of rows){
+    if(!TAIPEI_DISTRICTS.has(r.venue.district)) continue;
+    const key=(r.title||'')+'|'+(r.start_at||'')+'|'+(r.venue.name||'');
+    if(seen.has(key)) continue;
+    seen.add(key); out.push(r);
+  }
+  return out;
+}
+async function loadFromEventsJson(){
   try{
-    const seed=JSON.parse(document.getElementById('seed').textContent);
-    const rows=seed.results||[];
-    return rows.map(row=>({
-      id:`local_${crypto.randomUUID?.()||Math.random()}`,
-      title:row.title, type:row.type||'其他', desc:row.desc||'',
-      start_at:row.start_at||null, end_at:row.end_at||null,
-      url:row.url||'', price_min:row.price_min??null, price_max:row.price_max??null,
-      venue:{name:row.venue?.name||'', address:row.venue?.address||'', district:row.venue?.district||''},
-      lat:row.venue?.lat??null, lng:row.venue?.lng??null,
-      image:row.image||null
-    }));
-  }catch(e){ console.warn('JSON 解析失敗',e); return []; }
+    const res=await fetch('events.json',{cache:'no-store'});
+    if(!res.ok) throw new Error(res.status);
+    const raw=await res.json();
+    const arr=(raw.results||raw||[]).map(normalizeRow);
+    return dedupeTaipei(arr);
+  }catch(e){
+    const seed=JSON.parse(document.getElementById('seed').textContent).results||[];
+    return dedupeTaipei(seed.map(normalizeRow));
+  }
 }
 
 /* ===== 呈現 ===== */
@@ -298,20 +301,17 @@ function render(list){
         .on('click',()=>openDetail(ev));
     }
 
-    const d = ev.start_at? new Date(ev.start_at): null;
-    const dstr = d ? `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())} ${pad(d.getHours())}:${pad(d.getMinutes())}` : '時間未定';
-
     const card=document.createElement('article'); card.className='card'; card.tabIndex=0;
     card.innerHTML=`
       <img class="cover" alt="" src="${ev.image||coverFor(ev)}">
       <div class="card-body">
         <div class="badges">
-          <span class="badge">${ev.type}</span>
+          <span class="badge">${ev.type||'其他'}</span>
           <span class="chip">${ev.venue.district||'行政區未知'}</span>
         </div>
         <h3 class="title">${ev.title}</h3>
-        <p class="meta"><span>${dstr}</span><span>· 距離 ${fmtKm(distKm)}</span></p>
-        <p class="sub">${ev.venue.name}</p>
+        <p class="meta"><span>${fmtDateTime(ev.start_at)}</span><span>· 距離 ${fmtKm(distKm)}</span></p>
+        <p class="sub">${ev.venue.name||''}</p>
         <div class="actions-row">
           ${ev.url?`<a class="btn link" href="${ev.url}" target="_blank" rel="noopener">活動頁</a>`:''}
           <button class="btn" data-act="more">詳細</button>
@@ -326,19 +326,21 @@ function render(list){
 
 /* ===== 篩選 ===== */
 function applyFilters(){
-  const q=document.getElementById('q').value.trim();
+  const q=document.getElementById('q').value.trim().toLowerCase();
   const type=document.getElementById('type').value;
   const dist=document.getElementById('district').value;
   const w=document.getElementById('weekday').value;
   const maxKm=parseFloat(document.getElementById('maxKm').value);
 
   const filtered=allEvents.filter(ev=>{
-    if(q && !(`${ev.title} ${ev.venue.name} ${ev.venue.address}`.toLowerCase().includes(q.toLowerCase()))) return false;
+    if(q && !(`${ev.title} ${ev.venue.name} ${ev.venue.address}`.toLowerCase().includes(q))) return false;
     if(type && ev.type!==type) return false;
     if(dist && ev.venue.district!==dist) return false;
-    if(w!==''){ const wd=ev.start_at?weekdayOf(ev.start_at):null; if(wd===null||String(wd)!==w) return false; }
-    if(!isNaN(maxKm) && ev._distance_km!=null && ev._distance_km>maxKm) return false;
-    if(!isNaN(maxKm) && ev._distance_km==null) return false;
+    if(!occursOnWeekday(ev,w)) return false;
+    if(!isNaN(maxKm)){
+      if(ev._distance_km==null) return false;
+      if(ev._distance_km>maxKm) return false;
+    }
     return true;
   }).sort((a,b)=>{
     const da=a._distance_km??Infinity, db=b._distance_km??Infinity;
@@ -360,18 +362,19 @@ function openDetail(ev){
   document.getElementById('d-title').textContent=ev.title||'活動';
   document.getElementById('d-type').textContent=ev.type||'類型未知';
   document.getElementById('d-district').textContent=ev.venue?.district||'行政區未知';
-  const t = ev.start_at? new Date(ev.start_at): null;
-  document.getElementById('d-time').textContent = t? t.toLocaleString(): '時間未定';
+  const s=ev.start_at?new Date(ev.start_at):null;
+  const e=ev.end_at?new Date(ev.end_at):null;
+  const timeLine = s? (e && +e>+s ? `${s.toLocaleString()} ～ ${e.toLocaleString()}` : s.toLocaleString()) : '時間未定';
+  document.getElementById('d-time').textContent = timeLine;
   document.getElementById('d-venue').textContent=ev.venue?.name||'';
   document.getElementById('d-addr').textContent=ev.venue?.address||'';
   document.getElementById('d-desc').textContent=ev.desc||'';
-  document.getElementById('d-price').textContent=fmtPrice(ev.price_min,ev.price_max);
+  document.getElementById('d-price').textContent=ev.price_label||'票價未提供';
 
   const link=document.getElementById('d-url');
   if(ev.url){ link.href=ev.url; link.style.display='inline-flex'; } else { link.removeAttribute('href'); link.style.display='none'; }
 
   dlg.showModal();
-  // 無障礙：Esc 關閉
   dlg.addEventListener('keydown',e=>{ if(e.key==='Escape') dlg.close(); }, {once:true});
 }
 document.getElementById('d-close').addEventListener('click',()=>document.getElementById('detail').close());
@@ -392,14 +395,16 @@ document.getElementById('btnCopy').addEventListener('click',async()=>{
   try{ await navigator.clipboard.writeText(url); alert('已複製連結'); }catch(e){ alert(url); }
 });
 
-/* ===== 綁定 ===== */
-document.getElementById('btnLoad').addEventListener('click',()=>{
-  allEvents = loadSeed();
+/* 載入與綁定 */
+async function boot(){
+  allEvents = await loadFromEventsJson();
+  // 初始距離計算
   if(myPos) allEvents.forEach(ev=>{
     if(ev.lat!=null && ev.lng!=null) ev._distance_km=haversineKm([myPos.lat,myPos.lng],[ev.lat,ev.lng]);
   });
   render(allEvents);
-});
+}
+document.getElementById('btnLoad').addEventListener('click',boot);
 document.getElementById('btnFilter').addEventListener('click',applyFilters);
 document.getElementById('useGeo').addEventListener('change',e=>{
   if(e.target.checked){
@@ -420,8 +425,9 @@ document.getElementById('useGeo').addEventListener('change',e=>{
   }
 });
 
-/* 初次渲染 */
-allEvents=loadSeed(); render(allEvents);
+/* 開頁即嘗試讀取 events.json（可改成只靠按鈕） */
+boot();
 </script>
 </body>
 </html>
+```
