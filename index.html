@@ -104,12 +104,20 @@ dialog::backdrop{background:rgba(0,0,0,.45)}
 .leaflet-control-container .leaflet-control{border-radius:10px; overflow:hidden}
 </style>
 
-<!-- 覆寫：1) checkbox 與文字更近且不換行 2) 套用篩選置中並放大 -->
 <style>
-.sidebar .switch{gap:1px; white-space:nowrap}
-.actions{justify-content:center}
-.actions .btn{font-size:18px; padding:12px 20px}
+/* 覆寫：1) checkbox 與文字靠左且更近 2) 套用篩選置中並放大 */
+.sidebar .switch{
+  gap:4px;
+  white-space:nowrap;
+  justify-content:flex-start;   /* 靠左 */
+  align-self:flex-start;        /* 本行元素自身也靠左 */
+}
+.sidebar .switch input{ margin:0; }  /* 移除瀏覽器預設外距 */
+
+.actions{ justify-content:center; }
+.actions .btn{ font-size:18px; padding:12px 20px; }
 </style>
+
 </head>
 <body>
 <div class="shell">
