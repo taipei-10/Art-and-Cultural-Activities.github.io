@@ -121,7 +121,18 @@ input, select {
 }
 input::placeholder { color: #9aa3af; }
 
-.switch { display: flex; align-items: center; gap: 10px; margin: var(--space-2) 0 var(--space-4); font-size: var(--fz-14); color: var(--ink-2); }
+/* === 更新區：讓方框與文字更靠近 === */
+.switch {
+  display: flex;
+  align-items: center;
+  gap: 4px;              /* 原本是 10px */
+  white-space: nowrap;   /* 防止換行 */
+  margin: var(--space-2) 0 var(--space-4);
+  font-size: var(--fz-14);
+  color: var(--ink-2);
+}
+/* ============================== */
+
 .actions { display: flex; gap: 10px; }
 .btn {
   padding: 10px 14px; border-radius: 10px; border: 1px solid var(--border);
