@@ -20,12 +20,11 @@
   <header class="mb-4 flex items-start justify-between gap-3">
     <div>
       <h1 class="text-2xl md:text-3xl font-semibold">台北市最近幾天藝文活動</h1>
-      <p class="text-sm text-gray-600 dark:text-gray-400">種類・天數・距離・行政區・關鍵字 即時篩選</p>
+      <p class="text-sm text-gray-600 dark:text-gray-400">種類・天數・距離・行政區・關鍵字 即時篩選，並同步搜臺北市資料大平台</p>
     </div>
     <button id="darkToggle" class="px-3 py-2 text-sm border rounded-md">深淺切換</button>
   </header>
 
-  <!-- 篩選列 -->
   <section class="sticky top-0 z-30 bg-white/80 dark:bg-gray-900/80 backdrop-blur border rounded-md p-3 mb-4">
     <div class="grid md:grid-cols-3 gap-3">
       <div class="md:col-span-2 flex gap-2">
@@ -51,7 +50,6 @@
     </div>
   </section>
 
-  <!-- 地圖 -->
   <section class="rounded-md border mb-4 relative overflow-hidden">
     <div id="map"></div>
     <div class="map-tools">
@@ -61,7 +59,6 @@
     <div id="coord" class="absolute right-2 top-2 bg-white/90 dark:bg-gray-800/80 border dark:border-gray-700 rounded px-2 py-1 text-xs font-mono"></div>
   </section>
 
-  <!-- 側欄 + 結果 -->
   <section class="grid md:grid-cols-3 gap-4 items-start">
     <aside class="md:col-span-1 space-y-3">
       <div class="rounded-md border p-3">
@@ -87,14 +84,17 @@
       </div>
     </main>
   </section>
+
+  <section id="portalResults" class="mt-6 space-y-3"></section>
 </div>
 
 <script>
 const CULTURE_API = "https://cultureexpress.taipei/OpenData/Event/C000003";
 const TPE_TOWNS_TOPO = "https://raw.githubusercontent.com/jason2506/Taiwan.TopoJSON/master/topojson/towns/63000.json";
 const FALLBACK_JSON = "events.json";
+const TPE_CKAN = "https://data.taipei/api/3/action/package_search";
 
-let map, userLoc = { lat: 25.0375, lng: 121.5637 }; // 台北市府
+let map, userLoc = { lat: 25.0375, lng: 121.5637 };
 let markers = [];
 let ringSourceId = 'search-ring';
 
@@ -116,12 +116,9 @@ async function loadDistricts(){
   map.addSource('tpe-dists',{type:'geojson', data: geo});
   map.addLayer({ id:'tpe-fill', type:'fill', source:'tpe-dists', paint:{'fill-color':'#0ea5e9','fill-opacity':0.08}});
   map.addLayer({ id:'tpe-line', type:'line', source:'tpe-dists', paint:{'line-color':'#0284c7','line-width':1}});
-
-  // 行政區選單
   const set = new Set(geo.features.map(f=>f.properties.TOWNNAME));
   const distSel = qs('dist');
   [...set].sort().forEach(n=>{ const opt=document.createElement('option'); opt.value=n; opt.textContent=n; distSel.appendChild(opt); });
-
   map.on('click','tpe-fill', e=>{
     const name = e.features[0].properties.TOWNNAME;
     new maplibregl.Popup().setLngLat(e.lngLat).setHTML(`<b>${name}</b>`).addTo(map);
@@ -205,7 +202,6 @@ async function fetchCultureEvents(){
   const now = new Date(p.start);
   const until = new Date(p.end);
 
-  // 計算距離
   list.forEach(e=>{
     if(p.lat && p.lng && e.venue?.lat && e.venue?.lng){
       e._km = haversineKm([p.lat,p.lng],[e.venue.lat,e.venue.lng]);
@@ -237,7 +233,6 @@ function render(list){
     return;
   }
 
-  // 地圖 marker
   list.forEach(e=>{
     if(map && e.venue?.lng && e.venue?.lat){
       const m = new maplibregl.Marker({color:"#333"}).setLngLat([e.venue.lng,e.venue.lat]).addTo(map);
@@ -246,10 +241,8 @@ function render(list){
     }
   });
 
-  // 視野自動包含結果
   fitBoundsToResults(list);
 
-  // 清單
   list.forEach(e=>{
     const card = document.createElement("article");
     card.className = "border rounded-md p-3 bg-white dark:bg-gray-900";
@@ -273,6 +266,58 @@ function render(list){
   });
 }
 
+/* === 臺北市資料大平台（CKAN）=== */
+async function searchPortal(keyword="", rows=10, start=0){
+  const params = new URLSearchParams({
+    rows:String(rows),
+    start:String(start),
+    sort:"metadata_modified desc",
+    q: keyword || ""
+  });
+  params.append("fq",'organization:"臺北市政府文化局" AND groups:文化');
+  const url = `${TPE_CKAN}?${params.toString()}`;
+  const r = await fetch(url);
+  if(!r.ok) throw new Error("portal api failed");
+  const json = await r.json();
+  if(!json.success) throw new Error("portal success=false");
+  return json.result; // {count, results:[...]}
+}
+
+async function renderPortal(keyword){
+  const box = document.getElementById("portalResults");
+  box.innerHTML = `<div class="text-sm text-gray-500 mb-1">來自臺北市資料大平台</div>`;
+  try{
+    const res = await searchPortal(keyword, 10, 0);
+    if(!res.results.length){
+      box.innerHTML += `<div class="p-3 text-sm border rounded bg-white dark:bg-gray-900">無符合資料集</div>`;
+      return;
+    }
+    res.results.forEach(ds=>{
+      const resources = (ds.resources||[])
+        .filter(r => /json|csv|xml/i.test(r.format||""))
+        .map(r => `<a class="px-2 py-1 border rounded text-xs" href="${r.url}" target="_blank" rel="noopener">${(r.format||'LINK').toUpperCase()}</a>`)
+        .join(" ");
+      const card = document.createElement("article");
+      card.className = "border rounded-md p-3 bg-white dark:bg-gray-900";
+      card.innerHTML = `
+        <div class="flex items-start justify-between gap-2">
+          <h3 class="font-medium">${ds.title||"(無標題)"}</h3>
+          <span class="text-xs text-gray-500">${(ds.metadata_modified||"").slice(0,10)}</span>
+        </div>
+        <p class="text-sm text-gray-700 dark:text-gray-300 mt-1 clamp-2">${ds.notes||""}</p>
+        <div class="mt-2 flex flex-wrap gap-2">
+          <a class="px-2 py-1 border rounded text-xs" href="https://data.taipei/dataset/${ds.name}" target="_blank" rel="noopener">資料集頁面</a>
+          ${resources || '<span class="text-xs text-gray-500">無可直接下載的資源</span>'}
+        </div>`;
+      box.appendChild(card);
+    });
+  }catch(e){
+    console.error(e);
+    box.innerHTML += `<div class="p-3 text-sm border rounded bg-red-50 dark:bg-red-900/20">大平台查詢失敗</div>`;
+  }
+}
+/* === /CKAN === */
+
 async function search(){
   qs('skeletonWrap').style.display='';
   qs('results').innerHTML="";
@@ -294,13 +339,15 @@ async function search(){
       qs('results').innerHTML = `<div class="p-6 text-sm text-red-700 dark:text-red-300 border rounded-md bg-red-50 dark:bg-red-900/20">備援資料也無法載入。</div>`;
     }
   }
+
+  await renderPortal(qs("q").value.trim());
 }
 
 function debounce(fn, ms=400){ let t; return (...a)=>{ clearTimeout(t); t=setTimeout(()=>fn(...a), ms); }; }
 
 function initUI(){
   qs("btn").onclick = search;
-  qs("q").oninput = debounce(search, 400);
+  qs("q").oninput = debounce(search, 500);
   ["type","days","radius","pmax","dist"].forEach(id=>qs(id).onchange = ()=>{ search(); drawSearchRing(); });
   qs("reset").onclick = ()=>{ ["q","type","pmax"].forEach(id=>qs(id).value=""); qs("days").value="3"; qs("radius").value="5"; qs("dist").value=""; search(); drawSearchRing(); };
   qs("recenter").onclick = ()=>{ userLoc={lat:25.0375,lng:121.5637}; map.flyTo({center:[userLoc.lng,userLoc.lat], zoom:12}); drawSearchRing(); };
@@ -311,7 +358,6 @@ function initUI(){
   qs('darkToggle').onclick=()=>{ const d=root.classList.toggle('dark'); localStorage.setItem('theme', d?'dark':'light'); };
 }
 
-// boot
 initMap();
 geolocate();
 initUI();
