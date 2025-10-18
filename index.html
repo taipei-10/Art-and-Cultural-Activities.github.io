@@ -1,433 +1,202 @@
-```html
 <!doctype html>
-<html lang="zh-Hant">
-<head>
 <meta charset="utf-8" />
-<title>臺北藝文活動搜尋</title>
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300..800&family=Noto+Sans+TC:wght@300;400;500;700;900&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<title>藝文活動搜尋</title>
+<meta name="viewport" content="width=device-width,initial-scale=1" />
 <style>
-:root{
-  --brand:#3a86ff; --brand-ink:#0b57d0; --accent:#eef4ff;
-  --bg:#f7f8fb; --panel:#ffffff; --ink:#0f1420; --ink-2:#5b6475;
-  --border:#e6e8ee; --muted:#eef1f6; --shadow:0 2px 6px rgba(15,20,32,.06),0 16px 36px rgba(15,20,32,.12);
-  --radius:16px; --r-sm:12px; --gap:22px;
-  --fz-12:clamp(11px,.75vw,12px); --fz-14:clamp(13px,.9vw,14px); --fz-16:clamp(14px,1vw,16px);
-  --fz-18:clamp(16px,1.1vw,18px); --fz-22:clamp(18px,1.6vw,22px); --fz-28:clamp(22px,2.2vw,28px); --fz-40:clamp(28px,4vw,40px);
-}
-@media (prefers-color-scheme: dark){
-  :root{
-    --bg:#0f1216; --panel:#141922; --ink:#eef2f7; --ink-2:#a3adc2; --border:#1f2630; --muted:#1b2330; --accent:#17243f;
-    --shadow:0 2px 8px rgba(0,0,0,.35),0 20px 44px rgba(0,0,0,.5);
-  }
-}
-*{box-sizing:border-box}
-html,body{height:100%}
-body{
-  margin:0; color:var(--ink);
-  font-family:Inter,"Noto Sans TC",system-ui,-apple-system,"PingFang TC","Microsoft JhengHei",Arial,sans-serif;
-  background:
-    radial-gradient(600px 600px at 10% -10%, #93c5fd33, transparent 60%),
-    radial-gradient(600px 600px at 100% 0%, #60a5fa22, transparent 60%),
-    linear-gradient(180deg,var(--bg),#fff0 40%);
-  font-size:var(--fz-16); line-height:1.65;
-}
-a{color:inherit}
-.shell{display:grid; grid-template-columns: min(360px, 92vw) 1fr; gap:0; min-height:100dvh}
-@media (max-width: 760px){ .shell{grid-template-columns: 1fr} }
-.sidebar{
-  position: sticky; top:0; align-self:start; height:100dvh; overflow:auto;
-  background:var(--panel); border-right:1px solid var(--border); padding:24px; display:grid; grid-template-rows:auto auto 1fr auto; gap:18px;
-}
-@media (max-width:760px){ .sidebar{position: static; height:auto; border-right:0; border-bottom:1px solid var(--border)} }
-.brand{display:flex; align-items:center; gap:12px}
-.logo{inline-size:48px; block-size:48px; border-radius:14px; display:grid; place-items:center; font-weight:900; letter-spacing:1px; background:linear-gradient(135deg,var(--brand),var(--brand-ink)); color:#fff; box-shadow:var(--shadow)}
-.brand .t1{font-size:var(--fz-22); font-weight:850; letter-spacing:.5px}
-.panel{background:linear-gradient(180deg,var(--panel),color-mix(in oklab,var(--panel),var(--accent) 10%)); border:1px solid var(--border); border-radius:var(--radius); padding:18px; box-shadow:var(--shadow)}
-.h2{font-size:var(--fz-18); margin:0 0 10px; font-weight:800}
-.field{display:grid; gap:6px; margin:12px 0}
-.field>span{font-size:var(--fz-12); color:var(--ink-2); letter-spacing:.4px; text-transform:uppercase}
-input,select{width:100%; padding:10px 12px; font-size:var(--fz-14); border:1px solid var(--border); border-radius:10px; background:var(--panel); color:var(--ink)}
-input::placeholder{color:#9aa3af}
-.switch{display:flex; align-items:center; gap:10px; margin-top:8px; color:var(--ink-2)}
-.actions{display:flex; gap:10px; margin-top:10px}
-.btn{padding:10px 14px; border-radius:10px; border:1px solid var(--border); background:var(--panel); cursor:pointer; font-weight:700; font-size:var(--fz-14)}
-.btn.primary{background:var(--brand); border-color:var(--brand); color:#fff}
-.btn.link{display:inline-flex; align-items:center; gap:6px; border-color:transparent; background:var(--accent); color:var(--brand-ink)}
-.help{font-size:var(--fz-12); color:var(--ink-2); margin:8px 0 0}
-.foot{font-size:var(--fz-12); color:var(--ink-2)}
-.main{padding:28px min(5vw,40px)}
-.hero{position:relative; overflow:hidden; border-radius:var(--radius); padding:36px; background:
-  radial-gradient(1000px 400px at 70% -20%, #60a5fa33, transparent 60%),
-  linear-gradient(160deg, color-mix(in oklab, var(--brand), #fff 65%), var(--panel));
-  border:1px solid var(--border); box-shadow:var(--shadow); margin-bottom:24px}
-.hero h1{margin:0 0 6px; font-size:var(--fz-40); font-weight:900; letter-spacing:.4px}
-.hero p{margin:0; font-size:var(--fz-18); color:var(--ink-2)}
-.map{width:100%; height:380px; margin:22px 0; border-radius:var(--radius); overflow:hidden; border:1px solid var(--border); box-shadow:var(--shadow)}
-.grid{display:grid; grid-template-columns: repeat(12, 1fr); gap:var(--gap)}
-.card{grid-column: span 4; background:var(--panel); border:1px solid var(--border); border-radius:var(--radius); overflow:hidden; box-shadow:var(--shadow); transition:.15s transform}
-@media (max-width:1200px){ .card{grid-column: span 6} }
-@media (max-width:760px){ .card{grid-column: span 12} }
-.card:hover{transform: translateY(-2px)}
-.cover{aspect-ratio: 16 / 9; width:100%; object-fit:cover; display:block}
-.card-body{padding:16px 16px 18px}
-.badges{display:flex; gap:8px; margin-bottom:8px}
-.badge{background:color-mix(in oklab,var(--brand),#fff 80%); color:var(--brand-ink); border:1px solid color-mix(in oklab,var(--brand),#000 15%); padding:4px 10px; border-radius:999px; font-size:var(--fz-12); font-weight:800; letter-spacing:.2px}
-.chip{background:var(--muted); color:color-mix(in oklab,var(--ink),#000 10%); padding:4px 10px; border-radius:999px; font-size:var(--fz-12)}
-.title{margin:4px 0 6px; font-size:var(--fz-22); font-weight:900; line-height:1.35; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient: vertical; overflow:hidden}
-.meta{margin:0 0 8px; font-size:var(--fz-14); color:var(--ink-2); display:flex; gap:10px; flex-wrap:wrap}
-.sub{margin:0 0 6px; color:color-mix(in oklab,var(--ink),#000 12%)}
-.actions-row{display:flex; gap:8px}
-.card .btn{font-weight:700}
-dialog#detail{border:0; padding:0; max-width:900px; width:min(96vw,900px); border-radius:18px; box-shadow:var(--shadow)}
-dialog::backdrop{background:rgba(0,0,0,.45)}
-.detail{background:var(--panel); color:var(--ink); border:1px solid var(--border); border-radius:18px; overflow:hidden}
-.detail-head{display:grid; grid-template-columns: 320px 1fr}
-@media (max-width:900px){ .detail-head{grid-template-columns:1fr} }
-.detail-media{background:var(--muted); min-height:220px}
-.detail-media img{width:100%; height:100%; object-fit:cover; display:block}
-.detail-meta{padding:18px 18px 8px}
-.d-title{margin:0 0 6px; font-size:var(--fz-28); font-weight:900; line-height:1.3}
-.d-chips{display:flex; gap:8px; flex-wrap:wrap; margin-bottom:6px}
-.x{margin-left:auto}
-.dline{margin:0 0 2px; font-size:var(--fz-14); color:var(--ink-2)}
-.detail-body{padding:6px 18px 18px}
-.prose{max-width:75ch}
-.prose p{margin:10px 0}
-.prose strong{font-weight:800}
-.prose a{color:var(--brand-ink); text-decoration:underline}
-.price{font-weight:800; margin-top:8px}
-.toolbar{display:flex; gap:8px; margin-top:10px}
-.toolbar .btn{padding:8px 10px; font-size:var(--fz-12)}
-.leaflet-control-container .leaflet-control{border-radius:10px; overflow:hidden}
+  :root { font-family: system-ui, sans-serif; }
+  body { max-width: 960px; margin: 24px auto; padding: 0 16px; }
+  header { display: grid; gap: 8px; grid-template-columns: 1fr 220px 140px; align-items: center; }
+  header > * { height: 40px; }
+  #q { padding: 8px 12px; }
+  select, button, input[type=file] { padding: 6px 8px; }
+  #stats { margin: 8px 0 16px; font-size: 14px; opacity: .75; }
+  .card { border: 1px solid #ddd; border-radius: 8px; padding: 12px 14px; margin: 10px 0; }
+  .title { font-weight: 700; margin: 0 0 6px; }
+  .meta { font-size: 14px; opacity: .85; margin-bottom: 6px; }
+  .desc { margin: 6px 0 0; white-space: pre-wrap; }
+  .tags { font-size: 12px; opacity: .8; margin-top: 6px; }
+  .date-sep { margin: 18px 0 6px; font-weight: 700; }
+  #loader { display:none; }
 </style>
-</head>
-<body>
-<div class="shell">
-  <aside class="sidebar">
-    <div class="brand">
-      <div class="logo">TA</div><div class="t1">藝文活動搜尋</div>
-    </div>
-    <div class="panel">
-      <div class="h2">搜尋與篩選</div>
-      <label class="field"><span>關鍵字</span><input id="q" type="search" placeholder="輸入活動或場館關鍵字"></label>
-      <label class="field"><span>類型</span>
-        <select id="type"><option value="">全部</option><option>展覽</option><option>表演</option><option>講座</option><option>電影</option><option>市集</option><option>其他</option></select>
-      </label>
-      <label class="field"><span>行政區</span>
-        <select id="district">
-          <option value="">全部</option>
-          <option>中正區</option><option>大同區</option><option>中山區</option><option>松山區</option>
-          <option>大安區</option><option>萬華區</option><option>信義區</option><option>士林區</option>
-          <option>北投區</option><option>內湖區</option><option>南港區</option><option>文山區</option>
-        </select>
-      </label>
-      <label class="field"><span>星期</span>
-        <select id="weekday"><option value="">全部</option><option value="0">日</option><option value="1">一</option><option value="2">二</option><option value="3">三</option><option value="4">四</option><option value="5">五</option><option value="6">六</option></select>
-      </label>
-      <label class="field"><span>最大距離（公里）</span><input id="maxKm" type="number" min="0" step="0.5" placeholder="不限制"></label>
-      <label class="switch"><input type="checkbox" id="useGeo"> 顯示與我距離</label>
-      <div class="actions"><button id="btnLoad" class="btn primary">載入 events.json</button><button id="btnFilter" class="btn">套用篩選</button></div>
-      <p class="help">資料來源：<code>events.json</code>。自動清洗票價、去重、限制台北市行政區。</p>
-    </div>
-    <div class="foot">© Taipei Open Culture • Leaflet + OSM</div>
-  </aside>
 
-  <main class="main">
-    <section class="hero">
-      <h1>發現本週的藝文靈感</h1><p>精準篩選，地圖導覽，詳細資訊一鍵到位。</p>
-    </section>
-    <div id="map" class="map"></div>
-    <section id="list" class="grid" aria-live="polite"></section>
-  </main>
+<header>
+  <input id="q" type="search" placeholder="輸入關鍵字：標題、場地、行政區、描述…" />
+  <select id="type">
+    <option value="">所有類型</option>
+  </select>
+  <label style="display:flex;align-items:center;gap:6px;">
+    <input id="freeOnly" type="checkbox"> 免費
+  </label>
+</header>
+
+<div style="display:flex; gap:8px; align-items:center; margin:8px 0 12px;">
+  <button id="openFile">載入本機 JSON</button>
+  <input id="file" type="file" accept=".json,application/json" hidden />
+  <button id="fetchLocal">從 events.json 載入</button>
+  <span id="loader">讀取中…</span>
 </div>
 
-<dialog id="detail" aria-labelledby="d-title">
-  <article class="detail">
-    <div class="detail-head">
-      <div class="detail-media"><img id="d-img" alt=""></div>
-      <div class="detail-meta">
-        <div style="display:flex; align-items:center; gap:8px">
-          <h3 id="d-title" class="d-title"></h3>
-          <button id="d-close" class="btn x" aria-label="關閉">關閉</button>
-        </div>
-        <div class="d-chips">
-          <span class="badge" id="d-type"></span><span class="chip" id="d-district"></span>
-        </div>
-        <p class="dline" id="d-time"></p>
-        <p class="dline" id="d-venue"></p>
-        <p class="dline" id="d-addr"></p>
-        <div class="toolbar">
-          <a id="d-url" class="btn link" target="_blank" rel="noopener">前往活動頁</a>
-          <button id="btnShare" class="btn">分享</button><button id="btnCopy" class="btn">複製連結</button>
-        </div>
-      </div>
-    </div>
-    <div class="detail-body"><div class="prose">
-      <p id="d-desc"></p><p class="price" id="d-price"></p>
-    </div></div>
-  </article>
-</dialog>
-
-<!-- 本地預設（僅作為後備） -->
-<script type="application/json" id="seed">
-{"results":[
- {"title":"城市光影—短片巡演","desc":"精選本地創作者短片放映暨映後談。","type":"電影","start_at":"2025-10-18T19:00:00","end_at":"2025-10-18T21:00:00","url":"https://example.com/event/film","price_min":0,"price_max":200,"venue":{"name":"台北市中山堂 光點廳","district":"中正區","lat":25.0435,"lng":121.5167}},
- {"title":"王大閎建築劇場「登月：氣味與聲音劇場」","desc":"跨感官的建築與聲音裝置展演。","type":"展覽","start_at":"2025-10-21T00:00:00","end_at":"2025-12-21T23:59:59","url":"https://www.tfam.museum/","price_min":null,"price_max":null,"venue":{"name":"臺北市立美術館","district":"中山區","lat":25.0723,"lng":121.5249}},
- {"title":"2025自綠生活節","desc":"戶外主題市集與永續生活展。","type":"市集","start_at":"2025-10-18T00:00:00","end_at":"2025-10-19T23:59:59","url":"https://www.huashan1914.com/","price_min":null,"price_max":null,"venue":{"name":"華山1914文化創意產業園區","district":"中正區","lat":25.0447,"lng":121.5299}}
-]}
-</script>
+<div id="stats"></div>
+<div id="results"></div>
 
 <script>
-/* ===== 地圖與狀態 ===== */
-const TAIPEI_CENTER=[25.0419,121.5654];
-const TAIPEI_DISTRICTS=new Set(["中正區","大同區","中山區","松山區","大安區","萬華區","信義區","士林區","北投區","內湖區","南港區","文山區"]);
-const map=L.map('map',{scrollWheelZoom:false}).setView(TAIPEI_CENTER,12);
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'&copy; OpenStreetMap'}).addTo(map);
-let meMarker=null,myPos=null,markers=L.layerGroup().addTo(map);
-let allEvents=[];
+  // 允許兩種載入方式：本機選檔 或 同目錄 events.json
+  const state = { data: [], view: [], typeSet: new Set() };
+  const $q = document.getElementById('q');
+  const $type = document.getElementById('type');
+  const $results = document.getElementById('results');
+  const $stats = document.getElementById('stats');
+  const $fileBtn = document.getElementById('openFile');
+  const $file = document.getElementById('file');
+  const $fetchLocal = document.getElementById('fetchLocal');
+  const $freeOnly = document.getElementById('freeOnly');
+  const $loader = document.getElementById('loader');
 
-/* ===== 工具 ===== */
-const toRad=d=>d*Math.PI/180;
-const haversineKm=(a,b)=>{const R=6371,dLat=toRad(b[0]-a[0]),dLon=toRad(b[1]-a[1]);const s=Math.sin(dLat/2)**2+Math.cos(toRad(a[0]))*Math.cos(toRad(b[0]))*Math.sin(Math.min(1,Math.max(-1,Math.sin(dLon/2)))**2);return 2*R*Math.asin(Math.sqrt(Math.sin(dLat/2)**2+Math.cos(toRad(a[0]))*Math.cos(toRad(b[0]))*Math.sin(dLon/2)**2));};
-const fmtKm=k=>k==null?'—':(k<1?`${(k*1000|0)} m`:`${k.toFixed(1)} km`);
-const pad=n=>String(n).padStart(2,'0');
-const clamp = (v,min,max)=>Math.max(min,Math.min(max,v));
-const parseNum = v => {const n=parseFloat(v); return Number.isFinite(n)?n:null;};
-
-/* 日期與票價 */
-function fmtDateTime(iso){
-  if(!iso) return '時間未定';
-  const d=new Date(iso);
-  if(Number.isNaN(+d)) return '時間未定';
-  return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())} ${pad(d.getHours())}:${pad(d.getMinutes())}`;
-}
-function extractPrices(rawMin, rawMax, rawStr){
-  const nums=[];
-  const pushNum=v=>{const n=parseNum(v); if(n!=null) nums.push(n);};
-  pushNum(rawMin); pushNum(rawMax);
-  if(typeof rawStr==='string'){ (rawStr.match(/\d+(\.\d+)?/g)||[]).forEach(s=>nums.push(parseFloat(s))); }
-  if(nums.length===0) return {min:null,max:null,label:'票價未提供'};
-  const mn=Math.min(...nums), mx=Math.max(...nums);
-  if(mn===0 && mx===0) return {min:0,max:0,label:'免費'};
-  if(mn===0 && mx>0) return {min:0,max:mx,label:`免費～${mx} 元`};
-  if(mn===mx) return {min:mn,max:mn,label:`${mn} 元`};
-  return {min:mn,max:mx,label:`${mn}～${mx} 元`};
-}
-function occursOnWeekday(ev, want){
-  if(want===''||want==null) return true;
-  const w=parseInt(want,10);
-  const s=ev.start_at?new Date(ev.start_at):null;
-  if(!s||Number.isNaN(+s)) return false;
-  const e=ev.end_at?new Date(ev.end_at):s;
-  const maxSpanDays=clamp(Math.ceil((e - s)/(86400000))+1,1,400);
-  for(let i=0;i<maxSpanDays;i++){
-    const d=new Date(s.getFullYear(),s.getMonth(),s.getDate()+i);
-    if(d.getDay()===w) return true;
-  }
-  return false;
-}
-
-/* 封面：無 image 則用 SVG 佔位 */
-function coverFor(ev){
-  const T={展覽:'#8b5cf6', 表演:'#f97316', 講座:'#22c55e', 電影:'#0ea5e9', 市集:'#eab308', 其他:'#94a3b8'};
-  const c=T[ev.type]||T['其他']; const txt=(ev.type||'活').slice(0,1);
-  const t=encodeURIComponent; const svg=`<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 675'><defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='1'><stop offset='0%' stop-color='${c}'/><stop offset='100%' stop-color='#111827'/></linearGradient></defs><rect fill='url(#g)' width='1200' height='675'/><circle cx='980' cy='-40' r='260' fill='#ffffff22'/><text x='60' y='520' font-family='Inter, Noto Sans TC' font-weight='900' font-size='520' fill='#ffffffdd'>${txt}</text></svg>`;
-  return `data:image/svg+xml;charset=UTF-8,${t(svg)}`;
-}
-
-/* ===== 載入與清洗 ===== */
-function normalizeRow(row){
-  const typeMap = new Map([['演出','表演'],['音樂會','表演'],['音樂','表演'],['talk','講座']]);
-  const t=(row.type||'').trim();
-  const type=typeMap.get(t)||t||'其他';
-  const venue=row.venue||{};
-  const district=(venue.district||'').trim();
-  const lat=parseNum(venue.lat), lng=parseNum(venue.lng);
-  const img=row.image||row.cover||null;
-  const priceStr=row.price||row.fee||null;
-  const prices=extractPrices(row.price_min,row.price_max,priceStr);
-  return {
-    id: row.id || `evt_${crypto.randomUUID?.()||Math.random().toString(36).slice(2)}`,
-    title: (row.title||'').trim(),
-    type, desc: (row.desc||row.description||'').trim(),
-    start_at: row.start_at||row.start||null,
-    end_at: row.end_at||row.end||null,
-    url: row.url||row.link||'',
-    price_min: prices.min, price_max: prices.max, price_label: prices.label,
-    venue:{name:venue.name||'', address:venue.address||'', district},
-    lat, lng,
-    image: img
+  $fileBtn.onclick = () => $file.click();
+  $file.onchange = async (e) => {
+    if (!e.target.files?.[0]) return;
+    const text = await e.target.files[0].text();
+    loadJSON(JSON.parse(text));
   };
-}
-function dedupeTaipei(rows){
-  const seen=new Set();
-  const out=[];
-  for(const r of rows){
-    if(!TAIPEI_DISTRICTS.has(r.venue.district)) continue;
-    const key=(r.title||'')+'|'+(r.start_at||'')+'|'+(r.venue.name||'');
-    if(seen.has(key)) continue;
-    seen.add(key); out.push(r);
-  }
-  return out;
-}
-async function loadFromEventsJson(){
-  try{
-    const res=await fetch('events.json',{cache:'no-store'});
-    if(!res.ok) throw new Error(res.status);
-    const raw=await res.json();
-    const arr=(raw.results||raw||[]).map(normalizeRow);
-    return dedupeTaipei(arr);
-  }catch(e){
-    const seed=JSON.parse(document.getElementById('seed').textContent).results||[];
-    return dedupeTaipei(seed.map(normalizeRow));
-  }
-}
-
-/* ===== 呈現 ===== */
-function render(list){
-  markers.clearLayers();
-  const wrap=document.getElementById('list'); wrap.innerHTML='';
-  list.forEach(ev=>{
-    const distKm=(myPos && ev.lat!=null && ev.lng!=null)?haversineKm([myPos.lat,myPos.lng],[ev.lat,ev.lng]):null;
-    ev._distance_km=distKm;
-
-    if(ev.lat!=null && ev.lng!=null){
-      L.marker([ev.lat,ev.lng]).addTo(markers)
-        .bindPopup(`<strong>${ev.title}</strong><br/>${ev.venue.name}<br/>${fmtKm(distKm)}`)
-        .on('click',()=>openDetail(ev));
+  $fetchLocal.onclick = async () => {
+    try {
+      $loader.style.display = 'inline';
+      const res = await fetch('events.json', { cache: 'no-store' });
+      const json = await res.json();
+      loadJSON(json);
+    } catch(err) {
+      alert('找不到 events.json，請確認檔案與此網頁同資料夾。');
+    } finally {
+      $loader.style.display = 'none';
     }
+  };
 
-    const card=document.createElement('article'); card.className='card'; card.tabIndex=0;
-    card.innerHTML=`
-      <img class="cover" alt="" src="${ev.image||coverFor(ev)}">
-      <div class="card-body">
-        <div class="badges">
-          <span class="badge">${ev.type||'其他'}</span>
-          <span class="chip">${ev.venue.district||'行政區未知'}</span>
-        </div>
-        <h3 class="title">${ev.title}</h3>
-        <p class="meta"><span>${fmtDateTime(ev.start_at)}</span><span>· 距離 ${fmtKm(distKm)}</span></p>
-        <p class="sub">${ev.venue.name||''}</p>
-        <div class="actions-row">
-          ${ev.url?`<a class="btn link" href="${ev.url}" target="_blank" rel="noopener">活動頁</a>`:''}
-          <button class="btn" data-act="more">詳細</button>
-        </div>
-      </div>`;
-    card.querySelector('[data-act="more"]').addEventListener('click',e=>{ e.stopPropagation(); openDetail(ev); });
-    card.addEventListener('click',()=>openDetail(ev));
-    card.addEventListener('keydown',e=>{ if(e.key==='Enter') openDetail(ev); });
-    wrap.appendChild(card);
-  });
-}
-
-/* ===== 篩選 ===== */
-function applyFilters(){
-  const q=document.getElementById('q').value.trim().toLowerCase();
-  const type=document.getElementById('type').value;
-  const dist=document.getElementById('district').value;
-  const w=document.getElementById('weekday').value;
-  const maxKm=parseFloat(document.getElementById('maxKm').value);
-
-  const filtered=allEvents.filter(ev=>{
-    if(q && !(`${ev.title} ${ev.venue.name} ${ev.venue.address}`.toLowerCase().includes(q))) return false;
-    if(type && ev.type!==type) return false;
-    if(dist && ev.venue.district!==dist) return false;
-    if(!occursOnWeekday(ev,w)) return false;
-    if(!isNaN(maxKm)){
-      if(ev._distance_km==null) return false;
-      if(ev._distance_km>maxKm) return false;
-    }
-    return true;
-  }).sort((a,b)=>{
-    const da=a._distance_km??Infinity, db=b._distance_km??Infinity;
-    if(da!==db) return da-db;
-    const ta=a.start_at?+new Date(a.start_at):Infinity, tb=b.start_at?+new Date(b.start_at):Infinity;
-    return ta-tb;
-  });
-
-  render(filtered);
-}
-
-/* ===== 詳細視窗 ===== */
-function openDetail(ev){
-  const dlg=document.getElementById('detail');
-  const img=document.getElementById('d-img');
-  img.src = ev.image || coverFor(ev);
-  img.alt = ev.title;
-
-  document.getElementById('d-title').textContent=ev.title||'活動';
-  document.getElementById('d-type').textContent=ev.type||'類型未知';
-  document.getElementById('d-district').textContent=ev.venue?.district||'行政區未知';
-  const s=ev.start_at?new Date(ev.start_at):null;
-  const e=ev.end_at?new Date(ev.end_at):null;
-  const timeLine = s? (e && +e>+s ? `${s.toLocaleString()} ～ ${e.toLocaleString()}` : s.toLocaleString()) : '時間未定';
-  document.getElementById('d-time').textContent = timeLine;
-  document.getElementById('d-venue').textContent=ev.venue?.name||'';
-  document.getElementById('d-addr').textContent=ev.venue?.address||'';
-  document.getElementById('d-desc').textContent=ev.desc||'';
-  document.getElementById('d-price').textContent=ev.price_label||'票價未提供';
-
-  const link=document.getElementById('d-url');
-  if(ev.url){ link.href=ev.url; link.style.display='inline-flex'; } else { link.removeAttribute('href'); link.style.display='none'; }
-
-  dlg.showModal();
-  dlg.addEventListener('keydown',e=>{ if(e.key==='Escape') dlg.close(); }, {once:true});
-}
-document.getElementById('d-close').addEventListener('click',()=>document.getElementById('detail').close());
-document.getElementById('detail').addEventListener('click',e=>{
-  const dlg=e.currentTarget, rect=dlg.getBoundingClientRect();
-  if(e.clientX<rect.left||e.clientX>rect.right||e.clientY<rect.top||e.clientY>rect.bottom) dlg.close();
-});
-
-/* 分享與複製 */
-document.getElementById('btnShare').addEventListener('click',async()=>{
-  const a=document.getElementById('d-url'); const url=a?.href||location.href;
-  const title=document.getElementById('d-title').textContent;
-  try{ if(navigator.share){ await navigator.share({title,text:title,url}); return; } }catch(e){}
-  try{ await navigator.clipboard.writeText(url); alert('已複製連結'); }catch(e){ alert(url); }
-});
-document.getElementById('btnCopy').addEventListener('click',async()=>{
-  const a=document.getElementById('d-url'); const url=a?.href||location.href;
-  try{ await navigator.clipboard.writeText(url); alert('已複製連結'); }catch(e){ alert(url); }
-});
-
-/* 載入與綁定 */
-async function boot(){
-  allEvents = await loadFromEventsJson();
-  // 初始距離計算
-  if(myPos) allEvents.forEach(ev=>{
-    if(ev.lat!=null && ev.lng!=null) ev._distance_km=haversineKm([myPos.lat,myPos.lng],[ev.lat,ev.lng]);
-  });
-  render(allEvents);
-}
-document.getElementById('btnLoad').addEventListener('click',boot);
-document.getElementById('btnFilter').addEventListener('click',applyFilters);
-document.getElementById('useGeo').addEventListener('change',e=>{
-  if(e.target.checked){
-    if(!navigator.geolocation){ alert('此瀏覽器不支援定位'); e.target.checked=false; return; }
-    navigator.geolocation.getCurrentPosition(pos=>{
-      myPos={lat:pos.coords.latitude,lng:pos.coords.longitude};
-      if(meMarker) map.removeLayer(meMarker);
-      meMarker=L.marker([myPos.lat,myPos.lng],{title:'我的位置'}).addTo(map).bindPopup('我的位置');
-      map.setView([myPos.lat,myPos.lng],13);
-      allEvents.forEach(ev=>{
-        if(ev.lat!=null && ev.lng!=null) ev._distance_km=haversineKm([myPos.lat,myPos.lng],[ev.lat,ev.lng]);
-      });
-      applyFilters();
-    },err=>{ alert('定位失敗：'+err.message); e.target.checked=false; },{enableHighAccuracy:true,timeout:10000});
-  }else{
-    myPos=null; if(meMarker){ map.removeLayer(meMarker); meMarker=null; }
-    allEvents.forEach(ev=>ev._distance_km=null); applyFilters();
+  // 將各種常見欄位做容錯映射；未知結構也盡量可搜尋
+  function normalize(raw) {
+    const v = raw.venue || {};
+    const title = raw.title || raw.name || '';
+    const desc = raw.desc || raw.description || '';
+    const type = raw.type || raw.category || '';
+    const start = raw.start_at || raw.start || raw.date || '';
+    const end   = raw.end_at || raw.end || '';
+    const url   = raw.url || raw.link || '';
+    const priceMin = num(raw.price_min ?? raw.priceMin ?? raw.price ?? '');
+    const priceMax = num(raw.price_max ?? raw.priceMax ?? raw.price ?? '');
+    const venueName = v.name || raw.venue_name || '';
+    const district  = v.district || v.area || raw.district || '';
+    const lat = num(v.lat ?? v.latitude ?? raw.lat ?? raw.latitude ?? '');
+    const lng = num(v.lng ?? v.longitude ?? raw.lng ?? raw.longitude ?? '');
+    return {
+      _raw: raw,
+      title, desc, type, start, end, url,
+      priceMin, priceMax, venueName, district, lat, lng,
+      // 合併字串供關鍵字比對
+      _haystack: [
+        title, desc, type, venueName, district, start, end, url
+      ].filter(Boolean).join(' ').toLowerCase()
+    };
+    function num(x){ const n = parseFloat(x); return Number.isFinite(n) ? n : null; }
   }
-});
 
-/* 開頁即嘗試讀取 events.json（可改成只靠按鈕） */
-boot();
+  function loadJSON(arr) {
+    if (!Array.isArray(arr)) { alert('JSON 應為陣列'); return; }
+    state.data = arr.map(normalize);
+    buildTypeFilter();
+    applyFilter();
+  }
+
+  function buildTypeFilter() {
+    state.typeSet = new Set(state.data.map(d => d.type).filter(Boolean));
+    $type.innerHTML = '<option value="">所有類型</option>' +
+      [...state.typeSet].sort().map(t => `<option>${safe(t)}</option>`).join('');
+  }
+
+  // 篩選：以空白切關鍵字，全部須命中（AND）
+  function applyFilter() {
+    const words = $q.value.trim().toLowerCase().split(/\s+/).filter(Boolean);
+    const typeSel = $type.value;
+    const free = $freeOnly.checked;
+    state.view = state.data.filter(d => {
+      if (typeSel && d.type !== typeSel) return false;
+      if (free && !isFree(d)) return false;
+      return words.every(w => d._haystack.includes(w));
+    });
+    render();
+  }
+
+  function isFree(d) {
+    // 任一價格為 0 視為免費；皆未知則視為不免費
+    if (d.priceMin === 0 || d.priceMax === 0) return true;
+    if (d.priceMin == null && d.priceMax == null) return false;
+    return false;
+  }
+
+  // 依開始日期分組
+  function render() {
+    $results.innerHTML = '';
+    $stats.textContent = `共 ${state.view.length} 筆`;
+    const groups = new Map();
+    for (const d of state.view) {
+      const key = (d.start || '').slice(0,10) || '未提供日期';
+      if (!groups.has(key)) groups.set(key, []);
+      groups.get(key).push(d);
+    }
+    for (const [date, arr] of groups) {
+      const h = document.createElement('div');
+      h.className = 'date-sep';
+      h.textContent = date;
+      $results.appendChild(h);
+      arr.forEach(d => $results.appendChild(card(d)));
+    }
+  }
+
+  function card(d) {
+    const el = document.createElement('article');
+    el.className = 'card';
+    el.innerHTML = `
+      <div class="title">${safe(d.title || '(無標題)')}</div>
+      <div class="meta">
+        ${safe(d.type || '未分類')} ｜ 
+        ${safe(d.venueName || '未知場地')}${d.district ? '（'+safe(d.district)+'）' : ''} ｜ 
+        ${safe(rng(d.start, d.end))}
+      </div>
+      ${d.url ? `<a href="${safe(d.url)}" target="_blank" rel="noopener">官方連結</a>` : ''}
+      <div class="desc">${safe(d.desc || '')}</div>
+      <div class="tags">
+        ${priceLabel(d)} ${coordLabel(d)}
+      </div>
+    `;
+    return el;
+    function rng(a,b){ return [a,b].filter(Boolean).join(' ~ '); }
+    function priceLabel(d){
+      if (d.priceMin==null && d.priceMax==null) return '';
+      if (d.priceMin===0 || d.priceMax===0) return '｜費用：免費';
+      if (d.priceMin!=null && d.priceMax!=null) return `｜費用：${d.priceMin}–${d.priceMax}`;
+      return `｜費用：${d.priceMin ?? d.priceMax}`;
+    }
+    function coordLabel(d){
+      if (d.lat==null || d.lng==null) return '';
+      return `｜座標：${d.lat}, ${d.lng}`;
+    }
+  }
+
+  // 小心 XSS
+  function safe(s){ return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+
+  // 事件
+  $q.addEventListener('input', debounce(applyFilter, 150));
+  $type.addEventListener('change', applyFilter);
+  $freeOnly.addEventListener('change', applyFilter);
+
+  function debounce(fn, ms){
+    let t; return (...args)=>{ clearTimeout(t); t=setTimeout(()=>fn(...args), ms); };
+  }
+
+  // 若與網頁同夾有 events.json，嘗試自動載入
+  (async ()=>{
+    try{
+      const res = await fetch('events.json', { cache: 'no-store' });
+      if (res.ok) loadJSON(await res.json());
+    }catch{}
+  })();
 </script>
-</body>
-</html>
-```
