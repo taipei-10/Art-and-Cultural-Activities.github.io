@@ -1,62 +1,36 @@
-[
-  {
-    "id": "e1",
-    "title": "2025 台北當代藝術展",
-    "desc": "國際藝術家聯展，含現場導覽與互動工作坊。",
-    "type": "展覽",
-    "start_at": "2025-10-19T10:00:00+08:00",
-    "end_at": "2025-10-31T18:00:00+08:00",
-    "price_min": 0,
-    "price_max": 300,
-    "url": "https://example.com/event1",
-    "venue": {
-      "name": "台北市立美術館",
-      "address": "台北市中山區中山北路三段181號",
-      "district": "中山區",
-      "lat": 25.0725,
-      "lng": 121.5245
+{
+  "results": [
+    {
+      "title": "城市光影—短片巡演",
+      "desc": "精選本地創作者短片放映暨映後談。",
+      "type": "電影",
+      "start_at": "2025-10-18T19:00:00",
+      "end_at": "2025-10-18T21:00:00",
+      "url": "https://example.com/event/film",
+      "price_min": 0,
+      "price_max": 200,
+      "venue": {
+        "name": "台北市中山堂 光點廳",
+        "district": "中正區",
+        "lat": 25.0435,
+        "lng": 121.5167
+      }
     },
-    "tags": ["藝術", "展覽", "文化"],
-    "popularity": 45
-  },
-  {
-    "id": "e2",
-    "title": "華山電影節：台灣新導演特映",
-    "desc": "展出多部新銳導演短片，映後座談。",
-    "type": "電影",
-    "start_at": "2025-10-20T19:00:00+08:00",
-    "end_at": "2025-10-20T21:30:00+08:00",
-    "price_min": 200,
-    "price_max": 350,
-    "url": "https://example.com/event2",
-    "venue": {
-      "name": "華山1914文創園區 中3館",
-      "address": "台北市中正區八德路一段1號",
-      "district": "中正區",
-      "lat": 25.0442,
-      "lng": 121.5291
-    },
-    "tags": ["電影", "放映", "座談"],
-    "popularity": 72
-  },
-  {
-    "id": "e3",
-    "title": "士林音樂派對",
-    "desc": "結合市集與現場樂團演出。",
-    "type": "表演",
-    "start_at": "2025-10-21T17:00:00+08:00",
-    "end_at": "2025-10-21T22:00:00+08:00",
-    "price_min": 0,
-    "price_max": 0,
-    "url": "https://example.com/event3",
-    "venue": {
-      "name": "士林官邸公園",
-      "address": "台北市士林區福林路60號",
-      "district": "士林區",
-      "lat": 25.0943,
-      "lng": 121.5260
-    },
-    "tags": ["音樂", "戶外", "市集"],
-    "popularity": 30
-  }
-]
+    {
+      "title": "秋日室內樂之夜",
+      "desc": "弦樂四重奏演出海頓與舒伯特。",
+      "type": "表演",
+      "start_at": "2025-10-19T19:30:00",
+      "end_at": "2025-10-19T21:30:00",
+      "url": "https://example.com/event/chamber",
+      "price_min": 300,
+      "price_max": 800,
+      "venue": {
+        "name": "士林藝文中心 音樂廳",
+        "district": "士林區",
+        "lat": 25.0923,
+        "lng": 121.5246
+      }
+    }
+  ]
+}
