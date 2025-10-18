@@ -5,6 +5,11 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>台北藝文活動搜尋</title>
   <link rel="stylesheet" href="styles.css" />
+  <!-- Leaflet 地圖套件 -->
+  <link rel="stylesheet"
+        href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+        crossorigin="">
 </head>
 <body>
   <header class="wrap">
@@ -12,36 +17,50 @@
     <form id="filters" class="filters" autocomplete="off">
       <label>
         類型
-        <select id="type">
-          <option value="">全部</option>
-        </select>
+        <select id="type"><option value="">全部</option></select>
       </label>
       <label>
         行政區
-        <select id="district">
-          <option value="">全部</option>
-        </select>
+        <select id="district"><option value="">全部</option></select>
       </label>
       <label>
         星期
         <select id="weekday">
           <option value="">全部</option>
-          <option value="1">週一</option>
-          <option value="2">週二</option>
-          <option value="3">週三</option>
-          <option value="4">週四</option>
-          <option value="5">週五</option>
-          <option value="6">週六</option>
-          <option value="0">週日</option>
+          <option value="1">週一</option><option value="2">週二</option><option value="3">週三</option>
+          <option value="4">週四</option><option value="5">週五</option><option value="6">週六</option><option value="0">週日</option>
         </select>
       </label>
       <label class="grow">
         關鍵字
         <input id="q" type="search" placeholder="活動名稱、場館…">
       </label>
+
+      <div class="stack">
+        <button type="button" id="locateBtn">使用我的位置</button>
+        <small id="locInfo" class="hint"></small>
+      </div>
+
+      <label>
+        排序
+        <select id="sort">
+          <option value="">預設</option>
+          <option value="distance">距離最近</option>
+          <option value="time">開始時間</option>
+        </select>
+      </label>
+      <label>
+        半徑(km)
+        <input id="radius" type="number" min="0" step="0.5" placeholder="不限制">
+      </label>
+
       <button type="reset" id="resetBtn">清除</button>
     </form>
   </header>
+
+  <section class="wrap">
+    <div id="map" aria-label="活動地圖"></div>
+  </section>
 
   <main class="wrap">
     <section id="source-hint" class="hint"></section>
@@ -63,67 +82,81 @@
     <small>資料來源：臺北市資料大平台與自備清單</small>
   </footer>
 
+  <!-- Leaflet JS -->
+  <script
+    src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+    crossorigin=""></script>
+
   <script>
     // ---------- helpers ----------
     const $ = (sel, el=document) => el.querySelector(sel);
     const fmtDate = (iso) => {
       if (!iso) return "";
-      const d = new Date(iso);
-      if (Number.isNaN(d)) return iso;
-      const y = d.getFullYear(), m = String(d.getMonth()+1).padStart(2,'0'), da = String(d.getDate()).padStart(2,'0');
-      const w = "日一二三四五六".charAt(d.getDay());
-      const hh = String(d.getHours()).padStart(2,'0'), mm = String(d.getMinutes()).padStart(2,'0');
+      const d = new Date(iso); if (Number.isNaN(d)) return iso;
+      const y=d.getFullYear(),m=String(d.getMonth()+1).padStart(2,'0'),da=String(d.getDate()).padStart(2,'0');
+      const w="日一二三四五六".charAt(d.getDay());
+      const hh=String(d.getHours()).padStart(2,'0'),mm=String(d.getMinutes()).padStart(2,'0');
       return `${y}-${m}-${da}(${w}) ${hh}:${mm}`;
     };
-    const weekdayOf = (iso) => {
-      if (!iso) return null;
-      const d = new Date(iso);
-      return Number.isNaN(d) ? null : d.getDay();
+    const weekdayOf = (iso) => { if (!iso) return null; const d=new Date(iso); return Number.isNaN(d)?null:d.getDay(); };
+    const haversineKm = (a,b) => {
+      if (!a || !b) return null;
+      const toRad = d=>d*Math.PI/180;
+      const R=6371, dLat=toRad(b.lat-a.lat), dLng=toRad(b.lng-a.lng);
+      const s = Math.sin(dLat/2)**2 + Math.cos(toRad(a.lat))*Math.cos(toRad(b.lat))*Math.sin(dLng/2)**2;
+      return R*2*Math.atan2(Math.sqrt(s),Math.sqrt(1-s));
     };
-    const unique = (arr) => Array.from(new Set(arr)).filter(Boolean);
 
     // ---------- state ----------
     let ALL = [];
+    let map, userLL = null, userMarker = null, radiusCircle = null;
+    let eventLayer = L.layerGroup();
+
+    // 台北各行政區中心點(約略)
+    const DIST_CENTERS = {
+      "中正區": {lat:25.0328,lng:121.5199}, "大同區":{lat:25.0632,lng:121.5135},
+      "中山區": {lat:25.0697,lng:121.5333}, "松山區":{lat:25.0578,lng:121.5578},
+      "大安區": {lat:25.0260,lng:121.5438}, "萬華區":{lat:25.0352,lng:121.4973},
+      "信義區": {lat:25.0330,lng:121.5765}, "士林區":{lat:25.0930,lng:121.5246},
+      "北投區": {lat:25.1373,lng:121.5064}, "內湖區":{lat:25.0830,lng:121.5880},
+      "南港區": {lat:25.0555,lng:121.6070}, "文山區":{lat:24.9889,lng:121.5705}
+    };
 
     // ---------- init ----------
     async function boot() {
       const res = await fetch('data.json');
       const cfg = await res.json();
 
-      // source note
       $('#source-hint').textContent = cfg.sources?.map(s => s.name).join('、') || '';
 
-      // preload options
+      preloadOptions(cfg);
+
+      ALL = normalizeMany(cfg.events || []).filter(e => e.venue?.lat && e.venue?.lng);
+
+      initMap();
+      render(); // initial list and markers
+
+      // binds
+      $('#filters').addEventListener('input', onFiltersChange);
+      $('#filters').addEventListener('reset', () => setTimeout(()=>{ userLL=null; clearUserMarker(); render(); },0));
+      $('#locateBtn').addEventListener('click', locateMe);
+      $('#district').addEventListener('change', flyToDistrict);
+    }
+
+    function preloadOptions(cfg){
       const typeSet = new Set(cfg.types || []);
       const distSet = new Set(cfg.districts || []);
       (cfg.events || []).forEach(ev => {
         if (ev.type) typeSet.add(ev.type);
         if (ev?.venue?.district) distSet.add(ev.venue.district);
       });
-
       fillSelect($('#type'), [...typeSet].sort());
       fillSelect($('#district'), [...distSet].sort());
-
-      // data
-      ALL = normalizeMany(cfg.events || []);
-
-      // render
-      render();
-
-      // bind
-      $('#filters').addEventListener('input', render);
-      $('#filters').addEventListener('reset', (e) => {
-        // allow reset to clear, then re-render
-        setTimeout(render, 0);
-      });
     }
 
     function fillSelect(sel, items) {
-      items.forEach(v => {
-        const o = document.createElement('option');
-        o.value = v; o.textContent = v;
-        sel.appendChild(o);
-      });
+      items.forEach(v => { const o=document.createElement('option'); o.value=v; o.textContent=v; sel.appendChild(o); });
     }
 
     function normalizeMany(list) {
@@ -139,12 +172,66 @@
           name: e.venue?.name || e.place || '',
           address: e.venue?.address || '',
           district: e.venue?.district || '',
-          lat: e.venue?.lat || null,
-          lng: e.venue?.lng || null,
+          lat: e.venue?.lat ?? null,
+          lng: e.venue?.lng ?? null,
         },
         price_min: e.price_min ?? null,
-        price_max: e.price_max ?? null
+        price_max: e.price_max ?? null,
+        distance_km: null
       }));
+    }
+
+    function initMap(){
+      map = L.map('map', { zoomControl:true }).setView([25.0419,121.5654], 12);
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '&copy; OpenStreetMap'
+      }).addTo(map);
+      eventLayer.addTo(map);
+    }
+
+    async function locateMe(){
+      if (!navigator.geolocation) {
+        $('#locInfo').textContent = '此裝置不支援定位';
+        return;
+      }
+      navigator.geolocation.getCurrentPosition((pos)=>{
+        userLL = {lat: pos.coords.latitude, lng: pos.coords.longitude};
+        $('#locInfo').textContent = `已定位：${userLL.lat.toFixed(5)}, ${userLL.lng.toFixed(5)}`;
+        showUserMarker();
+        render(); // recompute distances and refresh list + markers
+        map.setView([userLL.lat,userLL.lng], 13);
+      },(err)=>{
+        $('#locInfo').textContent = '定位失敗：' + err.message;
+      },{ enableHighAccuracy:true, timeout:10000, maximumAge:60000 });
+    }
+
+    function showUserMarker(){
+      clearUserMarker();
+      userMarker = L.marker([userLL.lat,userLL.lng], {title:'我的位置'}).addTo(map);
+      const r = Number($('#radius').value);
+      if (!Number.isNaN(r) && r>0){
+        radiusCircle = L.circle([userLL.lat,userLL.lng], { radius: r*1000 }).addTo(map);
+      }
+    }
+    function clearUserMarker(){
+      if (userMarker){ map.removeLayer(userMarker); userMarker=null; }
+      if (radiusCircle){ map.removeLayer(radiusCircle); radiusCircle=null; }
+    }
+
+    function onFiltersChange(){
+      // 若變更半徑需要重畫圓
+      if (userLL){ showUserMarker(); }
+      render();
+      flyToDistrict(); // 若有選行政區就移動
+    }
+
+    function flyToDistrict(){
+      const dist = $('#district').value.trim();
+      if (dist && DIST_CENTERS[dist]) {
+        const c = DIST_CENTERS[dist];
+        map.flyTo([c.lat, c.lng], 13);
+      }
     }
 
     function getFilters() {
@@ -153,6 +240,8 @@
         district: $('#district').value.trim(),
         weekday: $('#weekday').value.trim(),
         q: $('#q').value.trim().toLowerCase(),
+        sort: $('#sort').value.trim(),
+        radiusKm: Number($('#radius').value)
       };
     }
 
@@ -160,33 +249,63 @@
       if (f.type && ev.type !== f.type) return false;
       if (f.district && ev.venue?.district !== f.district) return false;
       if (f.weekday !== "") {
-        const w1 = weekdayOf(ev.start_at);
-        const w2 = weekdayOf(ev.end_at);
-        const target = Number(f.weekday);
-        if (w1 === null && w2 === null) return false;
-        const ok = (w1 === target) || (w2 === target);
+        const w1 = weekdayOf(ev.start_at), w2 = weekdayOf(ev.end_at), target = Number(f.weekday);
+        if (w1===null && w2===null) return false;
+        const ok = (w1===target)||(w2===target);
         if (!ok) return false;
       }
       if (f.q) {
-        const hay = [
-          ev.title, ev.desc, ev.type, ev.venue?.name, ev.venue?.address, ev.venue?.district
-        ].join(' ').toLowerCase();
+        const hay = [ev.title, ev.desc, ev.type, ev.venue?.name, ev.venue?.address, ev.venue?.district].join(' ').toLowerCase();
         if (!hay.includes(f.q)) return false;
+      }
+      // 半徑過濾
+      if (userLL && !Number.isNaN(f.radiusKm) && f.radiusKm>0){
+        const d = ev.distance_km ?? haversineKm(userLL, {lat:ev.venue.lat,lng:ev.venue.lng});
+        if (d===null || d>f.radiusKm) return false;
       }
       return true;
     }
 
+    function sortList(list, f){
+      if (f.sort === 'distance' && userLL){
+        list.sort((a,b)=>(a.distance_km??1e9)-(b.distance_km??1e9));
+      } else if (f.sort === 'time'){
+        list.sort((a,b)=> new Date(a.start_at) - new Date(b.start_at));
+      }
+    }
+
     function render() {
+      // 距離更新
+      if (userLL){
+        ALL.forEach(ev=>{
+          ev.distance_km = haversineKm(userLL, {lat:ev.venue.lat,lng:ev.venue.lng});
+        });
+      } else {
+        ALL.forEach(ev=> ev.distance_km = null);
+      }
+
       const f = getFilters();
       const list = ALL.filter(ev => match(ev, f));
-      const wrap = $('#results');
-      wrap.innerHTML = '';
+      sortList(list, f);
+
+      // 清標記
+      eventLayer.clearLayers();
+
+      // 標記與列表
+      const wrap = $('#results'); wrap.innerHTML = '';
       if (!list.length) {
         wrap.innerHTML = '<p class="hint">查無活動，請嘗試其他條件。</p>';
         return;
       }
       const tpl = $('#card-tpl');
+
       list.forEach(ev => {
+        // 地圖標記
+        const m = L.marker([ev.venue.lat, ev.venue.lng])
+          .bindPopup(`<strong>${ev.title}</strong><br>${ev.venue.name || ''}<br>${fmtDate(ev.start_at)}`)
+          .addTo(eventLayer);
+
+        // 卡片
         const node = tpl.content.cloneNode(true);
         const link = $('.card__link', node);
         const title = $('.card__title', node);
@@ -196,15 +315,32 @@
 
         link.href = ev.url || '#';
         title.textContent = ev.title;
+
         const time = [fmtDate(ev.start_at), fmtDate(ev.end_at)].filter(Boolean).join(' — ');
         const typeTxt = ev.type ? `｜${ev.type}` : '';
-        meta.textContent = [time, typeTxt].filter(Boolean).join(' ');
+        const distTxt = (ev.distance_km!=null) ? `｜距離 ${ev.distance_km.toFixed(2)} km` : '';
+        meta.textContent = [time, typeTxt, distTxt].filter(Boolean).join(' ');
+
         desc.textContent = ev.desc || '';
         const loc = [ev.venue?.name, ev.venue?.district, ev.venue?.address].filter(Boolean).join('，');
         venue.textContent = loc;
 
+        // 點卡片聚焦該標記
+        node.querySelector('.card').addEventListener('click', (e)=>{
+          if (!e.target.closest('a')) {
+            map.flyTo([ev.venue.lat, ev.venue.lng], 16);
+            m.openPopup();
+          }
+        });
+
         wrap.appendChild(node);
       });
+
+      // 若列表有資料且未選行政區，讓地圖自動框選
+      if (list.length){
+        const group = L.featureGroup(eventLayer.getLayers());
+        try { map.fitBounds(group.getBounds().pad(0.2)); } catch(e){}
+      }
     }
 
     boot();
