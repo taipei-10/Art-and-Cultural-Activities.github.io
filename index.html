@@ -22,19 +22,33 @@
 <div class="max-w-6xl mx-auto p-4">
   <h1 class="text-2xl font-semibold mb-2">台北市最近幾天藝文活動</h1>
 
+  <!-- 搜尋＋篩選列 -->
   <div class="grid md:grid-cols-3 gap-3 mb-3">
     <div class="md:col-span-2 flex gap-2">
       <input id="q" class="flex-1 sel" placeholder="輸入關鍵字"/>
       <button id="btn" class="ctl">搜尋</button>
     </div>
-    <div class="grid grid-cols-4 gap-2">
+    <div class="grid grid-cols-5 gap-2">
       <select id="type" class="sel">
         <option value="">全部類型</option><option>展覽</option><option>表演</option>
         <option>講座</option><option>電影</option><option>市集</option>
       </select>
-      <select id="days" class="sel"><option value="3" selected>近3天</option><option value="7">近7天</option></select>
-      <select id="radius" class="sel"><option value="2">2km</option><option value="5" selected>5km</option><option value="10">10km</option><option value="20">20km</option></select>
-      <select id="dist" class="sel"><option value="">全台北市</option></select>
+      <select id="dist" class="sel">
+        <option value="">全台北市</option>
+      </select>
+      <select id="wday" class="sel">
+        <option value="">全部星期</option>
+        <option value="0">週日</option><option value="1">週一</option><option value="2">週二</option>
+        <option value="3">週三</option><option value="4">週四</option><option value="5">週五</option>
+        <option value="6">週六</option>
+      </select>
+      <select id="days" class="sel">
+        <option value="3" selected>近3天</option><option value="7">近7天</option><option value="14">近14天</option>
+      </select>
+      <select id="radius" class="sel">
+        <option value="2">2km</option><option value="5" selected>5km</option>
+        <option value="10">10km</option><option value="20">20km</option>
+      </select>
     </div>
   </div>
 
@@ -79,6 +93,9 @@ const TPE_BOUNDS = [
   [121.65, 25.21]  /* 東北角 */
 ];
 
+/* 台北市行政區 */
+const TPE_DISTRICTS = ["中正區","大同區","中山區","松山區","大安區","萬華區","信義區","士林區","北投區","內湖區","南港區","文山區"];
+
 const qs=id=>document.getElementById(id);
 const fmt=t=>{const d=new Date(t);const mm=String(d.getMonth()+1).padStart(2,'0');const dd=String(d.getDate()).padStart(2,'0');const hh=String(d.getHours()).padStart(2,'0');const mi=String(d.getMinutes()).padStart(2,'0');return `${mm}/${dd} ${hh}:${mi}`};
 const hav=(a,b)=>{const R=6371,rad=x=>x*Math.PI/180;const dlat=rad(b[0]-a[0]),dlng=rad(b[1]-a[1]),la1=rad(a[0]),la2=rad(b[0]);const h=Math.sin(dlat/2)**2+Math.cos(la1)*Math.cos(la2)*Math.sin(dlng/2)**2;return 2*R*Math.asin(Math.sqrt(h))};
@@ -115,7 +132,7 @@ function normCulture(x){
   };
 }
 
-/* 正規化：CKAN v1 通用（中山堂、北美館都走這裡） */
+/* 正規化：CKAN v1 通用 */
 function normCKAN(row, defaults={type:"表演", venue:""}) {
   const titleK = gv(row,["title","Caption","節目名稱","活動名稱","name","program","program_name","展覽名稱"]);
   const descK  = gv(row,["description","Introduction","簡介","內容","intro","展覽介紹"]);
@@ -166,7 +183,6 @@ async function fetchCKANv1(url, resourceId, defaults){
 
 /* 路徑繪製：OSRM 公開服務 */
 async function drawRoute(from, to){
-  // 移除舊線
   if(map.getLayer('route-line')) map.removeLayer('route-line');
   if(map.getSource('route')) map.removeSource('route');
 
@@ -183,12 +199,22 @@ async function drawRoute(from, to){
   qs('routeInfo').textContent=`距離約 ${dKm.toFixed(1)} km，預估 ${dMin.toFixed(0)} 分鐘`;
 }
 
-/* 篩選 */
+/* 篩選參數收集 */
 function collectParams(){
   const now=new Date(), end=new Date(now.getTime()+Number(qs("days").value)*86400000);
-  return {q:qs("q").value.trim(), lat:userLoc.lat,lng:userLoc.lng, radius_km:Number(qs("radius").value),
-          start:now.toISOString(), end:end.toISOString(), types:qs("type").value, price_max:Number(qs("pmax").value||0)||"", district:qs("dist").value||""};
+  return {
+    q:qs("q").value.trim(),
+    lat:userLoc.lat, lng:userLoc.lng,
+    radius_km:Number(qs("radius").value),
+    start:now.toISOString(), end:end.toISOString(),
+    types:qs("type").value,
+    price_max:Number(qs("pmax").value||0)||"",
+    district:qs("dist").value||"",
+    wday:qs("wday").value // "" 或 "0"~"6"（日~六）
+  };
 }
+
+/* 篩選主程式：加入星期條件 */
 function filterEvents(list){
   const p=collectParams(), now=new Date(p.start), until=new Date(p.end);
   list.forEach(e=>{
@@ -197,12 +223,19 @@ function filterEvents(list){
   return list.filter(e=>{
     const st=new Date(e.start_at||Date.now()), ed=new Date(e.end_at||e.start_at||Date.now());
     const inRange=(st<=until)&&(ed>=now);
-    const typeOk=!p.types||String(e.type||"").includes(p.types);
-    const distOk=!p.district||e.venue?.district===p.district;
-    const priceOk=!p.price_max||(e.price_min==null&&e.price_max==null)||((e.price_min??0)<=p.price_max);
-    const qOk=!p.q||[e.title,e.desc,e.venue?.name,e.type,e.venue?.district].some(s=>(s||"").includes(p.q));
-    let radiusOk=true; if(p.radius_km&&Number.isFinite(e.venue?.lat)&&Number.isFinite(e.venue?.lng)){ radiusOk=(e._km<=p.radius_km); }
-    return inRange&&typeOk&&distOk&&priceOk&&qOk&&radiusOk;
+
+    const typeOk = !p.types || String(e.type||"").includes(p.types);
+    const distOk = !p.district || e.venue?.district===p.district;
+    const priceOk= !p.price_max || (e.price_min==null&&e.price_max==null) || ((e.price_min??0)<=p.price_max);
+    const qOk    = !p.q || [e.title,e.desc,e.venue?.name,e.type,e.venue?.district].some(s=>(s||"").includes(p.q));
+
+    // 活動星期：以開始日為判斷，若需要更嚴格可迭代區間
+    const wOk = !p.wday || new Date(e.start_at||Date.now()).getDay().toString()===p.wday;
+
+    let radiusOk=true;
+    if(p.radius_km&&Number.isFinite(e.venue?.lat)&&Number.isFinite(e.venue?.lng)){ radiusOk=(e._km<=p.radius_km); }
+
+    return inRange&&typeOk&&distOk&&priceOk&&qOk&&wOk&&radiusOk;
   }).sort((a,b)=>(a._km??999)-(b._km??999));
 }
 
@@ -244,7 +277,6 @@ function render(list){
       </div>`;
     box.appendChild(card);
 
-    // 綁定路線
     card.querySelector('button[data-i]').onclick=()=>{
       if(!(Number.isFinite(e.venue?.lng)&&Number.isFinite(e.venue?.lat))) { qs('routeInfo').textContent="此活動缺座標，無法規劃路線。"; return; }
       drawRoute([userLoc.lng,userLoc.lat],[e.venue.lng,e.venue.lat]);
@@ -275,16 +307,30 @@ async function search(){
   }
 }
 
-/* 綁定 */
+/* 綁定與初始化 */
 function bind(){
   qs("btn").onclick=search;
-  ["type","days","radius","pmax","dist"].forEach(id=>qs(id).onchange=search);
-  qs("reset").onclick=()=>{["q","type","pmax"].forEach(id=>qs(id).value=""); qs("days").value="3"; qs("radius").value="5"; qs("dist").value=""; search();};
+  ["type","days","radius","pmax","dist","wday"].forEach(id=>qs(id).onchange=search);
+  qs("reset").onclick=()=>{
+    ["q","type","pmax"].forEach(id=>qs(id).value="");
+    qs("days").value="3"; qs("radius").value="5"; qs("dist").value=""; qs("wday").value="";
+    search();
+  };
   qs("recenter").onclick=()=>{userLoc={lat:25.0375,lng:121.5637}; map.flyTo({center:[userLoc.lng,userLoc.lat],zoom:12}); };
 }
 
+/* 行政區下拉填入 */
+function fillDistricts(){
+  const sel=qs("dist");
+  TPE_DISTRICTS.forEach(d=>{
+    const opt=document.createElement("option");
+    opt.value=d; opt.textContent=d;
+    sel.appendChild(opt);
+  });
+}
+
 /* 啟動 */
-initMap(); bind(); search();
+initMap(); fillDistricts(); bind(); search();
 </script>
 </body>
 </html>
