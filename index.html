@@ -1,202 +1,95 @@
 <!doctype html>
-<meta charset="utf-8" />
+<meta charset="utf-8">
 <title>藝文活動搜尋</title>
-<meta name="viewport" content="width=device-width,initial-scale=1" />
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <style>
-  :root { font-family: system-ui, sans-serif; }
-  body { max-width: 960px; margin: 24px auto; padding: 0 16px; }
-  header { display: grid; gap: 8px; grid-template-columns: 1fr 220px 140px; align-items: center; }
-  header > * { height: 40px; }
-  #q { padding: 8px 12px; }
-  select, button, input[type=file] { padding: 6px 8px; }
-  #stats { margin: 8px 0 16px; font-size: 14px; opacity: .75; }
-  .card { border: 1px solid #ddd; border-radius: 8px; padding: 12px 14px; margin: 10px 0; }
-  .title { font-weight: 700; margin: 0 0 6px; }
-  .meta { font-size: 14px; opacity: .85; margin-bottom: 6px; }
-  .desc { margin: 6px 0 0; white-space: pre-wrap; }
-  .tags { font-size: 12px; opacity: .8; margin-top: 6px; }
-  .date-sep { margin: 18px 0 6px; font-weight: 700; }
-  #loader { display:none; }
+  body{font-family:system-ui,sans-serif;max-width:900px;margin:24px auto;padding:0 12px}
+  header{display:grid;grid-template-columns:1fr 160px 160px 120px 90px;gap:8px}
+  .cards{margin-top:12px}
+  .card{border:1px solid #ddd;border-radius:8px;padding:12px;margin:8px 0}
+  .title{font-weight:700}
+  .meta{font-size:14px;opacity:.8}
 </style>
 
 <header>
-  <input id="q" type="search" placeholder="輸入關鍵字：標題、場地、行政區、描述…" />
-  <select id="type">
-    <option value="">所有類型</option>
+  <input id="q" placeholder="關鍵字"/>
+  <select id="type"><option value="">所有類型</option></select>
+  <select id="district"><option value="">所有行政區</option></select>
+  <select id="weekday">
+    <option value="">所有星期</option>
+    <option value="一">星期一</option><option value="二">星期二</option>
+    <option value="三">星期三</option><option value="四">星期四</option>
+    <option value="五">星期五</option><option value="六">星期六</option>
+    <option value="日">星期日</option>
   </select>
-  <label style="display:flex;align-items:center;gap:6px;">
-    <input id="freeOnly" type="checkbox"> 免費
-  </label>
+  <label><input type="checkbox" id="freeOnly"> 免費</label>
 </header>
 
-<div style="display:flex; gap:8px; align-items:center; margin:8px 0 12px;">
-  <button id="openFile">載入本機 JSON</button>
-  <input id="file" type="file" accept=".json,application/json" hidden />
-  <button id="fetchLocal">從 events.json 載入</button>
-  <span id="loader">讀取中…</span>
+<div style="margin:10px 0">
+  <input type="date" id="from"> 至 <input type="date" id="to">
+  <button id="search">搜尋</button>
+  <span id="stats"></span>
 </div>
 
-<div id="stats"></div>
-<div id="results"></div>
+<section class="cards" id="cards"></section>
 
 <script>
-  // 允許兩種載入方式：本機選檔 或 同目錄 events.json
-  const state = { data: [], view: [], typeSet: new Set() };
-  const $q = document.getElementById('q');
-  const $type = document.getElementById('type');
-  const $results = document.getElementById('results');
-  const $stats = document.getElementById('stats');
-  const $fileBtn = document.getElementById('openFile');
-  const $file = document.getElementById('file');
-  const $fetchLocal = document.getElementById('fetchLocal');
-  const $freeOnly = document.getElementById('freeOnly');
-  const $loader = document.getElementById('loader');
+const API = '';
+init();
 
-  $fileBtn.onclick = () => $file.click();
-  $file.onchange = async (e) => {
-    if (!e.target.files?.[0]) return;
-    const text = await e.target.files[0].text();
-    loadJSON(JSON.parse(text));
-  };
-  $fetchLocal.onclick = async () => {
-    try {
-      $loader.style.display = 'inline';
-      const res = await fetch('events.json', { cache: 'no-store' });
-      const json = await res.json();
-      loadJSON(json);
-    } catch(err) {
-      alert('找不到 events.json，請確認檔案與此網頁同資料夾。');
-    } finally {
-      $loader.style.display = 'none';
-    }
-  };
+async function init(){
+  const meta = await fetch(API + '/meta').then(r=>r.json());
+  fillSelect('type', meta.types);
+  fillSelect('district', meta.districts);
+  document.getElementById('search').onclick = run;
+  run();
+}
 
-  // 將各種常見欄位做容錯映射；未知結構也盡量可搜尋
-  function normalize(raw) {
-    const v = raw.venue || {};
-    const title = raw.title || raw.name || '';
-    const desc = raw.desc || raw.description || '';
-    const type = raw.type || raw.category || '';
-    const start = raw.start_at || raw.start || raw.date || '';
-    const end   = raw.end_at || raw.end || '';
-    const url   = raw.url || raw.link || '';
-    const priceMin = num(raw.price_min ?? raw.priceMin ?? raw.price ?? '');
-    const priceMax = num(raw.price_max ?? raw.priceMax ?? raw.price ?? '');
-    const venueName = v.name || raw.venue_name || '';
-    const district  = v.district || v.area || raw.district || '';
-    const lat = num(v.lat ?? v.latitude ?? raw.lat ?? raw.latitude ?? '');
-    const lng = num(v.lng ?? v.longitude ?? raw.lng ?? raw.longitude ?? '');
-    return {
-      _raw: raw,
-      title, desc, type, start, end, url,
-      priceMin, priceMax, venueName, district, lat, lng,
-      // 合併字串供關鍵字比對
-      _haystack: [
-        title, desc, type, venueName, district, start, end, url
-      ].filter(Boolean).join(' ').toLowerCase()
-    };
-    function num(x){ const n = parseFloat(x); return Number.isFinite(n) ? n : null; }
-  }
+function fillSelect(id, arr){
+  const sel = document.getElementById(id);
+  sel.innerHTML = '<option value="">全部</option>' + arr.map(v=>`<option>${esc(v)}</option>`).join('');
+}
 
-  function loadJSON(arr) {
-    if (!Array.isArray(arr)) { alert('JSON 應為陣列'); return; }
-    state.data = arr.map(normalize);
-    buildTypeFilter();
-    applyFilter();
-  }
+async function run(){
+  const p = new URLSearchParams();
+  v('q') && p.set('q', v('q'));
+  v('type') && p.set('type', v('type'));
+  v('district') && p.set('district', v('district'));
+  v('weekday') && p.set('weekday', v('weekday'));
+  if (document.getElementById('freeOnly').checked) p.set('freeOnly','true');
+  v('from') && p.set('dateFrom', v('from'));
+  v('to') && p.set('dateTo', v('to'));
 
-  function buildTypeFilter() {
-    state.typeSet = new Set(state.data.map(d => d.type).filter(Boolean));
-    $type.innerHTML = '<option value="">所有類型</option>' +
-      [...state.typeSet].sort().map(t => `<option>${safe(t)}</option>`).join('');
-  }
+  const url = API + '/events?' + p.toString();
+  const data = await fetch(url).then(r=>r.json());
+  document.getElementById('stats').textContent = `共 ${data.total} 筆`;
+  render(data.results);
+}
 
-  // 篩選：以空白切關鍵字，全部須命中（AND）
-  function applyFilter() {
-    const words = $q.value.trim().toLowerCase().split(/\s+/).filter(Boolean);
-    const typeSel = $type.value;
-    const free = $freeOnly.checked;
-    state.view = state.data.filter(d => {
-      if (typeSel && d.type !== typeSel) return false;
-      if (free && !isFree(d)) return false;
-      return words.every(w => d._haystack.includes(w));
-    });
-    render();
-  }
+function v(id){ return document.getElementById(id).value.trim(); }
+function esc(s){ return String(s).replace(/[&<>"']/g, m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m])); }
 
-  function isFree(d) {
-    // 任一價格為 0 視為免費；皆未知則視為不免費
-    if (d.priceMin === 0 || d.priceMax === 0) return true;
-    if (d.priceMin == null && d.priceMax == null) return false;
-    return false;
-  }
+function render(list){
+  const el = document.getElementById('cards');
+  el.innerHTML = list.map(d=>card(d)).join('') || '無結果';
+}
 
-  // 依開始日期分組
-  function render() {
-    $results.innerHTML = '';
-    $stats.textContent = `共 ${state.view.length} 筆`;
-    const groups = new Map();
-    for (const d of state.view) {
-      const key = (d.start || '').slice(0,10) || '未提供日期';
-      if (!groups.has(key)) groups.set(key, []);
-      groups.get(key).push(d);
-    }
-    for (const [date, arr] of groups) {
-      const h = document.createElement('div');
-      h.className = 'date-sep';
-      h.textContent = date;
-      $results.appendChild(h);
-      arr.forEach(d => $results.appendChild(card(d)));
-    }
-  }
-
-  function card(d) {
-    const el = document.createElement('article');
-    el.className = 'card';
-    el.innerHTML = `
-      <div class="title">${safe(d.title || '(無標題)')}</div>
-      <div class="meta">
-        ${safe(d.type || '未分類')} ｜ 
-        ${safe(d.venueName || '未知場地')}${d.district ? '（'+safe(d.district)+'）' : ''} ｜ 
-        ${safe(rng(d.start, d.end))}
-      </div>
-      ${d.url ? `<a href="${safe(d.url)}" target="_blank" rel="noopener">官方連結</a>` : ''}
-      <div class="desc">${safe(d.desc || '')}</div>
-      <div class="tags">
-        ${priceLabel(d)} ${coordLabel(d)}
-      </div>
-    `;
-    return el;
-    function rng(a,b){ return [a,b].filter(Boolean).join(' ~ '); }
-    function priceLabel(d){
-      if (d.priceMin==null && d.priceMax==null) return '';
-      if (d.priceMin===0 || d.priceMax===0) return '｜費用：免費';
-      if (d.priceMin!=null && d.priceMax!=null) return `｜費用：${d.priceMin}–${d.priceMax}`;
-      return `｜費用：${d.priceMin ?? d.priceMax}`;
-    }
-    function coordLabel(d){
-      if (d.lat==null || d.lng==null) return '';
-      return `｜座標：${d.lat}, ${d.lng}`;
-    }
-  }
-
-  // 小心 XSS
-  function safe(s){ return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
-
-  // 事件
-  $q.addEventListener('input', debounce(applyFilter, 150));
-  $type.addEventListener('change', applyFilter);
-  $freeOnly.addEventListener('change', applyFilter);
-
-  function debounce(fn, ms){
-    let t; return (...args)=>{ clearTimeout(t); t=setTimeout(()=>fn(...args), ms); };
-  }
-
-  // 若與網頁同夾有 events.json，嘗試自動載入
-  (async ()=>{
-    try{
-      const res = await fetch('events.json', { cache: 'no-store' });
-      if (res.ok) loadJSON(await res.json());
-    }catch{}
-  })();
+function card(d){
+  const v = d.venue || {};
+  const title = d.title || d.name || '(無標題)';
+  const type = d.type || d.category || '未分類';
+  const venue = v.name || d.venue_name || '未知場地';
+  const district = v.district || v.area || d.district || '';
+  const start = d.start_at || d.start || d.date || '';
+  const end = d.end_at || d.end || '';
+  const url = d.url || d.link || '';
+  return `
+    <article class="card">
+      <div class="title">${esc(title)}</div>
+      <div class="meta">${esc(type)} ｜ ${esc(venue)}${district?'（'+esc(district)+'）':''} ｜ ${esc([start,end].filter(Boolean).join(' ~ '))}</div>
+      ${url ? `<a href="${esc(url)}" target="_blank" rel="noopener">官方連結</a>` : ''}
+      ${d.desc ? `<div>${esc(d.desc)}</div>` : ''}
+    </article>
+  `;
+}
 </script>
