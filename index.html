@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>台北藝文・智慧搜尋</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://unpkg.com/maplibre-gl@3.6.2/dist/maplibre-gl.css" rel="stylesheet" />
+  <script src="https://unpkg.com/maplibre-gl@3.6.2/dist/maplibre-gl.js"></script>
+  <style>
+    #map { height: 360px; }
+  </style>
+</head>
+<body class="bg-gray-50">
+  <div class="max-w-6xl mx-auto p-4">
+    <header class="mb-3">
+      <h1 class="text-2xl font-semibold">台北市最近幾天藝文活動</h1>
+      <p class="text-sm text-gray-600">自然語句搜尋＋條件篩選＋地圖</p>
+    </header>
+
+    <section class="grid md:grid-cols-3 gap-3 mb-3">
+      <div class="md:col-span-2 flex gap-2">
+        <input id="q" class="flex-1 border rounded px-3 py-2" placeholder="輸入：明後天 士林 展覽 300元以下" />
+        <button id="btn" class="px-4 py-2 bg-black text-white rounded">搜尋</button>
+      </div>
+      <div class="grid grid-cols-3 gap-2">
+        <select id="type" class="border rounded px-2 py-2">
+          <option value="">全部類型</option>
+          <option>展覽</option><option>表演</option><option>講座</option>
+          <option>電影</option><option>市集</option>
+        </select>
+        <select id="days" class="border rounded px-2 py-2">
+          <option value="3">近3天</option><option value="7">近7天</option>
+        </select>
+        <select id="radius" class="border rounded px-2 py-2">
+          <option value="2">2km</option><option value="5" selected>5km</option><option value="10">10km</option>
+        </select>
+      </div>
+    </section>
+
+    <section id="map" class="rounded border mb-3"></section>
+
+    <section class="grid md:grid-cols-3 gap-3">
+      <aside class="md:col-span-1 space-y-2">
+        <label class="block text-sm">票價上限（NT$）
+          <input id="pmax" type="number" class="border rounded w-full px-2 py-2" placeholder="如 300" />
+        </label>
+        <label class="block text-sm">行政區
+          <select id="dist" class="border rounded w-full px-2 py-2">
+            <option value="">全部</option>
+            <option>士林區</option><option>中山區</option><option>大安區</option>
+            <option>信義區</option><option>萬華區</option><option>松山區</option>
+          </select>
+        </label>
+        <button id="reset" class="w-full px-3 py-2 border rounded">清除條件</button>
+      </aside>
+
+      <main id="results" class="md:col-span-2 space-y-3"></main>
+    </section>
+  </div>
+
+  <script>
+    const API_BASE = ""; // 之後改成你的後端，如 "https://api.example.com"
+    const FALLBACK_JSON = "events.json"; // 先用靜態檔測試
+    let map, userLoc = { lat: 25.0375, lng: 121.5637 }; // 台北市府
+
+    function initMap() {
+      map = new maplibregl.Map({
+        container: 'map',
+        style: 'https://demotiles.maplibre.org/style.json',
+        center: [userLoc.lng, userLoc.lat],
+        zoom: 12
+      });
+      new maplibregl.Marker().setLngLat([userLoc.lng, userLoc.lat]).addTo(map);
+    }
+
+    async function geolocate() {
+      if (!navigator.geolocation) return;
+      navigator.geolocation.getCurrentPosition(p => {
+        userLoc = { lat: p.coords.latitude, lng: p.coords.longitude };
+        if (map) { map.setCenter([userLoc.lng, userLoc.lat]); }
+      });
+    }
+
+    function qs(id){ return document.getElementById(id); }
+    function fmtTime(iso){
+      const d = new Date(iso);
+      const mm = (d.getMonth()+1).toString().padStart(2,'0');
+      const dd = d.getDate().toString().padStart(2,'0');
+      const hh = d.getHours().toString().padStart(2,'0');
+      const mi = d.getMinutes().toString().padStart(2,'0');
+      return `${mm}/${dd} ${hh}:${mi}`;
+    }
+
+    function render(list){
+      const box = qs("results");
+      box.innerHTML = "";
+      list.forEach(e=>{
+        const card = document.createElement("article");
+        card.className = "border rounded p-3 bg-white";
+        card.innerHTML = `
+          <div class="flex justify-between">
+            <h3 class="font-medium text-lg">${e.title}</h3>
+            <span class="text-sm text-gray-500">${e.type||""}</span>
+          </div>
+          <p class="text-sm text-gray-700 line-clamp-2">${e.desc||""}</p>
+          <p class="text-sm mt-1">時間：${fmtTime(e.start_at)} — ${fmtTime(e.end_at)}</p>
+          <p class="text-sm">地點：${e.venue?.name||""}（${e.venue?.district||""}）</p>
+          <p class="text-sm">票價：${e.price_min==null?"—":e.price_min} — ${e.price_max==null?"—":e.price_max}</p>
+          <div class="mt-2 flex gap-2">
+            <a class="px-3 py-1 border rounded text-sm" href="${e.url}" target="_blank" rel="noopener">活動連結</a>
+          </div>`;
+        box.appendChild(card);
+        if (map && e.venue?.lng && e.venue?.lat){
+          const m = new maplibregl.Marker({color:"#333"}).setLngLat([e.venue.lng, e.venue.lat]).addTo(map);
+          m.getElement().title = e.title;
+        }
+      });
+    }
+
+    function params(){
+      const now = new Date();
+      const end = new Date(now.getTime() + Number(qs("days").value)*86400000);
+      return {
+        q: qs("q").value.trim(),
+        lat: userLoc.lat, lng: userLoc.lng,
+        radius_km: Number(qs("radius").value),
+        start: now.toISOString(),
+        end: end.toISOString(),
+        types: qs("type").value,
+        price_max: qs("pmax").value || "",
+        district: qs("dist").value || ""
+      };
+    }
+
+    async function search(){
+      const p = params();
+      try{
+        const url = API_BASE ? `${API_BASE}/search?`+new URLSearchParams(p) : FALLBACK_JSON;
+        const r = await fetch(url);
+        const data = await r.json();
+        render(data.results || data); // 後端或靜態皆可
+      }catch(e){
+        console.error(e);
+        render([]);
+      }
+    }
+
+    function debounce(fn, ms=400){
+      let t; return (...a)=>{ clearTimeout(t); t=setTimeout(()=>fn(...a), ms); };
+    }
+
+    // events
+    initMap(); geolocate(); search();
+    qs("btn").onclick = search;
+    qs("q").oninput = debounce(search, 500);
+    ["type","days","radius","pmax","dist"].forEach(id=>qs(id).onchange = search);
+    qs("reset").onclick = ()=>{ ["q","type","pmax","dist"].forEach(id=>qs(id).value=""); qs("days").value="3"; qs("radius").value="5"; search(); };
+  </script>
+</body>
+</html>
