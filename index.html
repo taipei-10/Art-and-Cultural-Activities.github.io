@@ -12,40 +12,28 @@
 <script src="https://unpkg.com/@turf/turf@6"></script>
 
 <link rel="stylesheet" href="./styles.css" />
-
-<script>
-  tailwind.config = {
-    theme:{extend:{colors:{brand:'#0ea5e9',brandDark:'#0284c7'}}},
-    darkMode:'class'
-  }
-</script>
+<script>tailwind.config={theme:{extend:{colors:{brand:'#0ea5e9'}}},darkMode:'class'}</script>
 </head>
 
 <body class="bg-gray-50 text-gray-900 dark:bg-gray-900 dark:text-gray-100">
 <div class="max-w-6xl mx-auto p-4">
-  <!-- Header -->
   <header class="mb-4 flex items-start justify-between gap-3">
     <div>
-      <h1 class="text-2xl md:text-3xl font-semibold tracking-tight">台北市最近幾天藝文活動</h1>
-      <p class="text-sm text-gray-600 dark:text-gray-400">地圖含座標、行政區點選、即時路徑規劃</p>
+      <h1 class="text-2xl md:text-3xl font-semibold">台北市最近幾天藝文活動</h1>
+      <p class="text-sm text-gray-600 dark:text-gray-400">種類・天數・距離・行政區・關鍵字 即時篩選</p>
     </div>
-    <div class="flex items-center gap-2">
-      <button id="darkToggle" class="px-3 py-2 text-sm border rounded-md hover:bg-gray-50 dark:hover:bg-gray-800">深淺切換</button>
-      <a href="#results" class="px-3 py-2 text-sm border rounded-md hover:bg-gray-50 dark:hover:bg-gray-800">快速看清單</a>
-    </div>
+    <button id="darkToggle" class="px-3 py-2 text-sm border rounded-md">深淺切換</button>
   </header>
 
-  <!-- Filters -->
-  <section class="sticky top-0 z-30 bg-white/80 dark:bg-gray-900/80 backdrop-blur border rounded-md p-3 mb-4 shadow-sm">
+  <!-- 篩選列 -->
+  <section class="sticky top-0 z-30 bg-white/80 dark:bg-gray-900/80 backdrop-blur border rounded-md p-3 mb-4">
     <div class="grid md:grid-cols-3 gap-3">
       <div class="md:col-span-2 flex gap-2">
-        <div class="flex-1 relative">
-          <input id="q" class="w-full border rounded-md pl-9 pr-3 py-2 outline-none focus:ring-2 focus:ring-brand/40 dark:bg-gray-900 dark:border-gray-700" placeholder="輸入：明後天 士林 展覽 300元以下" />
-          <svg class="w-5 h-5 absolute left-2.5 top-2.5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="m21 21-4.3-4.3M17 10a7 7 0 1 1-14 0 7 7 0 0 1 14 0Z"/></svg>
-        </div>
-        <button id="btn" class="px-4 py-2 bg-black text-white rounded-md hover:opacity-90 dark:bg-gray-200 dark:text-gray-900">搜尋</button>
+        <input id="q" class="flex-1 border rounded-md px-3 py-2 dark:bg-gray-900 dark:border-gray-700"
+               placeholder="輸入關鍵字：例 明後天 士林 展覽 300元以下" />
+        <button id="btn" class="px-4 py-2 bg-black text-white rounded-md dark:bg-gray-200 dark:text-gray-900">搜尋</button>
       </div>
-      <div class="grid grid-cols-3 gap-2 items-center">
+      <div class="grid grid-cols-4 gap-2">
         <select id="type" class="border rounded-md px-2 py-2 dark:bg-gray-900 dark:border-gray-700">
           <option value="">全部類型</option><option>展覽</option><option>表演</option>
           <option>講座</option><option>電影</option><option>市集</option>
@@ -54,43 +42,35 @@
           <option value="3" selected>近3天</option><option value="7">近7天</option>
         </select>
         <select id="radius" class="border rounded-md px-2 py-2 dark:bg-gray-900 dark:border-gray-700">
-          <option value="2">2km</option><option value="5" selected>5km</option><option value="10">10km</option>
+          <option value="2">2km</option><option value="5" selected>5km</option><option value="10">10km</option><option value="20">20km</option>
         </select>
-        <label class="md:col-span-3 flex items-center gap-2 text-sm pt-1">
-          <input id="inView" type="checkbox" class="h-4 w-4">
-          <span>只看目前地圖範圍</span>
-        </label>
+        <select id="dist" class="border rounded-md px-2 py-2 dark:bg-gray-900 dark:border-gray-700">
+          <option value="">全台北市</option>
+        </select>
       </div>
     </div>
   </section>
 
-  <!-- Map -->
+  <!-- 地圖 -->
   <section class="rounded-md border mb-4 relative overflow-hidden">
     <div id="map"></div>
     <div class="map-tools">
-      <button id="btnGeo" class="tool-btn" title="定位到我"><svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M12 8a4 4 0 1 1 0 8 4 4 0 0 1 0-8Zm0-6a1 1 0 0 1 1 1v2.06a7.002 7.002 0 0 1 5.94 5.94H21a1 1 0 1 1 0 2h-2.06A7.002 7.002 0 0 1 13 18.94V21a1 1 0 1 1-2 0v-2.06A7.002 7.002 0 0 1 5.06 13H3a1 1 0 1 1 0-2h2.06A7.002 7.002 0 0 1 11 5.06V3a1 1 0 0 1 1-1Z"/></svg></button>
-      <button id="btnClearRoute" class="tool-btn" title="清除路線"><svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M5 7h14v2H5V7Zm0 4h10v2H5v-2Zm0 4h14v2H5v-2Z"/></svg></button>
+      <button id="btnGeo" class="tool-btn" title="定位到我">📍</button>
+      <button id="btnClearRoute" class="tool-btn" title="清除路線">✖️</button>
     </div>
     <div id="coord" class="absolute right-2 top-2 bg-white/90 dark:bg-gray-800/80 border dark:border-gray-700 rounded px-2 py-1 text-xs font-mono"></div>
-    <div id="mapToast" class="hidden absolute left-1/2 -translate-x-1/2 bottom-3 px-3 py-1.5 rounded bg-black/80 text-white text-xs"></div>
   </section>
 
-  <!-- Sidebar + Results -->
+  <!-- 側欄 + 結果 -->
   <section class="grid md:grid-cols-3 gap-4 items-start">
     <aside class="md:col-span-1 space-y-3">
       <div class="rounded-md border p-3">
         <label class="block text-sm mb-2">票價上限（NT$）</label>
         <input id="pmax" type="number" inputmode="numeric" class="border rounded-md w-full px-3 py-2 dark:bg-gray-900 dark:border-gray-700" placeholder="如 300" />
       </div>
-      <div class="rounded-md border p-3">
-        <label class="block text-sm mb-2">行政區（依圖層）</label>
-        <select id="dist" class="border rounded-md w-full px-3 py-2 dark:bg-gray-900 dark:border-gray-700">
-          <option value="">全部</option>
-        </select>
-      </div>
       <div class="flex gap-2">
-        <button id="reset" class="flex-1 px-3 py-2 border rounded-md hover:bg-gray-50 dark:hover:bg-gray-800">清除條件</button>
-        <button id="recenter" class="px-3 py-2 border rounded-md hover:bg-gray-50 dark:hover:bg-gray-800">回到台北</button>
+        <button id="reset" class="flex-1 px-3 py-2 border rounded-md">清除條件</button>
+        <button id="recenter" class="px-3 py-2 border rounded-md">回到台北</button>
       </div>
       <div id="routeInfo" class="text-xs text-gray-600 dark:text-gray-400"></div>
       <div id="alert" class="hidden text-xs mt-2 p-2 rounded bg-red-50 text-red-700 border border-red-200 dark:bg-red-900/20 dark:text-red-300 dark:border-red-800"></div>
@@ -104,50 +84,30 @@
           <div class="h-4 w-5/6 skeleton rounded mb-3"></div>
           <div class="h-8 w-40 skeleton rounded"></div>
         </div>
-        <div class="border rounded-md p-3 bg-white dark:bg-gray-900">
-          <div class="h-5 w-56 skeleton rounded mb-2"></div>
-          <div class="h-4 w-full skeleton rounded mb-1"></div>
-          <div class="h-4 w-5/6 skeleton rounded mb-3"></div>
-          <div class="h-8 w-40 skeleton rounded"></div>
-        </div>
       </div>
     </main>
   </section>
 </div>
 
 <script>
-const API_BASE = "";
-const FALLBACK_JSON = "events.json";
 const CULTURE_API = "https://cultureexpress.taipei/OpenData/Event/C000003";
 const TPE_TOWNS_TOPO = "https://raw.githubusercontent.com/jason2506/Taiwan.TopoJSON/master/topojson/towns/63000.json";
+const FALLBACK_JSON = "events.json";
 
 let map, userLoc = { lat: 25.0375, lng: 121.5637 }; // 台北市府
-let markers = [];                  // [{id, marker, lnglat:[lng,lat]}]
-let markerById = new Map();
+let markers = [];
 let ringSourceId = 'search-ring';
 
 function qs(id){ return document.getElementById(id); }
-function toast(msg){ const el = qs('mapToast'); el.textContent = msg; el.classList.remove('hidden'); setTimeout(()=>el.classList.add('hidden'), 1800); }
 function fmtTime(iso){ const d=new Date(iso); const mm=String(d.getMonth()+1).padStart(2,'0'); const dd=String(d.getDate()).padStart(2,'0'); const hh=String(d.getHours()).padStart(2,'0'); const mi=String(d.getMinutes()).padStart(2,'0'); return `${mm}/${dd} ${hh}:${mi}`; }
 function haversineKm(a,b){ const toRad=d=>d*Math.PI/180; const R=6371, dLat=toRad(b[0]-a[0]), dLng=toRad(b[1]-a[1]); const lat1=toRad(a[0]), lat2=toRad(b[0]); const h=Math.sin(dLat/2)**2+Math.cos(lat1)*Math.cos(lat2)*Math.sin(dLng/2)**2; return 2*R*Math.asin(Math.sqrt(h)); }
 
 function initMap(){
-  map = new maplibregl.Map({
-    container:'map',
-    style:'https://demotiles.maplibre.org/style.json',
-    center:[userLoc.lng,userLoc.lat], zoom:12, cooperativeGestures:true
-  });
+  map = new maplibregl.Map({ container:'map', style:'https://demotiles.maplibre.org/style.json', center:[userLoc.lng,userLoc.lat], zoom:12 });
   map.addControl(new maplibregl.NavigationControl(), 'top-left');
-
-  new maplibregl.Marker({color:"#0ea5e9"}).setLngLat([userLoc.lng,userLoc.lat]).addTo(map)
-    .setPopup(new maplibregl.Popup({closeButton:false}).setText(`你的位置\n${userLoc.lat.toFixed(5)}, ${userLoc.lng.toFixed(5)}`));
-
+  new maplibregl.Marker({color:"#0ea5e9"}).setLngLat([userLoc.lng,userLoc.lat]).addTo(map);
   map.on('mousemove', e=>{ qs('coord').textContent = `${e.lngLat.lat.toFixed(6)}, ${e.lngLat.lng.toFixed(6)}`; });
-
-  map.on('load', async ()=>{
-    await loadDistricts();
-    drawSearchRing();
-  });
+  map.on('load', async ()=>{ await loadDistricts(); drawSearchRing(); });
 }
 
 async function loadDistricts(){
@@ -157,6 +117,7 @@ async function loadDistricts(){
   map.addLayer({ id:'tpe-fill', type:'fill', source:'tpe-dists', paint:{'fill-color':'#0ea5e9','fill-opacity':0.08}});
   map.addLayer({ id:'tpe-line', type:'line', source:'tpe-dists', paint:{'line-color':'#0284c7','line-width':1}});
 
+  // 行政區選單
   const set = new Set(geo.features.map(f=>f.properties.TOWNNAME));
   const distSel = qs('dist');
   [...set].sort().forEach(n=>{ const opt=document.createElement('option'); opt.value=n; opt.textContent=n; distSel.appendChild(opt); });
@@ -164,11 +125,8 @@ async function loadDistricts(){
   map.on('click','tpe-fill', e=>{
     const name = e.features[0].properties.TOWNNAME;
     new maplibregl.Popup().setLngLat(e.lngLat).setHTML(`<b>${name}</b>`).addTo(map);
-    distSel.value = name;
-    search();
+    distSel.value = name; search();
   });
-  map.on('mouseenter','tpe-fill', ()=> map.getCanvas().style.cursor='pointer');
-  map.on('mouseleave','tpe-fill', ()=> map.getCanvas().style.cursor='');
 }
 
 async function geolocate(){
@@ -176,9 +134,26 @@ async function geolocate(){
   navigator.geolocation.getCurrentPosition(p=>{
     userLoc = {lat:p.coords.latitude, lng:p.coords.longitude};
     if(map){ map.setCenter([userLoc.lng,userLoc.lat]); drawSearchRing(); }
-    toast('已定位到目前位置');
-  }, _=> toast('無法取得定位'));
+  }, ()=>{});
 }
+
+function drawSearchRing(){
+  if(!window.turf || !map) return;
+  const km = Number(qs('radius').value);
+  const center = [userLoc.lng, userLoc.lat];
+  const poly = turf.circle(center, km, {steps:64, units:'kilometers'});
+  const fc = {type:'FeatureCollection', features:[poly]};
+  if(!map.getSource(ringSourceId)){
+    map.addSource(ringSourceId,{type:'geojson',data:fc});
+    map.addLayer({id:'ring-fill',type:'fill',source:ringSourceId,paint:{'fill-color':'#0ea5e9','fill-opacity':0.08}});
+    map.addLayer({id:'ring-line',type:'line',source:ringSourceId,paint:{'line-color':'#0284c7','line-width':2}});
+  }else{
+    map.getSource(ringSourceId).setData(fc);
+  }
+}
+
+function clearMarkers(){ markers.forEach(m=>m.remove()); markers=[]; }
+function clearRoute(){ if(map?.getLayer('route-line')) map.removeLayer('route-line'); if(map?.getSource('route')) map.removeSource('route'); qs('routeInfo').textContent=""; }
 
 function params(){
   const now = new Date();
@@ -199,19 +174,13 @@ function normalize(evt){
   const prices = [...priceTxt.matchAll(/\d+/g)].map(x=>Number(x[0]));
   const priceMin = prices.length? Math.min(...prices): null;
   const priceMax = prices.length? Math.max(...prices): null;
-
   const startISO = (evt.SessionStartDate || evt.StartDate || "").replace(" ", "T");
   const endISO   = (evt.SessionEndDate   || evt.EndDate   || "").replace(" ", "T");
-
-  const lat = Number(evt.Latitude);
-  const lng = Number(evt.Longitude);
-
+  const lat = Number(evt.Latitude), lng = Number(evt.Longitude);
   return {
-    title: evt.Caption || "",
-    desc:  evt.Introduction || "",
-    type:  evt.Category || "",
+    title: evt.Caption || "", desc: evt.Introduction || "", type: evt.Category || "",
     start_at: startISO || new Date().toISOString(),
-    end_at:   endISO   || startISO || new Date().toISOString(),
+    end_at: endISO || startISO || new Date().toISOString(),
     url: evt.WebsiteLink || evt.RelatedLink || "",
     price_min: Number.isFinite(priceMin)? priceMin : null,
     price_max: Number.isFinite(priceMax)? priceMax : null,
@@ -219,90 +188,11 @@ function normalize(evt){
   };
 }
 
-function getMapBBox(){ const b = map.getBounds(); return {w:b.getWest(), s:b.getSouth(), e:b.getEast(), n:b.getNorth()}; }
-
-function drawSearchRing(){
-  if(!window.turf || !map) return;
-  const km = Number(qs('radius').value);
-  const center = [userLoc.lng, userLoc.lat];
-  const poly = turf.circle(center, km, {steps:64, units:'kilometers'});
-  const fc = {type:'FeatureCollection', features:[poly]};
-  if(!map.getSource(ringSourceId)){
-    map.addSource(ringSourceId,{type:'geojson',data:fc});
-    map.addLayer({id:'ring-fill',type:'fill',source:ringSourceId,paint:{'fill-color':'#0ea5e9','fill-opacity':0.08}});
-    map.addLayer({id:'ring-line',type:'line',source:ringSourceId,paint:{'line-color':'#0284c7','line-width':2}});
-  }else{
-    map.getSource(ringSourceId).setData(fc);
-  }
-}
-
 function fitBoundsToResults(list){
   const pts = list.filter(e=>e.venue?.lng && e.venue?.lat).map(e=>[e.venue.lng,e.venue.lat]);
   if(!pts.length) return;
   const b = pts.reduce((bb,c)=>bb.extend(c), new maplibregl.LngLatBounds(pts[0],pts[0]));
   map.fitBounds(b, {padding:48, maxZoom:15});
-}
-
-function clearMarkers(){ markers.forEach(m=>m.marker.remove()); markers=[]; markerById.clear(); }
-
-function render(list){
-  const box = qs("results");
-  qs('skeletonWrap').style.display='none';
-  box.innerHTML=""; clearRoute(); clearMarkers();
-
-  if(!list.length){
-    box.innerHTML = `<div class="p-6 text-sm text-gray-600 dark:text-gray-400 border rounded-md bg-white dark:bg-gray-900">無符合結果。試試放寬條件。</div>`;
-    return;
-  }
-
-  list.forEach((e, idx)=>{
-    const id = `evt-${idx}`;
-    const card = document.createElement("article");
-    card.className = "border rounded-md p-3 bg-white dark:bg-gray-900";
-    card.setAttribute('data-id', id);
-
-    const priceStr = (e.price_min==null && e.price_max==null) ? "—" : `${e.price_min ?? 0} — ${e.price_max ?? e.price_min ?? 0}`;
-    const typeBadge = `<span class="badge bg-white/70 dark:bg-gray-800/60">${e.type||"—"}</span>`;
-    const distBadge = (e._km!=null) ? `<span class="badge bg-white/70 dark:bg-gray-800/60">距離 ${e._km.toFixed(1)}km</span>` : "";
-
-    card.innerHTML = `
-      <div class="flex flex-wrap items-center justify-between gap-2">
-        <h3 class="font-medium text-lg leading-tight">${e.title}</h3>
-        <div class="flex gap-2">${typeBadge}${distBadge}</div>
-      </div>
-      <p class="text-sm text-gray-700 dark:text-gray-300 mt-1 clamp-2">${e.desc||""}</p>
-      <div class="mt-2 grid sm:grid-cols-2 gap-1 text-sm">
-        <p>時間：${fmtTime(e.start_at)} — ${fmtTime(e.end_at)}</p>
-        <p>地點：${e.venue?.name||""}（${e.venue?.district||""}）</p>
-        <p>票價：${priceStr}</p>
-        <p class="text-gray-500 dark:text-gray-400">座標：${(e.venue?.lat??"—")}, ${(e.venue?.lng??"—")}</p>
-      </div>
-      <div class="mt-3 flex flex-wrap gap-2">
-        <a class="px-3 py-1.5 border rounded-md text-sm hover:bg-gray-50 dark:hover:bg-gray-800" href="${e.url||"#"}" target="_blank" rel="noopener">活動連結</a>
-        <button class="px-3 py-1.5 border rounded-md text-sm hover:bg-gray-50 dark:hover:bg-gray-800 route-btn">路徑</button>
-        <button class="px-3 py-1.5 border rounded-md text-sm hover:bg-gray-50 dark:hover:bg-gray-800 center-btn">地圖置中</button>
-      </div>`;
-    box.appendChild(card);
-
-    if(map && e.venue?.lng && e.venue?.lat){
-      const m = new maplibregl.Marker({color:"#333"}).setLngLat([e.venue.lng,e.venue.lat]).addTo(map);
-      const popupHtml = `
-        <div><b>${e.title}</b></div>
-        <div>${e.venue.name||""}</div>
-        <div>${(e.venue.lat?.toFixed?.(5))??e.venue.lat}, ${(e.venue.lng?.toFixed?.(5))??e.venue.lng}</div>`;
-      m.setPopup(new maplibregl.Popup({offset:24}).setHTML(popupHtml));
-      markers.push({id, marker:m, lnglat:[e.venue.lng,e.venue.lat]});
-      markerById.set(id, m);
-
-      card.querySelector('.route-btn').onclick = ()=> drawRoute([userLoc.lng,userLoc.lat],[e.venue.lng,e.venue.lat], e.title);
-      card.querySelector('.center-btn').onclick = ()=> map.flyTo({center:[e.venue.lng,e.venue.lat], zoom:15});
-      card.addEventListener('mouseenter', ()=> m.togglePopup());
-      card.addEventListener('mouseleave', ()=> m.togglePopup());
-    }
-  });
-
-  fitBoundsToResults(list);
-  drawSearchRing();
 }
 
 async function fetchCultureEvents(){
@@ -315,7 +205,7 @@ async function fetchCultureEvents(){
   const now = new Date(p.start);
   const until = new Date(p.end);
 
-  // 距離預先計算
+  // 計算距離
   list.forEach(e=>{
     if(p.lat && p.lng && e.venue?.lat && e.venue?.lng){
       e._km = haversineKm([p.lat,p.lng],[e.venue.lat,e.venue.lng]);
@@ -329,112 +219,102 @@ async function fetchCultureEvents(){
     const typeOk = !p.types || e.type.includes(p.types);
     const distOk = !p.district || e.venue?.district===p.district;
     const priceOk = !p.price_max || (e.price_min==null && e.price_max==null) || ((e.price_min??0) <= p.price_max);
-    const q = (p.q||"").trim();
+    const q = p.q;
     const qOk = !q || [e.title,e.desc,e.venue?.name,e.type,e.venue?.district].some(s=> (s||"").includes(q));
     let radiusOk = true;
     if(p.radius_km && e.venue?.lat && e.venue?.lng){ radiusOk = e._km <= p.radius_km; }
-    // bbox
-    const useBBox = qs("inView")?.checked && map;
-    let bboxOk = true;
-    if(useBBox && e.venue?.lat && e.venue?.lng){
-      const b = getMapBBox();
-      bboxOk = (e.venue.lng>=b.w && e.venue.lng<=b.e && e.venue.lat>=b.s && e.venue.lat<=b.n);
-    }
-    return inRange && typeOk && distOk && priceOk && qOk && radiusOk && bboxOk;
+    return inRange && typeOk && distOk && priceOk && qOk && radiusOk;
   }).sort((a,b)=>(a._km??999)-(b._km??999));
 }
 
-async function search(){
+function render(list){
   const box = qs("results");
+  qs('skeletonWrap').style.display='none';
+  box.innerHTML=""; clearRoute(); clearMarkers();
+
+  if(!list.length){
+    box.innerHTML = `<div class="p-6 text-sm text-gray-600 dark:text-gray-400 border rounded-md bg-white dark:bg-gray-900">無符合結果。請調整條件或換關鍵字。</div>`;
+    return;
+  }
+
+  // 地圖 marker
+  list.forEach(e=>{
+    if(map && e.venue?.lng && e.venue?.lat){
+      const m = new maplibregl.Marker({color:"#333"}).setLngLat([e.venue.lng,e.venue.lat]).addTo(map);
+      m.setPopup(new maplibregl.Popup({offset:24}).setHTML(`<b>${e.title}</b><div>${e.venue.name||""}</div>`));
+      markers.push(m);
+    }
+  });
+
+  // 視野自動包含結果
+  fitBoundsToResults(list);
+
+  // 清單
+  list.forEach(e=>{
+    const card = document.createElement("article");
+    card.className = "border rounded-md p-3 bg-white dark:bg-gray-900";
+    const priceStr = (e.price_min==null && e.price_max==null) ? "—" : `${e.price_min ?? 0} — ${e.price_max ?? e.price_min ?? 0}`;
+    const distBadge = (e._km!=null) ? `<span class="badge">距離 ${e._km.toFixed(1)}km</span>` : "";
+    card.innerHTML = `
+      <div class="flex items-center justify-between gap-2">
+        <h3 class="font-medium text-lg">${e.title}</h3>
+        <div class="flex gap-2"><span class="badge">${e.type||"—"}</span>${distBadge}</div>
+      </div>
+      <p class="text-sm text-gray-700 dark:text-gray-300 mt-1 clamp-2">${e.desc||""}</p>
+      <div class="mt-2 grid sm:grid-cols-2 gap-1 text-sm">
+        <p>時間：${fmtTime(e.start_at)} — ${fmtTime(e.end_at)}</p>
+        <p>地點：${e.venue?.name||""}（${e.venue?.district||""}）</p>
+        <p>票價：${priceStr}</p>
+      </div>
+      <div class="mt-3 flex flex-wrap gap-2">
+        <a class="px-3 py-1.5 border rounded-md text-sm" href="${e.url||"#"}" target="_blank" rel="noopener">活動連結</a>
+      </div>`;
+    box.appendChild(card);
+  });
+}
+
+async function search(){
   qs('skeletonWrap').style.display='';
-  box.innerHTML = "";
-  qs('alert').classList.add('hidden'); qs('alert').textContent = "";
+  qs('results').innerHTML="";
+  qs('alert').classList.add('hidden'); qs('alert').textContent="";
 
   try{
     const list = await fetchCultureEvents();
     render(list);
   }catch(err){
     console.error(err);
-    qs('alert').textContent = "即時資料來源暫時無法取得，已載入本機備援資料。";
+    qs('alert').textContent = "資料來源暫時無法取得，已載入備援資料。";
     qs('alert').classList.remove('hidden');
     try{
       const r = await fetch(FALLBACK_JSON);
       const data = await r.json();
-      const list = (data.results || data);
-      render(list);
+      render(data.results || data);
     }catch(e2){
       qs('skeletonWrap').style.display='none';
-      box.innerHTML = `<div class="p-6 text-sm text-red-700 dark:text-red-300 border border-red-200 dark:border-red-800 rounded-md bg-red-50 dark:bg-red-900/20">備援資料也無法載入。</div>`;
+      qs('results').innerHTML = `<div class="p-6 text-sm text-red-700 dark:text-red-300 border rounded-md bg-red-50 dark:bg-red-900/20">備援資料也無法載入。</div>`;
     }
   }
 }
 
 function debounce(fn, ms=400){ let t; return (...a)=>{ clearTimeout(t); t=setTimeout(()=>fn(...a), ms); }; }
 
-async function drawRoute(from, to, label="路徑"){
-  clearRoute();
-  const url = `https://router.project-osrm.org/route/v1/driving/${from[0]},${from[1]};${to[0]},${to[1]}?overview=full&geometries=geojson`;
-  const res = await fetch(url); const json = await res.json();
-  if(!json.routes || !json.routes[0]) return;
-  const route = json.routes[0];
-  const geo = {"type":"Feature","properties":{},"geometry":route.geometry};
-
-  if(!map.getSource('route')){
-    map.addSource('route',{type:'geojson', data: geo});
-    map.addLayer({id:'route-line', type:'line', source:'route', paint:{'line-color':'#ff3b30','line-width':4}});
-  }else{
-    map.getSource('route').setData(geo);
-  }
-  const coords = route.geometry.coordinates;
-  const bounds = coords.reduce((b,c)=>b.extend(c), new maplibregl.LngLatBounds(coords[0],coords[0]));
-  map.fitBounds(bounds, {padding:40});
-
-  const km = (route.distance/1000).toFixed(2);
-  const min = Math.round(route.duration/60);
-  qs('routeInfo').textContent = `${label}｜距離 ${km} km，預估 ${min} 分鐘（汽車）`;
-}
-
-function clearRoute(){
-  if(map?.getLayer('route-line')) map.removeLayer('route-line');
-  if(map?.getSource('route')) map.removeSource('route');
-  qs('routeInfo').textContent = "";
-}
-
-function initUIBindings(){
+function initUI(){
   qs("btn").onclick = search;
-  qs("q").oninput = debounce(search, 500);
+  qs("q").oninput = debounce(search, 400);
   ["type","days","radius","pmax","dist"].forEach(id=>qs(id).onchange = ()=>{ search(); drawSearchRing(); });
-  qs("reset").onclick = ()=>{
-    ["q","type","pmax"].forEach(id=>qs(id).value="");
-    qs("days").value="3"; qs("radius").value="5"; qs("dist").value="";
-    search(); drawSearchRing();
-  };
-  qs("recenter").onclick = ()=>{
-    userLoc = { lat: 25.0375, lng: 121.5637 };
-    map.flyTo({center:[userLoc.lng,userLoc.lat], zoom:12});
-    drawSearchRing();
-  };
+  qs("reset").onclick = ()=>{ ["q","type","pmax"].forEach(id=>qs(id).value=""); qs("days").value="3"; qs("radius").value="5"; qs("dist").value=""; search(); drawSearchRing(); };
+  qs("recenter").onclick = ()=>{ userLoc={lat:25.0375,lng:121.5637}; map.flyTo({center:[userLoc.lng,userLoc.lat], zoom:12}); drawSearchRing(); };
   qs("btnGeo").onclick = geolocate;
   qs("btnClearRoute").onclick = clearRoute;
 
-  // 只看目前地圖範圍
-  const inView = qs("inView"); if(inView){ inView.onchange = search; }
-  map.on('moveend', ()=>{ if(qs("inView")?.checked) search(); });
-
-  // 深淺色
-  const root = document.documentElement;
-  const saved = localStorage.getItem('theme');
-  if(saved){ root.classList.toggle('dark', saved==='dark'); }
-  qs('darkToggle').onclick = ()=>{
-    const d = root.classList.toggle('dark');
-    localStorage.setItem('theme', d?'dark':'light');
-  };
+  const root=document.documentElement; const saved=localStorage.getItem('theme'); if(saved){ root.classList.toggle('dark', saved==='dark'); }
+  qs('darkToggle').onclick=()=>{ const d=root.classList.toggle('dark'); localStorage.setItem('theme', d?'dark':'light'); };
 }
 
 // boot
 initMap();
 geolocate();
-initUIBindings();
+initUI();
 search();
 </script>
 </body>
