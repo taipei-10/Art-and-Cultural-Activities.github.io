@@ -1,203 +1,236 @@
 <!doctype html>
 <html lang="zh-Hant">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
 <title>台北藝文・智慧搜尋</title>
-<link href="https://unpkg.com/maplibre-gl@3.6.2/dist/maplibre-gl.css" rel="stylesheet" />
+<link href="https://unpkg.com/maplibre-gl@3.6.2/dist/maplibre-gl.css" rel="stylesheet"/>
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://unpkg.com/maplibre-gl@3.6.2/dist/maplibre-gl.js"></script>
 <script src="https://unpkg.com/topojson-client@3"></script>
 <script src="https://unpkg.com/@turf/turf@6"></script>
 <style>
-  #map{height:520px} .badge{font-size:.75rem;border:1px solid #e5e7eb;border-radius:.375rem;padding:.125rem .5rem}
+  body{background:#0b1220;color:#e6e7eb}
+  #map{height:520px}
+  .badge{font-size:.75rem;border:1px solid #2f3545;border-radius:.375rem;padding:.125rem .5rem}
   .clamp-2{-webkit-line-clamp:2;display:-webkit-box;-webkit-box-orient:vertical;overflow:hidden}
+  .card{background:#0f172a;border:1px solid #2f3545;border-radius:.5rem;padding:12px}
+  .ctl{border:1px solid #2f3545;background:#0b1220;border-radius:.375rem;padding:.5rem .75rem}
+  .sel{border:1px solid #2f3545;background:#0b1220;border-radius:.375rem;padding:.5rem}
 </style>
 </head>
-<body class="bg-gray-900 text-gray-100">
+<body>
 <div class="max-w-6xl mx-auto p-4">
   <h1 class="text-2xl font-semibold mb-2">台北市最近幾天藝文活動</h1>
 
   <div class="grid md:grid-cols-3 gap-3 mb-3">
     <div class="md:col-span-2 flex gap-2">
-      <input id="q" class="flex-1 border border-gray-700 bg-gray-900 rounded px-3 py-2" placeholder="輸入關鍵字"/>
-      <button id="btn" class="px-4 py-2 bg-white text-gray-900 rounded">搜尋</button>
+      <input id="q" class="flex-1 sel" placeholder="輸入關鍵字"/>
+      <button id="btn" class="ctl">搜尋</button>
     </div>
     <div class="grid grid-cols-4 gap-2">
-      <select id="type" class="border border-gray-700 bg-gray-900 rounded px-2 py-2"><option value="">全部類型</option><option>展覽</option><option>表演</option><option>講座</option><option>電影</option><option>市集</option></select>
-      <select id="days" class="border border-gray-700 bg-gray-900 rounded px-2 py-2"><option value="3" selected>近3天</option><option value="7">近7天</option></select>
-      <select id="radius" class="border border-gray-700 bg-gray-900 rounded px-2 py-2"><option value="2">2km</option><option value="5" selected>5km</option><option value="10">10km</option><option value="20">20km</option></select>
-      <select id="dist" class="border border-gray-700 bg-gray-900 rounded px-2 py-2"><option value="">全台北市</option></select>
+      <select id="type" class="sel"><option value="">全部類型</option><option>展覽</option><option>表演</option><option>講座</option><option>電影</option><option>市集</option></select>
+      <select id="days" class="sel"><option value="3" selected>近3天</option><option value="7">近7天</option></select>
+      <select id="radius" class="sel"><option value="2">2km</option><option value="5" selected>5km</option><option value="10">10km</option><option value="20">20km</option></select>
+      <select id="dist" class="sel"><option value="">全台北市</option></select>
     </div>
   </div>
 
-  <div class="rounded border border-gray-700 mb-4 relative overflow-hidden">
+  <div class="card mb-4 relative overflow-hidden">
     <div id="map"></div>
-    <div id="coord" class="absolute right-2 top-2 bg-gray-800/80 border border-gray-700 rounded px-2 py-1 text-xs font-mono"></div>
+    <div id="coord" class="absolute right-2 top-2 bg-[#0b1220cc] border border-[#2f3545] rounded px-2 py-1 text-xs font-mono"></div>
   </div>
 
   <div class="grid md:grid-cols-3 gap-4 items-start">
     <aside class="space-y-3">
-      <div class="rounded border border-gray-700 p-3">
+      <div class="card">
         <label class="block text-sm mb-2">票價上限（NT$）</label>
-        <input id="pmax" type="number" class="border border-gray-700 bg-gray-900 rounded w-full px-3 py-2" placeholder="如 300"/>
+        <input id="pmax" type="number" class="sel w-full" placeholder="如 300"/>
       </div>
       <div class="flex gap-2">
-        <button id="reset" class="flex-1 px-3 py-2 border border-gray-700 rounded">清除條件</button>
-        <button id="recenter" class="px-3 py-2 border border-gray-700 rounded">回到台北</button>
+        <button id="reset" class="ctl flex-1">清除條件</button>
+        <button id="recenter" class="ctl">回到台北</button>
       </div>
-      <div id="alert" class="hidden text-xs mt-2 p-2 rounded bg-red-900/20 text-red-300 border border-red-800"></div>
+      <div id="alert" class="hidden text-xs mt-2 p-2 rounded border border-red-800 bg-red-900/20 text-red-300"></div>
     </aside>
 
     <main id="results" class="md:col-span-2 space-y-3"></main>
   </div>
-
-  <section id="portalResults" class="mt-6 space-y-3"></section>
 </div>
 
-<!-- 內嵌備援資料：API 或外部 JSON 失敗時一定可渲染 -->
-<script id="events-fallback" type="application/json">
-{
-  "results": [
-    {
-      "title": "城市光影—短片巡演",
-      "desc": "精選本地創作者短片放映暨映後談。",
-      "type": "電影",
-      "start_at": "2025-10-18T19:00:00",
-      "end_at": "2025-10-18T21:00:00",
-      "url": "https://example.com/event/film",
-      "price_min": 0,
-      "price_max": 200,
-      "venue": { "name": "台北市中山堂 光點廳", "district": "中正區", "lat": 25.0435, "lng": 121.5167 }
-    },
-    {
-      "title": "王大閎建築劇場「登月：氣味與聲音劇場」",
-      "desc": "跨感官的建築與聲音裝置展演。",
-      "type": "展覽",
-      "start_at": "2025-10-21T00:00:00",
-      "end_at": "2025-12-21T23:59:59",
-      "url": "https://www.tfam.museum/",
-      "price_min": null,
-      "price_max": null,
-      "venue": { "name": "臺北市立美術館", "district": "中山區", "lat": 25.0723, "lng": 121.5249 }
-    },
-    {
-      "title": "2025自綠生活節",
-      "desc": "戶外主題市集與永續生活展。",
-      "type": "市集",
-      "start_at": "2025-10-18T00:00:00",
-      "end_at": "2025-10-19T23:59:59",
-      "url": "https://www.huashan1914.com/",
-      "price_min": null,
-      "price_max": null,
-      "venue": { "name": "華山1914文化創意產業園區", "district": "中正區", "lat": 25.0447, "lng": 121.5299 }
-    }
-  ]
-}
-</script>
-
 <script>
+/* 常數 */
 const CULTURE_API = "https://cultureexpress.taipei/OpenData/Event/C000003";
 const TPE_TOWNS_TOPO = "https://raw.githubusercontent.com/jason2506/Taiwan.TopoJSON/master/topojson/towns/63000.json";
+/* 你的 CKAN v1 來源：中山堂演出 */
+const ZSH_V1_URL = "https://data.taipei/api/v1/dataset/983810cb-d03a-4505-b73b-460eaca28ae4?scope=resourceAquire";
+const ZSH_RESOURCE_ID = "983810cb-d03a-4505-b73b-460eaca28ae4";
 
-let map, userLoc = { lat: 25.0375, lng: 121.5637 }, markers=[];
+let map, userLoc={lat:25.0375,lng:121.5637}, markers=[];
 
-function qs(id){return document.getElementById(id)}
-function fmtTime(iso){const d=new Date(iso);const mm=String(d.getMonth()+1).padStart(2,'0');const dd=String(d.getDate()).padStart(2,'0');const hh=String(d.getHours()).padStart(2,'0');const mi=String(d.getMinutes()).padStart(2,'0');return `${mm}/${dd} ${hh}:${mi}`}
-function haversineKm(a,b){const R=6371,toRad=x=>x*Math.PI/180;const dLat=toRad(b[0]-a[0]);const dLng=toRad(b[1]-a[1]);const lat1=toRad(a[0]);const lat2=toRad(b[0]);const h=Math.sin(dLat/2)**2+Math.cos(lat1)*Math.cos(lat2)*Math.sin(dLng/2)**2;return 2*R*Math.asin(Math.sqrt(h))}
+/* 小工具 */
+const qs=id=>document.getElementById(id);
+const fmt=t=>{const d=new Date(t);const mm=String(d.getMonth()+1).padStart(2,'0');const dd=String(d.getDate()).padStart(2,'0');const hh=String(d.getHours()).padStart(2,'0');const mi=String(d.getMinutes()).padStart(2,'0');return `${mm}/${dd} ${hh}:${mi}`};
+const hav=(a,b)=>{const R=6371,rad=x=>x*Math.PI/180;const dlat=rad(b[0]-a[0]),dlng=rad(b[1]-a[1]),la1=rad(a[0]),la2=rad(b[0]);const h=Math.sin(dlat/2)**2+Math.cos(la1)*Math.cos(la2)*Math.sin(dlng/2)**2;return 2*R*Math.asin(Math.sqrt(h))};
+const gv=(o,ks)=>ks.find(k=>o?.[k]!=null);
 
-function initMap(){
-  map = new maplibregl.Map({container:'map',style:'https://demotiles.maplibre.org/style.json',center:[userLoc.lng,userLoc.lat],zoom:12});
+/* 地圖 */
+async function initMap(){
+  map=new maplibregl.Map({container:'map',style:'https://demotiles.maplibre.org/style.json',center:[userLoc.lng,userLoc.lat],zoom:12});
   map.addControl(new maplibregl.NavigationControl(),'top-left');
-  new maplibregl.Marker({color:"#0ea5e9"}).setLngLat([userLoc.lng,userLoc.lat]).addTo(map);
-  map.on('mousemove', e=>{qs('coord').textContent=`${e.lngLat.lat.toFixed(6)}, ${e.lngLat.lng.toFixed(6)}`});
-  map.on('load', async ()=>{const topo=await fetch(TPE_TOWNS_TOPO).then(r=>r.json());const geo=topojson.feature(topo, topo.objects.towns);map.addSource('tpe',{type:'geojson',data:geo});map.addLayer({id:'tpe-line',type:'line',source:'tpe',paint:{'line-color':'#0284c7','line-width':1}});
-    const set=new Set(geo.features.map(f=>f.properties.TOWNNAME)); const distSel=qs('dist'); [...set].sort().forEach(n=>{const o=document.createElement('option');o.value=n;o.textContent=n;distSel.appendChild(o)});
+  new maplibregl.Marker({color:"#60a5fa"}).setLngLat([userLoc.lng,userLoc.lat]).addTo(map);
+  map.on('mousemove',e=>{qs('coord').textContent=`${e.lngLat.lat.toFixed(6)}, ${e.lngLat.lng.toFixed(6)}`});
+  const topo=await fetch(TPE_TOWNS_TOPO).then(r=>r.json());
+  const geo=topojson.feature(topo, topo.objects.towns);
+  map.on('load',()=>{
+    map.addSource('tpe',{type:'geojson',data:geo});
+    map.addLayer({id:'tpe-line',type:'line',source:'tpe',paint:{'line-color':'#3b82f6','line-width':1}});
+    const set=new Set(geo.features.map(f=>f.properties.TOWNNAME));
+    const distSel=qs('dist'); [...set].sort().forEach(n=>{const o=document.createElement('option');o.value=n;o.textContent=n;distSel.appendChild(o)});
   });
 }
 
-function normalize(evt){
-  const priceTxt=(evt.TicketPrice||"").replace(/,/g,""); const prices=[...priceTxt.matchAll(/\d+/g)].map(x=>+x[0]);
-  const startISO=(evt.SessionStartDate||evt.StartDate||evt.Start||"").toString().replace(" ","T");
-  const endISO=(evt.SessionEndDate||evt.EndDate||evt.End||"").toString().replace(" ","T");
-  const lat=Number(evt.Latitude??evt.latitude??evt.lat), lng=Number(evt.Longitude??evt.longitude??evt.lng);
-  return {title:evt.Caption||evt.Title||"",desc:evt.Introduction||evt.Description||"",type:evt.Category||evt.Type||"",
-          start_at:startISO||new Date().toISOString(), end_at:endISO||startISO||new Date().toISOString(),
-          url:evt.WebsiteLink||evt.RelatedLink||evt.Url||"", price_min:prices.length?Math.min(...prices):null, price_max:prices.length?Math.max(...prices):null,
-          venue:{name:evt.Venue||evt.Address||"",district:evt.Area||"",lat,lng}};
+/* 正規化：文化快遞 */
+function normCulture(x){
+  const prices=[...String(x.TicketPrice||"").replace(/,/g,"").matchAll(/\d+/g)].map(m=>+m[0]);
+  const lat=Number(x.Latitude??x.lat), lng=Number(x.Longitude??x.lng);
+  return {
+    title: x.Caption||x.Title||"",
+    desc: x.Introduction||x.Description||"",
+    type: x.Category||x.Type||"",
+    start_at: (x.SessionStartDate||x.StartDate||x.Start||"").toString().replace(" ","T"),
+    end_at: (x.SessionEndDate||x.EndDate||x.End||"").toString().replace(" ","T"),
+    url: x.WebsiteLink||x.RelatedLink||x.Url||"",
+    price_min: prices.length?Math.min(...prices):null,
+    price_max: prices.length?Math.max(...prices):null,
+    venue: { name:x.Venue||x.Address||"", district:x.Area||"", lat, lng }
+  };
 }
 
+/* 正規化：中山堂 CKAN v1 */
+function normZSH(row){
+  // 動態鍵名容錯
+  const titleK = gv(row,["title","Caption","節目名稱","活動名稱","name","program","program_name"]);
+  const descK  = gv(row,["description","Introduction","簡介","內容","intro"]);
+  const typeK  = gv(row,["type","Category","類型","分類"]);
+  const stK    = gv(row,["start_at","start","startDate","StartDate","SessionStartDate","開始時間","show_start"]);
+  const edK    = gv(row,["end_at","end","endDate","EndDate","SessionEndDate","結束時間","show_end"]);
+  const urlK   = gv(row,["url","WebsiteLink","RelatedLink","連結","link"]);
+  const placeK = gv(row,["venue","place","場地","location","地點","Venue"]);
+  const distK  = gv(row,["district","行政區","Area"]);
+  const latK   = gv(row,["lat","latitude","Latitude","緯度"]);
+  const lngK   = gv(row,["lng","longitude","Longitude","經度","lon"]);
+  const priceK = gv(row,["price","ticket","TicketPrice","票價","售票價格"]);
+
+  const prices=[...String(row?.[priceK]??"").replace(/,/g,"").matchAll(/\d+/g)].map(m=>+m[0]);
+  const lat=Number(row?.[latK]), lng=Number(row?.[lngK]);
+
+  return {
+    title: row?.[titleK]??"",
+    desc: row?.[descK]??"",
+    type: row?.[typeK]??"表演",
+    start_at: String(row?.[stK]??"").replace(" ","T"),
+    end_at: String(row?.[edK]??row?.[stK]??"").replace(" ","T"),
+    url: row?.[urlK]??"",
+    price_min: prices.length?Math.min(...prices):null,
+    price_max: prices.length?Math.max(...prices):null,
+    venue: { name: row?.[placeK]??"中山堂", district: row?.[distK]??"", lat, lng }
+  };
+}
+
+/* 抓資料 */
 async function fetchCulture(){
-  const r = await fetch(CULTURE_API,{mode:"cors"}); if(!r.ok) throw new Error("api fail"); const j=await r.json();
-  const rows = Array.isArray(j)?j: Array.isArray(j?.data)?j.data: Array.isArray(j?.result?.results)?j.result.results:[];
-  return rows.map(normalize);
+  const r=await fetch(CULTURE_API,{mode:"cors"}); if(!r.ok) throw new Error("culture api");
+  const j=await r.json();
+  const rows=Array.isArray(j)?j: Array.isArray(j?.data)?j.data: Array.isArray(j?.result?.results)?j.result.results:[];
+  return rows.map(normCulture);
+}
+async function fetchZSH(){
+  // CKAN v1 scope=resourceAquire，接受 POST JSON 參數 {resource_id:...}
+  const r=await fetch(ZSH_V1_URL,{
+    method:"POST",
+    headers:{"Content-Type":"application/json"},
+    body: JSON.stringify({ resource_id: ZSH_RESOURCE_ID })
+  });
+  if(!r.ok) throw new Error("zsh api");
+  const j=await r.json();
+  // 兼容多種包裝
+  const rows = Array.isArray(j)?j
+              : Array.isArray(j?.result?.results)?j.result.results
+              : Array.isArray(j?.result?.records)?j.result.records
+              : Array.isArray(j?.data)?j.data
+              : [];
+  return rows.map(normZSH);
 }
 
-function render(list){
-  const box=qs('results'); box.innerHTML=""; markers.forEach(m=>m.remove()); markers=[];
-  if(!list.length){ box.innerHTML=`<div class="p-4 text-sm border border-gray-700 rounded">無符合結果</div>`; return; }
-  list.forEach(e=>{
-    if(Number.isFinite(e.venue?.lng)&&Number.isFinite(e.venue?.lat)){
-      const m=new maplibregl.Marker({color:"#fff"}).setLngLat([e.venue.lng,e.venue.lat]).addTo(map);
-      m.setPopup(new maplibregl.Popup({offset:24}).setHTML(`<b>${e.title}</b><div>${e.venue.name||""}</div>`)); markers.push(m);
-    }
-  });
-  list.forEach(e=>{
-    const card=document.createElement('article'); card.className="border border-gray-700 rounded p-3 bg-gray-900";
-    const price=(e.price_min==null&&e.price_max==null)?"—":`${e.price_min??0} — ${e.price_max??e.price_min??0}`;
-    card.innerHTML=`<div class="flex items-center justify-between gap-2">
-      <h3 class="font-medium text-lg">${e.title}</h3>
-      <span class="badge">${e.type||"—"}</span></div>
-      <p class="text-sm text-gray-300 mt-1 clamp-2">${e.desc||""}</p>
-      <div class="mt-2 grid sm:grid-cols-2 gap-1 text-sm">
-        <p>時間：${fmtTime(e.start_at)} — ${fmtTime(e.end_at)}</p>
-        <p>地點：${e.venue?.name||""}（${e.venue?.district||""}）</p>
-        <p>票價：${price}</p></div>
-      <div class="mt-3"><a class="px-3 py-1.5 border border-gray-700 rounded text-sm" href="${e.url||"#"}" target="_blank" rel="noopener">活動連結</a></div>`;
-    box.appendChild(card);
-  });
-}
-
-function params(){
+/* 篩選 */
+function collectParams(){
   const now=new Date(), end=new Date(now.getTime()+Number(qs("days").value)*86400000);
   return {q:qs("q").value.trim(), lat:userLoc.lat,lng:userLoc.lng, radius_km:Number(qs("radius").value),
           start:now.toISOString(), end:end.toISOString(), types:qs("type").value, price_max:Number(qs("pmax").value||0)||"", district:qs("dist").value||""};
 }
-function filter(list){
-  const p=params(), now=new Date(p.start), until=new Date(p.end);
+function filterEvents(list){
+  const p=collectParams(), now=new Date(p.start), until=new Date(p.end);
   list.forEach(e=>{
-    if(p.lat&&p.lng&&Number.isFinite(e.venue?.lat)&&Number.isFinite(e.venue?.lng)){ e._km=haversineKm([p.lat,p.lng],[e.venue.lat,e.venue.lng]); }
+    if(p.lat&&p.lng&&Number.isFinite(e.venue?.lat)&&Number.isFinite(e.venue?.lng)){ e._km=hav([p.lat,p.lng],[e.venue.lat,e.venue.lng]); }
   });
   return list.filter(e=>{
-    const st=new Date(e.start_at), ed=new Date(e.end_at||e.start_at);
+    const st=new Date(e.start_at||Date.now()), ed=new Date(e.end_at||e.start_at||Date.now());
     const inRange=(st<=until)&&(ed>=now);
-    const typeOk=!p.types||e.type.includes(p.types);
+    const typeOk=!p.types||String(e.type||"").includes(p.types);
     const distOk=!p.district||e.venue?.district===p.district;
     const priceOk=!p.price_max||(e.price_min==null&&e.price_max==null)||((e.price_min??0)<=p.price_max);
     const qOk=!p.q||[e.title,e.desc,e.venue?.name,e.type,e.venue?.district].some(s=>(s||"").includes(p.q));
-    let radiusOk=true; if(p.radius_km&&Number.isFinite(e.venue?.lat)&&Number.isFinite(e.venue?.lng)){ radiusOk=e._km<=p.radius_km; }
+    let radiusOk=true; if(p.radius_km&&Number.isFinite(e.venue?.lat)&&Number.isFinite(e.venue?.lng)){ radiusOk=(e._km<=p.radius_km); }
     return inRange&&typeOk&&distOk&&priceOk&&qOk&&radiusOk;
   }).sort((a,b)=>(a._km??999)-(b._km??999));
 }
 
+/* 呈現 */
+function clearMarkers(){markers.forEach(m=>m.remove()); markers=[];}
+function render(list){
+  const box=qs('results'); box.innerHTML=""; clearMarkers();
+  if(!list.length){ box.innerHTML=`<div class="card">無符合結果</div>`; return; }
+  // markers
+  list.forEach(e=>{
+    if(Number.isFinite(e.venue?.lng)&&Number.isFinite(e.venue?.lat)){
+      const m=new maplibregl.Marker({color:"#fff"}).setLngLat([e.venue.lng,e.venue.lat]).addTo(map);
+      m.setPopup(new maplibregl.Popup({offset:24}).setHTML(`<b>${e.title}</b><div>${e.venue?.name||""}</div>`)); markers.push(m);
+    }
+  });
+  // cards
+  list.forEach(e=>{
+    const price=(e.price_min==null&&e.price_max==null)?"—":`${e.price_min??0} — ${e.price_max??e.price_min??0}`;
+    const card=document.createElement('article'); card.className="card";
+    card.innerHTML=`<div class="flex items-center justify-between gap-2">
+        <h3 class="font-medium text-lg">${e.title}</h3>
+        <span class="badge">${e.type||"—"}</span></div>
+      <p class="text-sm text-gray-300 mt-1 clamp-2">${e.desc||""}</p>
+      <div class="mt-2 grid sm:grid-cols-2 gap-1 text-sm">
+        <p>時間：${fmt(e.start_at)} — ${fmt(e.end_at||e.start_at)}</p>
+        <p>地點：${e.venue?.name||""}（${e.venue?.district||""}）</p>
+        <p>票價：${price}</p></div>
+      <div class="mt-3"><a class="ctl" href="${e.url||"#"}" target="_blank" rel="noopener">活動連結</a></div>`;
+    box.appendChild(card);
+  });
+}
+
+/* 搜尋 */
 async function search(){
   qs('alert').classList.add('hidden'); qs('alert').textContent="";
   try{
-    const api = await fetchCulture();
-    render(filter(api));
+    const [c,z]=await Promise.allSettled([fetchCulture(), fetchZSH()]);
+    const cList=c.status==="fulfilled"?c.value:[]; const zList=z.status==="fulfilled"?z.value:[];
+    const merged=[...cList,...zList];
+    render(filterEvents(merged));
+    if(z.status!=="fulfilled"){ qs('alert').textContent="中山堂資料來源失敗，已忽略。"; qs('alert').classList.remove('hidden'); }
+    if(c.status!=="fulfilled"){ qs('alert').textContent="文化快遞來源失敗，僅顯示中山堂資料。"; qs('alert').classList.remove('hidden'); }
   }catch(e){
-    qs('alert').textContent="資料來源暫時無法取得，改用備援資料。";
-    qs('alert').classList.remove('hidden');
-    try{
-      const embedded = JSON.parse(qs('events-fallback').textContent);
-      const list = Array.isArray(embedded)?embedded:embedded.results||[];
-      render(filter(list));
-    }catch(e2){
-      qs('results').innerHTML=`<div class="p-4 text-sm border rounded border-red-800 bg-red-900/20">備援資料也無法載入。</div>`;
-    }
+    qs('results').innerHTML=`<div class="card">所有來源皆失敗</div>`;
   }
 }
 
+/* 綁定 */
 function bind(){
   qs("btn").onclick=search;
   ["type","days","radius","pmax","dist"].forEach(id=>qs(id).onchange=search);
@@ -205,6 +238,7 @@ function bind(){
   qs("recenter").onclick=()=>{userLoc={lat:25.0375,lng:121.5637}; map.flyTo({center:[userLoc.lng,userLoc.lat],zoom:12});};
 }
 
+/* 啟動 */
 initMap(); bind(); search();
 </script>
 </body>
