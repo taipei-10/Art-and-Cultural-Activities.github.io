@@ -104,9 +104,9 @@ dialog::backdrop{background:rgba(0,0,0,.45)}
 .leaflet-control-container .leaflet-control{border-radius:10px; overflow:hidden}
 </style>
 
-<!-- 覆寫：1) checkbox 與文字更近且不換行 2) 套用篩選置中並放大 -->
+<!-- 覆寫：讓「顯示與我距離」與搜尋框同左緣，並與「最大距離」上下對齊 -->
 <style>
-.sidebar .switch{gap:6px; white-space:nowrap}
+.sidebar .switch{gap:6px; white-space:nowrap; margin:12px 0; padding-left:0}
 .sidebar .switch input{margin:0}
 .actions{justify-content:center}
 .actions .btn{font-size:18px; padding:12px 20px}
@@ -145,8 +145,7 @@ dialog::backdrop{background:rgba(0,0,0,.45)}
         <div id="dateChips" class="switch" style="flex-wrap:wrap"></div>
       </label>
       <label class="field"><span>最大距離（公里）</span><input id="maxKm" type="number" min="0" step="0.5" placeholder="不限制"></label>
-      <!-- 已改為 flex 排列並縮小間距 -->
-      <label class="switch"><input type="checkbox" id="useGeo"><span>顯示與我距離</span></label>
+      <label class="switch"><input type="checkbox" id="useGeo"> 顯示與我距離</label>
       <div class="actions"><button id="btnFilter" class="btn">套用篩選</button></div>
       <p class="help">來源 <code>events.json</code>。自動清洗欄位、票價、主辦、標籤、講者、系列、連結等。</p>
     </div>
@@ -539,5 +538,3 @@ boot();
 </script>
 </body>
 </html>
-
-   
