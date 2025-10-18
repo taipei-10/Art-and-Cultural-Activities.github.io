@@ -1,161 +1,259 @@
 <!doctype html>
 <html lang="zh-Hant">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>台北藝文・智慧搜尋</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://unpkg.com/maplibre-gl@3.6.2/dist/maplibre-gl.css" rel="stylesheet" />
-  <script src="https://unpkg.com/maplibre-gl@3.6.2/dist/maplibre-gl.js"></script>
-  <style>
-    #map { height: 360px; }
-  </style>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>台北藝文・智慧搜尋</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://unpkg.com/maplibre-gl@3.6.2/dist/maplibre-gl.css" rel="stylesheet" />
+<script src="https://unpkg.com/maplibre-gl@3.6.2/dist/maplibre-gl.js"></script>
+<style>
+  #map { height: 420px; }
+  .maplibregl-popup-content{font-size:12px;line-height:1.3}
+</style>
 </head>
 <body class="bg-gray-50">
-  <div class="max-w-6xl mx-auto p-4">
-    <header class="mb-3">
-      <h1 class="text-2xl font-semibold">台北市最近幾天藝文活動</h1>
-      <p class="text-sm text-gray-600">自然語句搜尋＋條件篩選＋地圖</p>
-    </header>
+<div class="max-w-6xl mx-auto p-4">
+  <header class="mb-3">
+    <h1 class="text-2xl font-semibold">台北市最近幾天藝文活動</h1>
+    <p class="text-sm text-gray-600">地圖含座標、行政區、路徑規劃</p>
+  </header>
 
-    <section class="grid md:grid-cols-3 gap-3 mb-3">
-      <div class="md:col-span-2 flex gap-2">
-        <input id="q" class="flex-1 border rounded px-3 py-2" placeholder="輸入：明後天 士林 展覽 300元以下" />
-        <button id="btn" class="px-4 py-2 bg-black text-white rounded">搜尋</button>
+  <section class="grid md:grid-cols-3 gap-3 mb-3">
+    <div class="md:col-span-2 flex gap-2">
+      <input id="q" class="flex-1 border rounded px-3 py-2" placeholder="輸入：明後天 士林 展覽 300元以下" />
+      <button id="btn" class="px-4 py-2 bg-black text-white rounded">搜尋</button>
+    </div>
+    <div class="grid grid-cols-3 gap-2">
+      <select id="type" class="border rounded px-2 py-2">
+        <option value="">全部類型</option><option>展覽</option><option>表演</option>
+        <option>講座</option><option>電影</option><option>市集</option>
+      </select>
+      <select id="days" class="border rounded px-2 py-2">
+        <option value="3">近3天</option><option value="7">近7天</option>
+      </select>
+      <select id="radius" class="border rounded px-2 py-2">
+        <option value="2">2km</option><option value="5" selected>5km</option><option value="10">10km</option>
+      </select>
+    </div>
+  </section>
+
+  <section class="rounded border mb-3 relative">
+    <div id="map"></div>
+    <div id="coord" class="absolute right-2 top-2 bg-white/90 border rounded px-2 py-1 text-xs font-mono"></div>
+  </section>
+
+  <section class="grid md:grid-cols-3 gap-3">
+    <aside class="md:col-span-1 space-y-2">
+      <label class="block text-sm">票價上限（NT$）
+        <input id="pmax" type="number" class="border rounded w-full px-2 py-2" placeholder="如 300" />
+      </label>
+      <label class="block text-sm">行政區（依圖層）
+        <select id="dist" class="border rounded w-full px-2 py-2">
+          <option value="">全部</option>
+          <option>士林區</option><option>中山區</option>
+        </select>
+      </label>
+      <button id="reset" class="w-full px-3 py-2 border rounded">清除條件</button>
+      <div id="routeInfo" class="text-xs text-gray-600"></div>
+    </aside>
+    <main id="results" class="md:col-span-2 space-y-3"></main>
+  </section>
+</div>
+
+<script>
+const API_BASE = "";            // 之後換成你的後端
+const FALLBACK_JSON = "events.json";
+let map, userLoc = { lat: 25.0375, lng: 121.5637 }; // 台北市府
+
+// 簡化版台北行政區 GeoJSON（示例：士林、中山）。換成完整資料即可。
+const TAIPEI_DISTRICTS = {
+ "type":"FeatureCollection","features":[
+  {"type":"Feature","properties":{"name":"士林區"},
+   "geometry":{"type":"Polygon","coordinates":[[
+    [121.515,25.115],[121.55,25.115],[121.57,25.10],[121.57,25.08],[121.55,25.07],
+    [121.52,25.08],[121.50,25.095],[121.503,25.11],[121.515,25.115]
+   ]]}},
+  {"type":"Feature","properties":{"name":"中山區"},
+   "geometry":{"type":"Polygon","coordinates":[[
+    [121.51,25.08],[121.545,25.08],[121.555,25.07],[121.555,25.06],[121.545,25.05],
+    [121.515,25.05],[121.505,25.06],[121.505,25.07],[121.51,25.08]
+   ]]}}
+ ]};
+
+// 地圖
+function initMap(){
+  map = new maplibregl.Map({
+    container:'map',
+    style:'https://demotiles.maplibre.org/style.json',
+    center:[userLoc.lng,userLoc.lat], zoom:12
+  });
+  map.addControl(new maplibregl.NavigationControl(), 'top-left');
+
+  // 使用者定位
+  new maplibregl.Marker().setLngLat([userLoc.lng,userLoc.lat]).addTo(map)
+    .setPopup(new maplibregl.Popup({closeButton:false}).setText(`你的位置\n${userLoc.lat.toFixed(5)}, ${userLoc.lng.toFixed(5)}`));
+
+  // 座標 readout
+  map.on('mousemove', e=>{
+    const c = document.getElementById('coord');
+    c.textContent = `${e.lngLat.lat.toFixed(6)}, ${e.lngLat.lng.toFixed(6)}`;
+  });
+
+  // 行政區圖層
+  map.on('load', ()=>{
+    map.addSource('tpe-dists',{type:'geojson', data: TAIPEI_DISTRICTS});
+    map.addLayer({
+      id:'tpe-fill', type:'fill', source:'tpe-dists',
+      paint:{'fill-color':'#0080ff','fill-opacity':0.08}
+    });
+    map.addLayer({
+      id:'tpe-line', type:'line', source:'tpe-dists',
+      paint:{'line-color':'#0060b0','line-width':1}
+    });
+    // 點行政區顯示名稱
+    map.on('click','tpe-fill', e=>{
+      const name = e.features[0].properties.name;
+      new maplibregl.Popup().setLngLat(e.lngLat).setHTML(`<b>${name}</b>`).addTo(map);
+      document.getElementById('dist').value = name;
+      search();
+    });
+    map.on('mouseenter','tpe-fill', ()=> map.getCanvas().style.cursor='pointer');
+    map.on('mouseleave','tpe-fill', ()=> map.getCanvas().style.cursor='');
+  });
+}
+
+async function geolocate(){
+  if(!navigator.geolocation) return;
+  navigator.geolocation.getCurrentPosition(p=>{
+    userLoc = {lat:p.coords.latitude, lng:p.coords.longitude};
+    if(map){ map.setCenter([userLoc.lng,userLoc.lat]); }
+  });
+}
+
+function qs(id){ return document.getElementById(id); }
+function fmtTime(iso){
+  const d = new Date(iso);
+  const mm = (d.getMonth()+1).toString().padStart(2,'0');
+  const dd = d.getDate().toString().padStart(2,'0');
+  const hh = d.getHours().toString().padStart(2,'0');
+  const mi = d.getMinutes().toString().padStart(2,'0');
+  return `${mm}/${dd} ${hh}:${mi}`;
+}
+
+function render(list){
+  const box = qs("results"); box.innerHTML="";
+  // 清除舊路線
+  clearRoute();
+
+  list.forEach(e=>{
+    const card = document.createElement("article");
+    card.className = "border rounded p-3 bg-white";
+    card.innerHTML = `
+      <div class="flex justify-between">
+        <h3 class="font-medium text-lg">${e.title}</h3>
+        <span class="text-sm text-gray-500">${e.type||""}</span>
       </div>
-      <div class="grid grid-cols-3 gap-2">
-        <select id="type" class="border rounded px-2 py-2">
-          <option value="">全部類型</option>
-          <option>展覽</option><option>表演</option><option>講座</option>
-          <option>電影</option><option>市集</option>
-        </select>
-        <select id="days" class="border rounded px-2 py-2">
-          <option value="3">近3天</option><option value="7">近7天</option>
-        </select>
-        <select id="radius" class="border rounded px-2 py-2">
-          <option value="2">2km</option><option value="5" selected>5km</option><option value="10">10km</option>
-        </select>
-      </div>
-    </section>
+      <p class="text-sm text-gray-700 line-clamp-2">${e.desc||""}</p>
+      <p class="text-sm mt-1">時間：${fmtTime(e.start_at)} — ${fmtTime(e.end_at)}</p>
+      <p class="text-sm">地點：${e.venue?.name||""}（${e.venue?.district||""}）</p>
+      <p class="text-sm">票價：${e.price_min==null?"—":e.price_min} — ${e.price_max==null?"—":e.price_max}</p>
+      <div class="mt-2 flex gap-2">
+        <a class="px-3 py-1 border rounded text-sm" href="${e.url}" target="_blank" rel="noopener">活動連結</a>
+        <button class="px-3 py-1 border rounded text-sm route-btn">路徑</button>
+      </div>`;
+    box.appendChild(card);
 
-    <section id="map" class="rounded border mb-3"></section>
+    // 地圖標記
+    if(map && e.venue?.lng && e.venue?.lat){
+      const m = new maplibregl.Marker({color:"#333"}).setLngLat([e.venue.lng,e.venue.lat]).addTo(map);
+      m.getElement().title = e.title;
+      const popupHtml = `
+        <div><b>${e.title}</b></div>
+        <div>${e.venue.name||""}</div>
+        <div>${e.venue.lat.toFixed?.(5)||e.venue.lat}, ${e.venue.lng.toFixed?.(5)||e.venue.lng}</div>`;
+      m.setPopup(new maplibregl.Popup({offset:24}).setHTML(popupHtml));
 
-    <section class="grid md:grid-cols-3 gap-3">
-      <aside class="md:col-span-1 space-y-2">
-        <label class="block text-sm">票價上限（NT$）
-          <input id="pmax" type="number" class="border rounded w-full px-2 py-2" placeholder="如 300" />
-        </label>
-        <label class="block text-sm">行政區
-          <select id="dist" class="border rounded w-full px-2 py-2">
-            <option value="">全部</option>
-            <option>士林區</option><option>中山區</option><option>大安區</option>
-            <option>信義區</option><option>萬華區</option><option>松山區</option>
-          </select>
-        </label>
-        <button id="reset" class="w-full px-3 py-2 border rounded">清除條件</button>
-      </aside>
-
-      <main id="results" class="md:col-span-2 space-y-3"></main>
-    </section>
-  </div>
-
-  <script>
-    const API_BASE = ""; // 之後改成你的後端，如 "https://api.example.com"
-    const FALLBACK_JSON = "events.json"; // 先用靜態檔測試
-    let map, userLoc = { lat: 25.0375, lng: 121.5637 }; // 台北市府
-
-    function initMap() {
-      map = new maplibregl.Map({
-        container: 'map',
-        style: 'https://demotiles.maplibre.org/style.json',
-        center: [userLoc.lng, userLoc.lat],
-        zoom: 12
-      });
-      new maplibregl.Marker().setLngLat([userLoc.lng, userLoc.lat]).addTo(map);
+      // 卡片按鈕 → 畫路徑
+      card.querySelector('.route-btn').onclick = ()=> drawRoute([userLoc.lng,userLoc.lat],[e.venue.lng,e.venue.lat], e.title);
     }
+  });
+}
 
-    async function geolocate() {
-      if (!navigator.geolocation) return;
-      navigator.geolocation.getCurrentPosition(p => {
-        userLoc = { lat: p.coords.latitude, lng: p.coords.longitude };
-        if (map) { map.setCenter([userLoc.lng, userLoc.lat]); }
-      });
-    }
+// 參數
+function params(){
+  const now = new Date();
+  const end = new Date(now.getTime() + Number(qs("days").value)*86400000);
+  return {
+    q: qs("q").value.trim(),
+    lat: userLoc.lat, lng: userLoc.lng,
+    radius_km: Number(qs("radius").value),
+    start: now.toISOString(), end: end.toISOString(),
+    types: qs("type").value,
+    price_max: qs("pmax").value || "",
+    district: qs("dist").value || ""
+  };
+}
 
-    function qs(id){ return document.getElementById(id); }
-    function fmtTime(iso){
-      const d = new Date(iso);
-      const mm = (d.getMonth()+1).toString().padStart(2,'0');
-      const dd = d.getDate().toString().padStart(2,'0');
-      const hh = d.getHours().toString().padStart(2,'0');
-      const mi = d.getMinutes().toString().padStart(2,'0');
-      return `${mm}/${dd} ${hh}:${mi}`;
-    }
+async function search(){
+  const p = params();
+  try{
+    const url = API_BASE ? `${API_BASE}/search?`+new URLSearchParams(p) : FALLBACK_JSON;
+    const r = await fetch(url);
+    const data = await r.json();
+    const list = (data.results || data).filter(e=>{
+      // 若選了行政區，與圖層一致才顯示
+      return !p.district || (e.venue && e.venue.district===p.district);
+    });
+    render(list);
+  }catch(e){ console.error(e); render([]); }
+}
 
-    function render(list){
-      const box = qs("results");
-      box.innerHTML = "";
-      list.forEach(e=>{
-        const card = document.createElement("article");
-        card.className = "border rounded p-3 bg-white";
-        card.innerHTML = `
-          <div class="flex justify-between">
-            <h3 class="font-medium text-lg">${e.title}</h3>
-            <span class="text-sm text-gray-500">${e.type||""}</span>
-          </div>
-          <p class="text-sm text-gray-700 line-clamp-2">${e.desc||""}</p>
-          <p class="text-sm mt-1">時間：${fmtTime(e.start_at)} — ${fmtTime(e.end_at)}</p>
-          <p class="text-sm">地點：${e.venue?.name||""}（${e.venue?.district||""}）</p>
-          <p class="text-sm">票價：${e.price_min==null?"—":e.price_min} — ${e.price_max==null?"—":e.price_max}</p>
-          <div class="mt-2 flex gap-2">
-            <a class="px-3 py-1 border rounded text-sm" href="${e.url}" target="_blank" rel="noopener">活動連結</a>
-          </div>`;
-        box.appendChild(card);
-        if (map && e.venue?.lng && e.venue?.lat){
-          const m = new maplibregl.Marker({color:"#333"}).setLngLat([e.venue.lng, e.venue.lat]).addTo(map);
-          m.getElement().title = e.title;
-        }
-      });
-    }
+function debounce(fn, ms=400){ let t; return (...a)=>{ clearTimeout(t); t=setTimeout(()=>fn(...a), ms); }; }
 
-    function params(){
-      const now = new Date();
-      const end = new Date(now.getTime() + Number(qs("days").value)*86400000);
-      return {
-        q: qs("q").value.trim(),
-        lat: userLoc.lat, lng: userLoc.lng,
-        radius_km: Number(qs("radius").value),
-        start: now.toISOString(),
-        end: end.toISOString(),
-        types: qs("type").value,
-        price_max: qs("pmax").value || "",
-        district: qs("dist").value || ""
-      };
-    }
+// 路徑繪製（OSRM demo）
+async function drawRoute(from, to, label="路徑"){
+  clearRoute();
+  const url = `https://router.project-osrm.org/route/v1/driving/${from[0]},${from[1]};${to[0]},${to[1]}?overview=full&geometries=geojson`;
+  const res = await fetch(url); const json = await res.json();
+  if(!json.routes || !json.routes[0]) return;
+  const route = json.routes[0];
+  const geo = {"type":"Feature","properties":{},"geometry":route.geometry};
 
-    async function search(){
-      const p = params();
-      try{
-        const url = API_BASE ? `${API_BASE}/search?`+new URLSearchParams(p) : FALLBACK_JSON;
-        const r = await fetch(url);
-        const data = await r.json();
-        render(data.results || data); // 後端或靜態皆可
-      }catch(e){
-        console.error(e);
-        render([]);
-      }
-    }
+  if(!map.getSource('route')){
+    map.addSource('route',{type:'geojson', data: geo});
+    map.addLayer({id:'route-line', type:'line', source:'route',
+      paint:{'line-color':'#ff3b30','line-width':4}});
+  }else{
+    map.getSource('route').setData(geo);
+  }
+  // fit bounds
+  const coords = route.geometry.coordinates;
+  const bounds = coords.reduce((b,c)=>b.extend(c), new maplibregl.LngLatBounds(coords[0],coords[0]));
+  map.fitBounds(bounds, {padding:40});
 
-    function debounce(fn, ms=400){
-      let t; return (...a)=>{ clearTimeout(t); t=setTimeout(()=>fn(...a), ms); };
-    }
+  // 顯示距離與時間
+  const km = (route.distance/1000).toFixed(2);
+  const min = Math.round(route.duration/60);
+  document.getElementById('routeInfo').textContent = `${label}｜距離 ${km} km，預估 ${min} 分鐘（汽車）`;
+}
 
-    // events
-    initMap(); geolocate(); search();
-    qs("btn").onclick = search;
-    qs("q").oninput = debounce(search, 500);
-    ["type","days","radius","pmax","dist"].forEach(id=>qs(id).onchange = search);
-    qs("reset").onclick = ()=>{ ["q","type","pmax","dist"].forEach(id=>qs(id).value=""); qs("days").value="3"; qs("radius").value="5"; search(); };
-  </script>
+function clearRoute(){
+  if(map?.getLayer('route-line')) map.removeLayer('route-line');
+  if(map?.getSource('route')) map.removeSource('route');
+  document.getElementById('routeInfo').textContent = "";
+}
+
+// init
+initMap(); geolocate(); search();
+qs("btn").onclick = search;
+qs("q").oninput = debounce(search, 500);
+["type","days","radius","pmax","dist"].forEach(id=>qs(id).onchange = search);
+qs("reset").onclick = ()=>{
+  ["q","type","pmax"].forEach(id=>qs(id).value="");
+  qs("days").value="3"; qs("radius").value="5"; qs("dist").value="";
+  search();
+};
+</script>
 </body>
 </html>
