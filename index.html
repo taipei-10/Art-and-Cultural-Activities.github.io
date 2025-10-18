@@ -124,15 +124,15 @@ dialog::backdrop{background:rgba(0,0,0,.45)}
           <option>北投區</option><option>內湖區</option><option>南港區</option><option>文山區</option>
         </select>
       </label>
+      <!-- 日期多選取代星期 -->
       <label class="field"><span>日期（可多選）</span>
-  <div style="display:flex;gap:8px;flex-wrap:wrap">
-    <input id="pickDate" type="date" />
-    <button id="addDate" class="btn">加入</button>
-    <button id="clearDates" class="btn">清空</button>
-  </div>
-  <div id="dateChips" class="switch" style="flex-wrap:wrap"></div>
-</label>
-
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <input id="pickDate" type="date" />
+          <button id="addDate" class="btn" type="button">加入</button>
+          <button id="clearDates" class="btn" type="button">清空</button>
+        </div>
+        <div id="dateChips" class="switch" style="flex-wrap:wrap"></div>
+      </label>
       <label class="field"><span>最大距離（公里）</span><input id="maxKm" type="number" min="0" step="0.5" placeholder="不限制"></label>
       <label class="switch"><input type="checkbox" id="useGeo"> 顯示與我距離</label>
       <div class="actions"><button id="btnLoad" class="btn primary">載入 events.json</button><button id="btnFilter" class="btn">套用篩選</button></div>
@@ -221,18 +221,6 @@ function extractPrices(rawMin, rawMax, rawStr){
   if(mn===mx) return {min:mn,max:mn,label:`${mn} 元`};
   return {min:mn,max:mx,label:`${mn}～${mx} 元`};
 }
-function occursOnWeekday(ev, want){
-  if(want===''||want==null) return true;
-  const w=parseInt(want,10);
-  const s=ev.start_at?new Date(ev.start_at):null; if(!s||Number.isNaN(+s)) return false;
-  const e=ev.end_at?new Date(ev.end_at):s;
-  const maxSpanDays=clamp(Math.ceil((e-s)/86400000)+1,1,400);
-  for(let i=0;i<maxSpanDays;i++){
-    const d=new Date(s.getFullYear(),s.getMonth(),s.getDate()+i);
-    if(d.getDay()===w) return true;
-  }
-  return false;
-}
 
 /* 封面：無 image 則用 SVG 佔位 */
 function coverFor(ev){
@@ -312,7 +300,40 @@ async function loadFromEventsJson(){
   }
 }
 
-/* ===== 呈現 ===== */
+/* ===== 日期多選狀態與工具 ===== */
+let selectedDates = new Set(); // 'YYYY-MM-DD'
+const dateOnly = (iso)=>{
+  const d = new Date(iso);
+  return Number.isNaN(+d)? null : new Date(d.getFullYear(), d.getMonth(), d.getDate());
+};
+function renderDateChips(){
+  const box=document.getElementById('dateChips');
+  box.innerHTML='';
+  [...selectedDates].sort().forEach(ds=>{
+    const chip=document.createElement('button');
+    chip.className='chip';
+    chip.type='button';
+    chip.textContent=ds+' ×';
+    chip.setAttribute('data-date', ds);
+    chip.style.cursor='pointer';
+    chip.onclick=()=>{ selectedDates.delete(ds); renderDateChips(); applyFilters(); };
+    box.appendChild(chip);
+  });
+}
+function occursOnAnySelectedDate(ev,set){
+  if(!set || set.size===0) return true;
+  const s = ev.start_at? dateOnly(ev.start_at): null;
+  if(!s) return false;
+  const e = ev.end_at? dateOnly(ev.end_at): s;
+  for(const ds of set){
+    const [Y,M,D]=ds.split('-').map(n=>parseInt(n,10));
+    const q = new Date(Y, M-1, D);
+    if(q>=s && q<=e) return true;
+  }
+  return false;
+}
+
+/* ===== 對應呈現 ===== */
 function render(list){
   markers.clearLayers();
   const wrap=document.getElementById('list'); wrap.innerHTML='';
@@ -359,14 +380,13 @@ function applyFilters(){
   const q=document.getElementById('q').value.trim().toLowerCase();
   const type=document.getElementById('type').value;
   const dist=document.getElementById('district').value;
-  const w=document.getElementById('weekday').value;
   const maxKm=parseFloat(document.getElementById('maxKm').value);
 
   const filtered=allEvents.filter(ev=>{
     if(q && !(`${ev._hay}`.includes(q))) return false;
     if(type && ev.type!==type) return false;
     if(dist && ev.venue.district!==dist) return false;
-    if(!occursOnWeekday(ev,w)) return false;
+    if(!occursOnAnySelectedDate(ev, selectedDates)) return false;
     if(!isNaN(maxKm)){
       if(ev._distance_km==null) return false;
       if(ev._distance_km>maxKm) return false;
@@ -398,7 +418,6 @@ function openDetail(ev){
   const timeLine = s? (e && +e>+s ? `${s.toLocaleString()} ～ ${e.toLocaleString()}` : s.toLocaleString()) : '時間未定';
   document.getElementById('d-time').textContent = timeLine;
 
-  // chips 與附加資訊
   const chips=[];
   if(ev.tags?.length) chips.push(...ev.tags.slice(0,6));
   if(ev.series) chips.push(`系列：${ev.series}`);
@@ -455,6 +474,7 @@ async function boot(){
     if(ev.lat!=null && ev.lng!=null) ev._distance_km=haversineKm([myPos.lat,myPos.lng],[ev.lat,ev.lng]);
   });
   render(allEvents);
+  renderDateChips();
 }
 document.getElementById('btnLoad').addEventListener('click',boot);
 document.getElementById('btnFilter').addEventListener('click',applyFilters);
@@ -475,6 +495,21 @@ document.getElementById('useGeo').addEventListener('change',e=>{
     myPos=null; if(meMarker){ map.removeLayer(meMarker); meMarker=null; }
     allEvents.forEach(ev=>ev._distance_km=null); applyFilters();
   }
+});
+
+/* 日期多選綁定 */
+document.getElementById('addDate').addEventListener('click', ()=>{
+  const input=document.getElementById('pickDate');
+  if(input.value){
+    selectedDates.add(input.value);
+    renderDateChips();
+    applyFilters();
+  }
+});
+document.getElementById('clearDates').addEventListener('click', ()=>{
+  selectedDates.clear();
+  renderDateChips();
+  applyFilters();
 });
 
 /* 開頁即嘗試讀取 events.json */
