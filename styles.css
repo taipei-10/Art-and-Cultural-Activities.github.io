@@ -110,13 +110,8 @@ body {
 }
 .brand-txt { font-weight: 800; font-size: var(--fz-22); letter-spacing: .6px; }
 
-.panel {
-  background: linear-gradient(180deg, var(--panel), color-mix(in oklab, var(--panel), var(--accent) 8%));
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: var(--space-5);
-  box-shadow: var(--shadow);
-}
+.panel { background: linear-gradient(180deg, var(--panel), color-mix(in oklab, var(--panel), var(--accent) 8%));
+  border: 1px solid var(--border); border-radius: var(--radius); padding: var(--space-5); box-shadow: var(--shadow); }
 .panel-title { font-size: var(--fz-18); margin: 0 0 var(--space-3); font-weight: 700; }
 .field { display: grid; gap: 6px; margin-bottom: var(--space-4); }
 .field > span { font-size: var(--fz-12); color: var(--ink-2); letter-spacing: .4px; text-transform: uppercase; }
@@ -126,14 +121,12 @@ input, select {
 }
 input::placeholder { color: #9aa3af; }
 
-/* === 更新區：讓方框與文字更靠近，並靠左對齊 === */
+/* === 更新區：讓方框與文字更靠近 === */
 .switch {
   display: flex;
   align-items: center;
-  justify-content: flex-start; /* 靠左對齊 */
-  text-align: left;             /* 文字靠左 */
-  gap: 1px;                     /* 原本是 10px */
-  white-space: nowrap;          /* 防止換行 */
+  gap: 4px;              /* 原本是 10px */
+  white-space: nowrap;   /* 防止換行 */
   margin: var(--space-2) 0 var(--space-4);
   font-size: var(--fz-14);
   color: var(--ink-2);
