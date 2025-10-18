@@ -1,18 +1,21 @@
 <!doctype html>
 <meta charset="utf-8">
-<title>藝文活動搜尋</title>
+<title>藝文活動搜尋（純前端）</title>
 <meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="stylesheet" href="styles.css">
 <style>
-  body{font-family:system-ui,sans-serif;max-width:900px;margin:24px auto;padding:0 12px}
-  header{display:grid;grid-template-columns:1fr 160px 160px 120px 90px;gap:8px}
+  body{font-family:system-ui,sans-serif;max-width:960px;margin:24px auto;padding:0 12px}
+  header{display:grid;grid-template-columns:1fr 140px 140px 120px 90px;gap:8px}
   .cards{margin-top:12px}
   .card{border:1px solid #ddd;border-radius:8px;padding:12px;margin:8px 0}
   .title{font-weight:700}
   .meta{font-size:14px;opacity:.8}
+  .sep{margin:18px 0 8px;font-weight:700}
+  #stats{font-size:14px;opacity:.8;margin-left:8px}
 </style>
 
 <header>
-  <input id="q" placeholder="關鍵字"/>
+  <input id="q" placeholder="關鍵字：標題/描述/場地/行政區">
   <select id="type"><option value="">所有類型</option></select>
   <select id="district"><option value="">所有行政區</option></select>
   <select id="weekday">
@@ -22,7 +25,7 @@
     <option value="五">星期五</option><option value="六">星期六</option>
     <option value="日">星期日</option>
   </select>
-  <label><input type="checkbox" id="freeOnly"> 免費</label>
+  <label style="display:flex;align-items:center;gap:6px"><input type="checkbox" id="freeOnly"> 免費</label>
 </header>
 
 <div style="margin:10px 0">
@@ -34,62 +37,127 @@
 <section class="cards" id="cards"></section>
 
 <script>
-const API = '';
+let DATA=[], VIEW=[];
+const $=id=>document.getElementById(id);
+
 init();
 
 async function init(){
-  const meta = await fetch(API + '/meta').then(r=>r.json());
-  fillSelect('type', meta.types);
-  fillSelect('district', meta.districts);
-  document.getElementById('search').onclick = run;
-  run();
+  const res = await fetch('events.json',{cache:'no-store'});
+  const raw = await res.json();
+  DATA = raw.map(normalize);
+  fillSelect($('#type'), uniq(DATA.map(x=>x.type)));
+  fillSelect($('#district'), uniq(DATA.map(x=>x.district)));
+  $('#search').onclick = applyFilter;
+  $('#q').addEventListener('input',debounce(applyFilter,150));
+  $('#type').onchange = $('#district').onchange = $('#weekday').onchange = $('#freeOnly').onchange = applyFilter;
+  $('#from').onchange = $('#to').onchange = applyFilter;
+  applyFilter();
 }
 
-function fillSelect(id, arr){
-  const sel = document.getElementById(id);
-  sel.innerHTML = '<option value="">全部</option>' + arr.map(v=>`<option>${esc(v)}</option>`).join('');
+function normalize(r){
+  const v = r.venue || {};
+  const n = {
+    _raw:r,
+    title: r.title || r.name || '',
+    desc: r.desc || r.description || '',
+    type: r.type || r.category || '',
+    start: r.start_at || r.start || r.date || '',
+    end:   r.end_at || r.end || '',
+    url:   r.url || r.link || '',
+    priceMin: num(r.price_min ?? r.priceMin ?? r.price ?? ''),
+    priceMax: num(r.price_max ?? r.priceMax ?? r.price ?? ''),
+    venueName: v.name || r.venue_name || '',
+    district: v.district || v.area || r.district || ''
+  };
+  n._hay = [n.title,n.desc,n.type,n.venueName,n.district,n.start,n.end,n.url].filter(Boolean).join(' ').toLowerCase();
+  return n;
+  function num(x){const n=parseFloat(x);return Number.isFinite(n)?n:null;}
 }
 
-async function run(){
-  const p = new URLSearchParams();
-  v('q') && p.set('q', v('q'));
-  v('type') && p.set('type', v('type'));
-  v('district') && p.set('district', v('district'));
-  v('weekday') && p.set('weekday', v('weekday'));
-  if (document.getElementById('freeOnly').checked) p.set('freeOnly','true');
-  v('from') && p.set('dateFrom', v('from'));
-  v('to') && p.set('dateTo', v('to'));
+function applyFilter(){
+  const words = $('#q').value.trim().toLowerCase().split(/\s+/).filter(Boolean);
+  const type = $('#type').value;
+  const district = $('#district').value;
+  const wd = parseWeekday($('#weekday').value);
+  const free = $('#freeOnly').checked;
+  const from = $('#from').value? new Date($('#from').value):null;
+  const to   = $('#to').value?   new Date($('#to').value):null;
 
-  const url = API + '/events?' + p.toString();
-  const data = await fetch(url).then(r=>r.json());
-  document.getElementById('stats').textContent = `共 ${data.total} 筆`;
-  render(data.results);
+  VIEW = DATA.filter(d=>{
+    if (type && d.type!==type) return false;
+    if (district && d.district!==district) return false;
+    if (free && !isFree(d)) return false;
+    if (words.length && !words.every(w=>d._hay.includes(w))) return false;
+    if ((from||to) && !overlap(d,from,to)) return false;
+    if (wd!==-1 && !hitsWeekday(d,wd)) return false;
+    return true;
+  });
+
+  render(VIEW);
 }
 
-function v(id){ return document.getElementById(id).value.trim(); }
-function esc(s){ return String(s).replace(/[&<>"']/g, m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m])); }
+function isFree(d){
+  if (d.priceMin===0 || d.priceMax===0) return true;
+  if (d.priceMin==null && d.priceMax==null) return false;
+  return false;
+}
+
+function overlap(d,from,to){
+  const s=d.start?new Date(d.start):null, e=d.end?new Date(d.end):null;
+  if(!s && !e) return false;
+  const S=s||e, E=e||s;
+  if(from && E && E<from) return false;
+  if(to && S && S>to) return false;
+  return true;
+}
+
+function hitsWeekday(d,wd){
+  const s=d.start?new Date(d.start):null, e=d.end?new Date(d.end):null;
+  if(!s && !e) return false;
+  let a=new Date(s||e), b=new Date(e||s);
+  a=new Date(a.getFullYear(),a.getMonth(),a.getDate());
+  b=new Date(b.getFullYear(),b.getMonth(),b.getDate());
+  for(let t=a;t<=b;t=setDays(t,1)) if(t.getDay()===wd) return true;
+  return (s||e).getDay()===wd;
+}
+function setDays(d,n){const t=new Date(d);t.setDate(t.getDate()+n);return t;}
+
+function parseWeekday(x){
+  if(!x) return -1;
+  const map={'日':0,'天':0,'一':1,'二':2,'三':3,'四':4,'五':5,'六':6};
+  return map[String(x).replace(/星期|週|禮拜/g,'').slice(-1)] ?? -1;
+}
 
 function render(list){
-  const el = document.getElementById('cards');
-  el.innerHTML = list.map(d=>card(d)).join('') || '無結果';
+  $('#stats').textContent = `共 ${list.length} 筆`;
+  const groups = groupBy(list, d => (d.start||'').slice(0,10) || '未提供日期');
+  const html = [...groups.entries()].map(([date,arr])=>{
+    return `<div class="sep">${esc(date)}</div>` + arr.map(card).join('');
+  }).join('') || '無結果';
+  $('#cards').innerHTML = html;
 }
 
 function card(d){
-  const v = d.venue || {};
-  const title = d.title || d.name || '(無標題)';
-  const type = d.type || d.category || '未分類';
-  const venue = v.name || d.venue_name || '未知場地';
-  const district = v.district || v.area || d.district || '';
-  const start = d.start_at || d.start || d.date || '';
-  const end = d.end_at || d.end || '';
-  const url = d.url || d.link || '';
+  const rng=[d.start,d.end].filter(Boolean).join(' ~ ');
+  const price = d.priceMin==null && d.priceMax==null ? '' :
+    (d.priceMin===0||d.priceMax===0) ? '｜費用：免費' :
+    (d.priceMin!=null && d.priceMax!=null) ? `｜費用：${d.priceMin}–${d.priceMax}` :
+    `｜費用：${d.priceMin ?? d.priceMax}`;
   return `
-    <article class="card">
-      <div class="title">${esc(title)}</div>
-      <div class="meta">${esc(type)} ｜ ${esc(venue)}${district?'（'+esc(district)+'）':''} ｜ ${esc([start,end].filter(Boolean).join(' ~ '))}</div>
-      ${url ? `<a href="${esc(url)}" target="_blank" rel="noopener">官方連結</a>` : ''}
-      ${d.desc ? `<div>${esc(d.desc)}</div>` : ''}
-    </article>
-  `;
+  <article class="card">
+    <div class="title">${esc(d.title||'(無標題)')}</div>
+    <div class="meta">${esc(d.type||'未分類')} ｜ ${esc(d.venueName||'未知場地')}${d.district?'（'+esc(d.district)+'）':''} ｜ ${esc(rng)} ${price}</div>
+    ${d.url?`<a href="${esc(d.url)}" target="_blank" rel="noopener">官方連結</a>`:''}
+    ${d.desc?`<div>${esc(d.desc)}</div>`:''}
+  </article>`;
 }
+
+function fillSelect(sel, arr){
+  sel.innerHTML = '<option value="">全部</option>' + arr.map(v=>`<option>${esc(v)}</option>`).join('');
+}
+function uniq(arr){return [...new Set(arr.filter(Boolean))].sort();}
+function esc(s){return String(s).replace(/[&<>"']/g,c=>({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+function groupBy(a,fn){const m=new Map();for(const x of a){const k=fn(x);if(!m.has(k))m.set(k,[]);m.get(k).push(x)}return m;}
+function debounce(f,ms){let t;return(...a)=>{clearTimeout(t);t=setTimeout(()=>f(...a),ms)}}
 </script>
