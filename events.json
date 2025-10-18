@@ -9,12 +9,7 @@
       "url": "https://example.com/event/film",
       "price_min": 0,
       "price_max": 200,
-      "venue": {
-        "name": "台北市中山堂 光點廳",
-        "district": "中正區",
-        "lat": 25.0435,
-        "lng": 121.5167
-      }
+      "venue": { "name": "台北市中山堂 光點廳", "district": "中正區", "lat": 25.0435, "lng": 121.5167 }
     },
     {
       "title": "王大閎建築劇場「登月：氣味與聲音劇場」",
@@ -25,12 +20,7 @@
       "url": "https://www.tfam.museum/",
       "price_min": null,
       "price_max": null,
-      "venue": {
-        "name": "臺北市立美術館",
-        "district": "中山區",
-        "lat": 25.0723,
-        "lng": 121.5249
-      }
+      "venue": { "name": "臺北市立美術館", "district": "中山區", "lat": 25.0723, "lng": 121.5249 }
     },
     {
       "title": "2025自綠生活節",
@@ -41,12 +31,7 @@
       "url": "https://www.huashan1914.com/",
       "price_min": null,
       "price_max": null,
-      "venue": {
-        "name": "華山1914文化創意產業園區",
-        "district": "中正區",
-        "lat": 25.0447,
-        "lng": 121.5299
-      }
+      "venue": { "name": "華山1914文化創意產業園區", "district": "中正區", "lat": 25.0447, "lng": 121.5299 }
     }
   ]
 }
