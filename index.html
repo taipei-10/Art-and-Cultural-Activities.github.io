@@ -1,336 +1,213 @@
 <!doctype html>
 <html lang="zh-Hant">
 <head>
-<meta charset="utf-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>台北藝文・智慧搜尋</title>
-<link href="https://unpkg.com/maplibre-gl@3.6.2/dist/maplibre-gl.css" rel="stylesheet"/>
-<script src="https://cdn.tailwindcss.com"></script>
-<script src="https://unpkg.com/maplibre-gl@3.6.2/dist/maplibre-gl.js"></script>
-<script src="https://unpkg.com/topojson-client@3"></script>
-<style>
-  body{background:#0b1220;color:#e6e7eb}
-  #map{height:520px}
-  .badge{font-size:.75rem;border:1px solid #2f3545;border-radius:.375rem;padding:.125rem .5rem}
-  .clamp-2{-webkit-line-clamp:2;display:-webkit-box;-webkit-box-orient:vertical;overflow:hidden}
-  .card{background:#0f172a;border:1px solid #2f3545;border-radius:.5rem;padding:12px}
-  .ctl{border:1px solid #2f3545;background:#0b1220;border-radius:.375rem;padding:.5rem .75rem}
-  .sel{border:1px solid #2f3545;background:#0b1220;border-radius:.375rem;padding:.5rem}
-</style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>台北藝文活動搜尋</title>
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-<div class="max-w-6xl mx-auto p-4">
-  <h1 class="text-2xl font-semibold mb-2">台北市最近幾天藝文活動</h1>
+  <header class="wrap">
+    <h1>台北藝文活動搜尋</h1>
+    <form id="filters" class="filters" autocomplete="off">
+      <label>
+        類型
+        <select id="type">
+          <option value="">全部</option>
+        </select>
+      </label>
+      <label>
+        行政區
+        <select id="district">
+          <option value="">全部</option>
+        </select>
+      </label>
+      <label>
+        星期
+        <select id="weekday">
+          <option value="">全部</option>
+          <option value="1">週一</option>
+          <option value="2">週二</option>
+          <option value="3">週三</option>
+          <option value="4">週四</option>
+          <option value="5">週五</option>
+          <option value="6">週六</option>
+          <option value="0">週日</option>
+        </select>
+      </label>
+      <label class="grow">
+        關鍵字
+        <input id="q" type="search" placeholder="活動名稱、場館…">
+      </label>
+      <button type="reset" id="resetBtn">清除</button>
+    </form>
+  </header>
 
-  <!-- 搜尋＋篩選列 -->
-  <div class="grid md:grid-cols-3 gap-3 mb-3">
-    <div class="md:col-span-2 flex gap-2">
-      <input id="q" class="flex-1 sel" placeholder="輸入關鍵字"/>
-      <button id="btn" class="ctl">搜尋</button>
-    </div>
-    <div class="grid grid-cols-5 gap-2">
-      <select id="type" class="sel">
-        <option value="">全部類型</option><option>展覽</option><option>表演</option>
-        <option>講座</option><option>電影</option><option>市集</option>
-      </select>
-      <select id="dist" class="sel">
-        <option value="">全台北市</option>
-      </select>
-      <select id="wday" class="sel">
-        <option value="">全部星期</option>
-        <option value="0">週日</option><option value="1">週一</option><option value="2">週二</option>
-        <option value="3">週三</option><option value="4">週四</option><option value="5">週五</option>
-        <option value="6">週六</option>
-      </select>
-      <select id="days" class="sel">
-        <option value="3" selected>近3天</option><option value="7">近7天</option><option value="14">近14天</option>
-      </select>
-      <select id="radius" class="sel">
-        <option value="2">2km</option><option value="5" selected>5km</option>
-        <option value="10">10km</option><option value="20">20km</option>
-      </select>
-    </div>
-  </div>
+  <main class="wrap">
+    <section id="source-hint" class="hint"></section>
+    <section id="results" class="cards" aria-live="polite"></section>
+    <template id="card-tpl">
+      <article class="card">
+        <a class="card__link" target="_blank" rel="noopener" aria-label="開啟活動連結"></a>
+        <div class="card__body">
+          <h3 class="card__title"></h3>
+          <p class="card__meta"></p>
+          <p class="card__desc"></p>
+          <p class="card__venue"></p>
+        </div>
+      </article>
+    </template>
+  </main>
 
-  <div class="card mb-4 relative overflow-hidden">
-    <div id="map"></div>
-    <div id="coord" class="absolute right-2 top-2 bg-[#0b1220cc] border border-[#2f3545] rounded px-2 py-1 text-xs font-mono"></div>
-  </div>
+  <footer class="wrap foot">
+    <small>資料來源：臺北市資料大平台與自備清單</small>
+  </footer>
 
-  <div class="grid md:grid-cols-3 gap-4 items-start">
-    <aside class="space-y-3">
-      <div class="card">
-        <label class="block text-sm mb-2">票價上限（NT$）</label>
-        <input id="pmax" type="number" class="sel w-full" placeholder="如 300"/>
-      </div>
-      <div class="flex gap-2">
-        <button id="reset" class="ctl flex-1">清除條件</button>
-        <button id="recenter" class="ctl">回到台北</button>
-      </div>
-      <div id="routeInfo" class="text-xs text-gray-400"></div>
-      <div id="alert" class="hidden text-xs mt-2 p-2 rounded border border-red-800 bg-red-900/20 text-red-300"></div>
-    </aside>
-
-    <main id="results" class="md:col-span-2 space-y-3"></main>
-  </div>
-</div>
-
-<script>
-/* 來源 */
-const CULTURE_API = "https://cultureexpress.taipei/OpenData/Event/C000003";
-/* 中山堂 CKAN v1 */
-const ZSH_V1_URL = "https://data.taipei/api/v1/dataset/983810cb-d03a-4505-b73b-460eaca28ae4?scope=resourceAquire";
-const ZSH_RESOURCE_ID = "983810cb-d03a-4505-b73b-460eaca28ae4";
-/* 北美館 CKAN v1 */
-const TFAM_V1_URL = "https://data.taipei/api/v1/dataset/1700a7e6-3d27-47f9-89d9-1811c9f7489c?scope=resourceAquire";
-const TFAM_RESOURCE_ID = "1700a7e6-3d27-47f9-89d9-1811c9f7489c";
-
-let map, userLoc={lat:25.0375,lng:121.5637}, markers=[];
-
-/* 台北市界限：maxBounds 鎖定 */
-const TPE_BOUNDS = [
-  [121.45, 24.95], /* 西南角 */
-  [121.65, 25.21]  /* 東北角 */
-];
-
-/* 台北市行政區 */
-const TPE_DISTRICTS = ["中正區","大同區","中山區","松山區","大安區","萬華區","信義區","士林區","北投區","內湖區","南港區","文山區"];
-
-const qs=id=>document.getElementById(id);
-const fmt=t=>{const d=new Date(t);const mm=String(d.getMonth()+1).padStart(2,'0');const dd=String(d.getDate()).padStart(2,'0');const hh=String(d.getHours()).padStart(2,'0');const mi=String(d.getMinutes()).padStart(2,'0');return `${mm}/${dd} ${hh}:${mi}`};
-const hav=(a,b)=>{const R=6371,rad=x=>x*Math.PI/180;const dlat=rad(b[0]-a[0]),dlng=rad(b[1]-a[1]),la1=rad(a[0]),la2=rad(b[0]);const h=Math.sin(dlat/2)**2+Math.cos(la1)*Math.cos(la2)*Math.sin(dlng/2)**2;return 2*R*Math.asin(Math.sqrt(h))};
-const gv=(o,ks)=>ks.find(k=>o?.[k]!=null);
-
-/* 地圖初始化與鎖定 */
-function initMap(){
-  map=new maplibregl.Map({
-    container:'map',
-    style:'https://demotiles.maplibre.org/style.json',
-    center:[userLoc.lng,userLoc.lat],
-    zoom:12,
-    maxBounds:TPE_BOUNDS
-  });
-  map.addControl(new maplibregl.NavigationControl(),'top-left');
-  new maplibregl.Marker({color:"#60a5fa"}).setLngLat([userLoc.lng,userLoc.lat]).addTo(map);
-  map.on('mousemove',e=>{qs('coord').textContent=`${e.lngLat.lat.toFixed(6)}, ${e.lngLat.lng.toFixed(6)}`});
-}
-
-/* 正規化：文化快遞 */
-function normCulture(x){
-  const prices=[...String(x.TicketPrice||"").replace(/,/g,"").matchAll(/\d+/g)].map(m=>+m[0]);
-  const lat=Number(x.Latitude??x.lat), lng=Number(x.Longitude??x.lng);
-  return {
-    title: x.Caption||x.Title||"",
-    desc: x.Introduction||x.Description||"",
-    type: x.Category||x.Type||"",
-    start_at: (x.SessionStartDate||x.StartDate||x.Start||"").toString().replace(" ","T"),
-    end_at: (x.SessionEndDate||x.EndDate||x.End||"").toString().replace(" ","T"),
-    url: x.WebsiteLink||x.RelatedLink||x.Url||"",
-    price_min: prices.length?Math.min(...prices):null,
-    price_max: prices.length?Math.max(...prices):null,
-    venue: { name:x.Venue||x.Address||"", district:x.Area||"", lat, lng }
-  };
-}
-
-/* 正規化：CKAN v1 通用 */
-function normCKAN(row, defaults={type:"表演", venue:""}) {
-  const titleK = gv(row,["title","Caption","節目名稱","活動名稱","name","program","program_name","展覽名稱"]);
-  const descK  = gv(row,["description","Introduction","簡介","內容","intro","展覽介紹"]);
-  const typeK  = gv(row,["type","Category","類型","分類"]);
-  const stK    = gv(row,["start_at","start","startDate","StartDate","SessionStartDate","開始時間","show_start","展覽開始時間","date_start"]);
-  const edK    = gv(row,["end_at","end","endDate","EndDate","SessionEndDate","結束時間","show_end","展覽結束時間","date_end"]);
-  const urlK   = gv(row,["url","WebsiteLink","RelatedLink","連結","link","web_url"]);
-  const placeK = gv(row,["venue","place","場地","location","地點","Venue","展覽地點","exhibition_place"]);
-  const distK  = gv(row,["district","行政區","Area"]);
-  const latK   = gv(row,["lat","latitude","Latitude","緯度"]);
-  const lngK   = gv(row,["lng","longitude","Longitude","經度","lon"]);
-  const priceK = gv(row,["price","ticket","TicketPrice","票價","售票價格"]);
-
-  const prices=[...String(row?.[priceK]??"").replace(/,/g,"").matchAll(/\d+/g)].map(m=>+m[0]);
-  const lat=Number(row?.[latK]), lng=Number(row?.[lngK]);
-
-  return {
-    title: row?.[titleK]??"",
-    desc: row?.[descK]??"",
-    type: row?.[typeK] ?? defaults.type,
-    start_at: String(row?.[stK]??"").replace(" ","T"),
-    end_at: String(row?.[edK]??row?.[stK]??"").replace(" ","T"),
-    url: row?.[urlK]??"",
-    price_min: prices.length?Math.min(...prices):null,
-    price_max: prices.length?Math.max(...prices):null,
-    venue: { name: row?.[placeK]??defaults.venue, district: row?.[distK]??"", lat, lng }
-  };
-}
-
-/* 取資料 */
-async function fetchCulture(){
-  const r=await fetch(CULTURE_API,{mode:"cors"}); if(!r.ok) throw new Error("culture api");
-  const j=await r.json();
-  const rows=Array.isArray(j)?j: Array.isArray(j?.data)?j.data: Array.isArray(j?.result?.results)?j.result.results:[];
-  return rows.map(normCulture);
-}
-async function fetchCKANv1(url, resourceId, defaults){
-  const r=await fetch(url,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({resource_id:resourceId})});
-  if(!r.ok) throw new Error("ckan v1");
-  const j=await r.json();
-  const rows = Array.isArray(j)?j
-              : Array.isArray(j?.result?.results)?j.result.results
-              : Array.isArray(j?.result?.records)?j.result.records
-              : Array.isArray(j?.data)?j.data
-              : [];
-  return rows.map(row=>normCKAN(row, defaults));
-}
-
-/* 路徑繪製：OSRM 公開服務 */
-async function drawRoute(from, to){
-  if(map.getLayer('route-line')) map.removeLayer('route-line');
-  if(map.getSource('route')) map.removeSource('route');
-
-  const url=`https://router.project-osrm.org/route/v1/driving/${from[0]},${from[1]};${to[0]},${to[1]}?overview=full&geometries=geojson`;
-  const r=await fetch(url);
-  if(!r.ok){ qs('routeInfo').textContent="路線服務不可用。"; return; }
-  const j=await r.json();
-  const g=j.routes?.[0]?.geometry;
-  if(!g){ qs('routeInfo').textContent="無法產生路線。"; return; }
-
-  map.addSource('route',{type:'geojson',data:{type:'Feature',geometry:g}});
-  map.addLayer({id:'route-line',type:'line',source:'route',paint:{'line-color':'#93c5fd','line-width':5}});
-  const dKm=(j.routes?.[0]?.distance||0)/1000, dMin=(j.routes?.[0]?.duration||0)/60;
-  qs('routeInfo').textContent=`距離約 ${dKm.toFixed(1)} km，預估 ${dMin.toFixed(0)} 分鐘`;
-}
-
-/* 篩選參數收集 */
-function collectParams(){
-  const now=new Date(), end=new Date(now.getTime()+Number(qs("days").value)*86400000);
-  return {
-    q:qs("q").value.trim(),
-    lat:userLoc.lat, lng:userLoc.lng,
-    radius_km:Number(qs("radius").value),
-    start:now.toISOString(), end:end.toISOString(),
-    types:qs("type").value,
-    price_max:Number(qs("pmax").value||0)||"",
-    district:qs("dist").value||"",
-    wday:qs("wday").value // "" 或 "0"~"6"（日~六）
-  };
-}
-
-/* 篩選主程式：加入星期條件 */
-function filterEvents(list){
-  const p=collectParams(), now=new Date(p.start), until=new Date(p.end);
-  list.forEach(e=>{
-    if(p.lat&&p.lng&&Number.isFinite(e.venue?.lat)&&Number.isFinite(e.venue?.lng)){ e._km=hav([p.lat,p.lng],[e.venue.lat,e.venue.lng]); }
-  });
-  return list.filter(e=>{
-    const st=new Date(e.start_at||Date.now()), ed=new Date(e.end_at||e.start_at||Date.now());
-    const inRange=(st<=until)&&(ed>=now);
-
-    const typeOk = !p.types || String(e.type||"").includes(p.types);
-    const distOk = !p.district || e.venue?.district===p.district;
-    const priceOk= !p.price_max || (e.price_min==null&&e.price_max==null) || ((e.price_min??0)<=p.price_max);
-    const qOk    = !p.q || [e.title,e.desc,e.venue?.name,e.type,e.venue?.district].some(s=>(s||"").includes(p.q));
-
-    // 活動星期：以開始日為判斷，若需要更嚴格可迭代區間
-    const wOk = !p.wday || new Date(e.start_at||Date.now()).getDay().toString()===p.wday;
-
-    let radiusOk=true;
-    if(p.radius_km&&Number.isFinite(e.venue?.lat)&&Number.isFinite(e.venue?.lng)){ radiusOk=(e._km<=p.radius_km); }
-
-    return inRange&&typeOk&&distOk&&priceOk&&qOk&&wOk&&radiusOk;
-  }).sort((a,b)=>(a._km??999)-(b._km??999));
-}
-
-/* 呈現 */
-function clearMarkers(){markers.forEach(m=>m.remove()); markers=[];}
-function fitBounds(list){
-  const pts=list.filter(e=>Number.isFinite(e.venue?.lng)&&Number.isFinite(e.venue?.lat))
-                .map(e=>[e.venue.lng,e.venue.lat]);
-  if(!pts.length) return;
-  const b=pts.reduce((bb,c)=>bb.extend(c), new maplibregl.LngLatBounds(pts[0],pts[0]));
-  map.fitBounds(b, {padding:48, maxZoom:15});
-}
-function render(list){
-  const box=qs('results'); box.innerHTML=""; clearMarkers(); qs('routeInfo').textContent="";
-  if(!list.length){ box.innerHTML=`<div class="card">無符合結果</div>`; return; }
-
-  list.forEach(e=>{
-    if(Number.isFinite(e.venue?.lng)&&Number.isFinite(e.venue?.lat)){
-      const m=new maplibregl.Marker({color:"#fff"}).setLngLat([e.venue.lng,e.venue.lat]).addTo(map);
-      m.setPopup(new maplibregl.Popup({offset:24}).setHTML(`<b>${e.title}</b><div>${e.venue?.name||""}</div>`)); markers.push(m);
-    }
-  });
-  fitBounds(list);
-
-  list.forEach((e,idx)=>{
-    const price=(e.price_min==null&&e.price_max==null)?"—":`${e.price_min??0} — ${e.price_max??e.price_min??0}`;
-    const card=document.createElement('article'); card.className="card";
-    card.innerHTML=`<div class="flex items-center justify-between gap-2">
-        <h3 class="font-medium text-lg">${e.title}</h3>
-        <span class="badge">${e.type||"—"}</span></div>
-      <p class="text-sm text-gray-300 mt-1 clamp-2">${e.desc||""}</p>
-      <div class="mt-2 grid sm:grid-cols-2 gap-1 text-sm">
-        <p>時間：${fmt(e.start_at)} — ${fmt(e.end_at||e.start_at)}</p>
-        <p>地點：${e.venue?.name||""}（${e.venue?.district||""}）</p>
-        <p>票價：${price}</p></div>
-      <div class="mt-3 flex gap-2 flex-wrap">
-        <a class="ctl" href="${e.url||"#"}" target="_blank" rel="noopener">活動連結</a>
-        <button class="ctl" data-i="${idx}">路線</button>
-      </div>`;
-    box.appendChild(card);
-
-    card.querySelector('button[data-i]').onclick=()=>{
-      if(!(Number.isFinite(e.venue?.lng)&&Number.isFinite(e.venue?.lat))) { qs('routeInfo').textContent="此活動缺座標，無法規劃路線。"; return; }
-      drawRoute([userLoc.lng,userLoc.lat],[e.venue.lng,e.venue.lat]);
-      map.fitBounds(new maplibregl.LngLatBounds([userLoc.lng,userLoc.lat],[e.venue.lng,e.venue.lat]).pad(0.3),{padding:48});
+  <script>
+    // ---------- helpers ----------
+    const $ = (sel, el=document) => el.querySelector(sel);
+    const fmtDate = (iso) => {
+      if (!iso) return "";
+      const d = new Date(iso);
+      if (Number.isNaN(d)) return iso;
+      const y = d.getFullYear(), m = String(d.getMonth()+1).padStart(2,'0'), da = String(d.getDate()).padStart(2,'0');
+      const w = "日一二三四五六".charAt(d.getDay());
+      const hh = String(d.getHours()).padStart(2,'0'), mm = String(d.getMinutes()).padStart(2,'0');
+      return `${y}-${m}-${da}(${w}) ${hh}:${mm}`;
     };
-  });
-}
+    const weekdayOf = (iso) => {
+      if (!iso) return null;
+      const d = new Date(iso);
+      return Number.isNaN(d) ? null : d.getDay();
+    };
+    const unique = (arr) => Array.from(new Set(arr)).filter(Boolean);
 
-/* 搜尋 */
-async function search(){
-  qs('alert').classList.add('hidden'); qs('alert').textContent="";
-  try{
-    const [c,z,t]=await Promise.allSettled([
-      fetchCulture(),
-      fetchCKANv1(ZSH_V1_URL, ZSH_RESOURCE_ID, {type:"表演", venue:"中山堂"}),
-      fetchCKANv1(TFAM_V1_URL, TFAM_RESOURCE_ID, {type:"展覽", venue:"臺北市立美術館"})
-    ]);
-    const cList=c.status==="fulfilled"?c.value:[]; 
-    const zList=z.status==="fulfilled"?z.value:[];
-    const tList=t.status==="fulfilled"?t.value:[];
-    const merged=[...cList,...zList,...tList];
-    render(filterEvents(merged));
-    if(z.status!=="fulfilled"){ qs('alert').textContent="中山堂來源失敗。"; qs('alert').classList.remove('hidden'); }
-    if(t.status!=="fulfilled"){ qs('alert').textContent += (qs('alert').textContent?" ":"")+"北美館來源失敗。"; qs('alert').classList.remove('hidden'); }
-    if(c.status!=="fulfilled"){ qs('alert').textContent += (qs('alert').textContent?" ":"")+"文化快遞來源失敗。"; qs('alert').classList.remove('hidden'); }
-  }catch(e){
-    qs('results').innerHTML=`<div class="card">所有來源皆失敗</div>`;
-  }
-}
+    // ---------- state ----------
+    let ALL = [];
 
-/* 綁定與初始化 */
-function bind(){
-  qs("btn").onclick=search;
-  ["type","days","radius","pmax","dist","wday"].forEach(id=>qs(id).onchange=search);
-  qs("reset").onclick=()=>{
-    ["q","type","pmax"].forEach(id=>qs(id).value="");
-    qs("days").value="3"; qs("radius").value="5"; qs("dist").value=""; qs("wday").value="";
-    search();
-  };
-  qs("recenter").onclick=()=>{userLoc={lat:25.0375,lng:121.5637}; map.flyTo({center:[userLoc.lng,userLoc.lat],zoom:12}); };
-}
+    // ---------- init ----------
+    async function boot() {
+      const res = await fetch('data.json');
+      const cfg = await res.json();
 
-/* 行政區下拉填入 */
-function fillDistricts(){
-  const sel=qs("dist");
-  TPE_DISTRICTS.forEach(d=>{
-    const opt=document.createElement("option");
-    opt.value=d; opt.textContent=d;
-    sel.appendChild(opt);
-  });
-}
+      // source note
+      $('#source-hint').textContent = cfg.sources?.map(s => s.name).join('、') || '';
 
-/* 啟動 */
-initMap(); fillDistricts(); bind(); search();
-</script>
+      // preload options
+      const typeSet = new Set(cfg.types || []);
+      const distSet = new Set(cfg.districts || []);
+      (cfg.events || []).forEach(ev => {
+        if (ev.type) typeSet.add(ev.type);
+        if (ev?.venue?.district) distSet.add(ev.venue.district);
+      });
+
+      fillSelect($('#type'), [...typeSet].sort());
+      fillSelect($('#district'), [...distSet].sort());
+
+      // data
+      ALL = normalizeMany(cfg.events || []);
+
+      // render
+      render();
+
+      // bind
+      $('#filters').addEventListener('input', render);
+      $('#filters').addEventListener('reset', (e) => {
+        // allow reset to clear, then re-render
+        setTimeout(render, 0);
+      });
+    }
+
+    function fillSelect(sel, items) {
+      items.forEach(v => {
+        const o = document.createElement('option');
+        o.value = v; o.textContent = v;
+        sel.appendChild(o);
+      });
+    }
+
+    function normalizeMany(list) {
+      return list.map(e => ({
+        id: e.id || crypto.randomUUID(),
+        title: e.title || e.name || '未命名活動',
+        desc: e.desc || e.description || '',
+        type: e.type || '',
+        start_at: e.start_at || e.start || e.begin || '',
+        end_at: e.end_at || e.end || '',
+        url: e.url || e.link || '#',
+        venue: {
+          name: e.venue?.name || e.place || '',
+          address: e.venue?.address || '',
+          district: e.venue?.district || '',
+          lat: e.venue?.lat || null,
+          lng: e.venue?.lng || null,
+        },
+        price_min: e.price_min ?? null,
+        price_max: e.price_max ?? null
+      }));
+    }
+
+    function getFilters() {
+      return {
+        type: $('#type').value.trim(),
+        district: $('#district').value.trim(),
+        weekday: $('#weekday').value.trim(),
+        q: $('#q').value.trim().toLowerCase(),
+      };
+    }
+
+    function match(ev, f) {
+      if (f.type && ev.type !== f.type) return false;
+      if (f.district && ev.venue?.district !== f.district) return false;
+      if (f.weekday !== "") {
+        const w1 = weekdayOf(ev.start_at);
+        const w2 = weekdayOf(ev.end_at);
+        const target = Number(f.weekday);
+        if (w1 === null && w2 === null) return false;
+        const ok = (w1 === target) || (w2 === target);
+        if (!ok) return false;
+      }
+      if (f.q) {
+        const hay = [
+          ev.title, ev.desc, ev.type, ev.venue?.name, ev.venue?.address, ev.venue?.district
+        ].join(' ').toLowerCase();
+        if (!hay.includes(f.q)) return false;
+      }
+      return true;
+    }
+
+    function render() {
+      const f = getFilters();
+      const list = ALL.filter(ev => match(ev, f));
+      const wrap = $('#results');
+      wrap.innerHTML = '';
+      if (!list.length) {
+        wrap.innerHTML = '<p class="hint">查無活動，請嘗試其他條件。</p>';
+        return;
+      }
+      const tpl = $('#card-tpl');
+      list.forEach(ev => {
+        const node = tpl.content.cloneNode(true);
+        const link = $('.card__link', node);
+        const title = $('.card__title', node);
+        const meta = $('.card__meta', node);
+        const desc = $('.card__desc', node);
+        const venue = $('.card__venue', node);
+
+        link.href = ev.url || '#';
+        title.textContent = ev.title;
+        const time = [fmtDate(ev.start_at), fmtDate(ev.end_at)].filter(Boolean).join(' — ');
+        const typeTxt = ev.type ? `｜${ev.type}` : '';
+        meta.textContent = [time, typeTxt].filter(Boolean).join(' ');
+        desc.textContent = ev.desc || '';
+        const loc = [ev.venue?.name, ev.venue?.district, ev.venue?.address].filter(Boolean).join('，');
+        venue.textContent = loc;
+
+        wrap.appendChild(node);
+      });
+    }
+
+    boot();
+  </script>
 </body>
 </html>
