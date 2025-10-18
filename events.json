@@ -1,65 +1,18 @@
-{
-  "about": "台北藝文活動資料與來源清單。events 可直接驅動前端。",
-  "sources": [
-    {
-      "name": "臺北市立文獻館_常設展資訊",
-      "endpoint": "https://data.taipei/api/v1/dataset/fcb092b7-37a6-4d81-be47-ddeeaf2dd7f6?scope=resourceAquire",
-      "resource_id": "fcb092b7-37a6-4d81-be47-ddeeaf2dd7f6"
-    },
-    {
-      "name": "臺北市歌仔戲觀摩匯演演出檔期",
-      "endpoint": "https://data.taipei/api/v1/dataset/88f87090-c6c8-4ee6-99c9-bad5baf7327c?scope=resourceAquire",
-      "resource_id": "88f87090-c6c8-4ee6-99c9-bad5baf7327c"
-    },
-    {
-      "name": "中山堂演出訊息",
-      "endpoint": "https://data.taipei/api/v1/dataset/983810cb-d03a-4505-b73b-460eaca28ae4?scope=resourceAquire",
-      "resource_id": "983810cb-d03a-4505-b73b-460eaca28ae4"
-    },
-    {
-      "name": "台北市立美術館 活動訊息",
-      "endpoint": "https://data.taipei/api/v1/dataset/fef040da-75d3-42bc-98dd-a292919a251a?scope=resourceAquire",
-      "resource_id": "fef040da-75d3-42bc-98dd-a292919a251a"
-    }
-  ],
-  "types": ["展覽", "表演", "講座", "電影", "市集"],
-  "districts": ["中正區","大同區","中山區","松山區","大安區","萬華區","信義區","士林區","北投區","內湖區","南港區","文山區"],
-  "events": [
-    {
-      "id": "e1",
-      "title": "2025 台北當代藝術展",
-      "desc": "國際藝術家聯展，含現場導覽與互動工作坊。",
-      "type": "展覽",
-      "start_at": "2025-10-19T10:00:00+08:00",
-      "end_at": "2025-10-31T18:00:00+08:00",
-      "price_min": 0,
-      "price_max": 300,
-      "url": "https://example.com/event1",
-      "venue": {
-        "name": "台北市立美術館",
-        "address": "台北市中山區中山北路三段181號",
-        "district": "中山區",
-        "lat": 25.0725,
-        "lng": 121.5244
-      }
-    },
-    {
-      "id": "e2",
-      "title": "歌仔戲觀摩匯演",
-      "desc": "經典折子戲精華場。",
-      "type": "表演",
-      "start_at": "2025-10-25T19:30:00+08:00",
-      "end_at": "2025-10-25T21:30:00+08:00",
-      "price_min": 200,
-      "price_max": 800,
-      "url": "https://example.com/event2",
-      "venue": {
-        "name": "中山堂中正廳",
-        "address": "台北市中正區延平南路98號",
-        "district": "中正區",
-        "lat": 25.0436,
-        "lng": 121.5098
-      }
-    }
-  ]
-}
+[
+  {
+    "name": "臺北市立文獻館_常設展資訊",
+    "endpoint": "https://data.taipei/api/v1/dataset/fcb092b7-37a6-4d81-be47-ddeeaf2dd7f6"
+  },
+  {
+    "name": "臺北市歌仔戲觀摩匯演演出檔期",
+    "endpoint": "https://data.taipei/api/v1/dataset/88f87090-c6c8-4ee6-99c9-bad5baf7327c"
+  },
+  {
+    "name": "中山堂演出訊息",
+    "endpoint": "https://data.taipei/api/v1/dataset/983810cb-d03a-4505-b73b-460eaca28ae4"
+  },
+  {
+    "name": "台北市立美術館 活動訊息",
+    "endpoint": "https://data.taipei/api/v1/dataset/fef040da-75d3-42bc-98dd-a292919a251a"
+  }
+]
