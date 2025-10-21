@@ -1,52 +1,5 @@
-"results": [
-    {
-      "title": "城市光影—短片巡演",
-      "desc": "精選本地創作者短片放映暨映後談。",
-      "type": "電影",
-      "start_at": "2025-10-18T19:00:00",
-      "end_at": "2025-10-18T21:00:00",
-      "url": "https://example.com/event/film",
-      "price_min": 0,
-      "price_max": 200,
-      "venue": {
-        "name": "台北市中山堂 光點廳",
-        "district": "中正區",
-        "lat": 25.0435,
-        "lng": 121.5167
-      }
-    },
-    {
-      "title": "王大閎建築劇場「登月：氣味與聲音劇場」",
-      "desc": "跨感官的建築與聲音裝置展演。",
-      "type": "展覽",
-      "start_at": "2025-10-21T00:00:00",
-      "end_at": "2025-12-21T23:59:59",
-      "url": "https://www.tfam.museum/",
-      "price_min": null,
-      "price_max": null,
-      "venue": {
-        "name": "臺北市立美術館",
-        "district": "中山區",
-        "lat": 25.0723,
-        "lng": 121.5249
-      }
-    },
-    {
-      "title": "2025自綠生活節",
-      "desc": "戶外主題市集與永續生活展。",
-      "type": "市集",
-      "start_at": "2025-10-18T00:00:00",
-      "end_at": "2025-10-19T23:59:59",
-      "url": "https://www.huashan1914.com/",
-      "price_min": null,
-      "price_max": null,
-      "venue": {
-        "name": "華山1914文化創意產業園區",
-        "district": "中正區",
-        "lat": 25.0447,
-        "lng": 121.5299
-      }
-    },
+{
+  "results": [
     {
       "title": "古蹟探祕—勸業銀行舊廈古蹟修復常設展",
       "desc": "臺北市定古蹟勸業銀行舊廈前身是日本時代在臺設立的「日本勸業銀行臺北支店」，落成於1933年。1946年國民政府接收勸業銀行，作為臺灣土地銀行總行使用。2010年由國立臺灣博物館修復再利用為博物館，正式對外開放營運。\r\n勸業銀行舊廈在當年是非常先進的建築，採用許多新式工法、新技術、新設備、新建材，是日本時代後期臺灣建築技術及工藝的具體見證。",
@@ -61,7 +14,9 @@
         "district": "中正區",
         "lat": 25.04367,
         "lng": 121.51443
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "刺繡線上課程，說說立體刺繡課：基礎入門到進階變化┋在繡線交織裡的平衡韻律",
@@ -77,7 +32,9 @@
         "district": null,
         "lat": null,
         "lng": null
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "刺繡線上課程┋​基礎到進階立體15種針法、飾品、衣物、裱框等運用技巧、立體刺繡",
@@ -93,7 +50,9 @@
         "district": null,
         "lat": null,
         "lng": null
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "基礎刺繡雙週課(共2日)┋灰喵的小種子們 - 13種針法組合靈活運用&構圖通用觀念",
@@ -109,7 +68,9 @@
         "district": "中正區",
         "lat": 25.02655,
         "lng": 121.52281
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "基礎刺繡✦​在刺繡裡與自己​聊聊，自選圖像，繡在自己的圖像上 ​𝟐𝟎𝟐𝟑/𝟒/𝟖(六) (3/28截止報名)",
@@ -125,7 +86,9 @@
         "district": "中正區",
         "lat": 25.02655,
         "lng": 121.52281
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "《遺響曲》第三屆漢服音樂會",
@@ -141,7 +104,9 @@
         "district": "大同區",
         "lat": 25.07276,
         "lng": 121.51618
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "platform A 第二波創作者募集",
@@ -157,7 +122,9 @@
         "district": null,
         "lat": null,
         "lng": null
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "敦煌壁畫常設展",
@@ -173,7 +140,9 @@
         "district": "大安區",
         "lat": 25.03495,
         "lng": 121.55209
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "中心新村｜常設展《走進中心新村的街談巷語》&實境解謎遊戲〈無人知曉的眷戀〉",
@@ -189,7 +158,9 @@
         "district": "北投區",
         "lat": 25.13895,
         "lng": 121.50753
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "基礎刺繡(2日課程)-新手魔法師： 10種針法組合&靈活運用 毛髮、花瓣漸層表現",
@@ -205,7 +176,9 @@
         "district": "中正區",
         "lat": 25.02655,
         "lng": 121.52281
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "《昭和唐唐》2023菊月文化祭",
@@ -221,7 +194,9 @@
         "district": "中山區",
         "lat": 25.06676,
         "lng": 121.52109
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "管絃祭 X 裝束繪卷《天寶服飾誌》2023漢服走秀",
@@ -255,7 +230,9 @@
         "district": "南港區",
         "lat": 25.03947,
         "lng": 121.61579
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "胡克敏水墨蔬菜長卷特展",
@@ -271,7 +248,9 @@
         "district": "大安區",
         "lat": 25.03495,
         "lng": 121.55209
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "《奇幻自然》常設展區",
@@ -287,7 +266,9 @@
         "district": "北區",
         "lat": 24.15746,
         "lng": 120.66643
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "胡克敏水墨百花圖集原作展",
@@ -303,7 +284,9 @@
         "district": "大安區",
         "lat": 25.03495,
         "lng": 121.55209
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "《春燈肆楽》第四屆漢服音樂會",
@@ -319,7 +302,9 @@
         "district": "大同區",
         "lat": 25.07276,
         "lng": 121.51618
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "《燈宵月夕遊光城》2024上元春燈祭",
@@ -335,7 +320,9 @@
         "district": "中正區",
         "lat": 25.04307,
         "lng": 121.51112
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "中心新村｜互動展覽《眷村故事香》親子空間",
@@ -351,7 +338,9 @@
         "district": "北投區",
         "lat": 25.13895,
         "lng": 121.50753
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "【現代詩之門】廖偉棠 | 線上課程",
@@ -367,7 +356,9 @@
         "district": null,
         "lat": null,
         "lng": null
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "EMBA雜誌我們學堂10月場(20251016)",
@@ -383,7 +374,9 @@
         "district": null,
         "lat": null,
         "lng": null
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "EMBA雜誌我們學堂10月場(20251016)",
@@ -399,7 +392,9 @@
         "district": null,
         "lat": null,
         "lng": null
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "EMBA雜誌我們學堂10月場(20251016)",
@@ -415,7 +410,9 @@
         "district": null,
         "lat": null,
         "lng": null
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "EMBA雜誌我們學堂10月場(20251016)",
@@ -431,7 +428,9 @@
         "district": null,
         "lat": null,
         "lng": null
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "EMBA雜誌我們學堂10月場(20251016)",
@@ -447,7 +446,9 @@
         "district": null,
         "lat": null,
         "lng": null
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "EMBA雜誌我們學堂10月場(20251016)",
@@ -463,7 +464,9 @@
         "district": null,
         "lat": null,
         "lng": null
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "EMBA雜誌我們學堂10月場(20251016)",
@@ -479,7 +482,9 @@
         "district": null,
         "lat": null,
         "lng": null
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "EMBA雜誌我們學堂10月場(20251016)",
@@ -495,7 +500,9 @@
         "district": null,
         "lat": null,
         "lng": null
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "EMBA雜誌我們學堂10月場(20251016)",
@@ -511,7 +518,9 @@
         "district": null,
         "lat": null,
         "lng": null
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "EMBA雜誌我們學堂10月場(20251016)",
@@ -527,7 +536,9 @@
         "district": null,
         "lat": null,
         "lng": null
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "EMBA雜誌我們學堂10月場(20251016)",
@@ -543,7 +554,9 @@
         "district": null,
         "lat": null,
         "lng": null
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "EMBA雜誌我們學堂10月場(20251016)",
@@ -559,7 +572,9 @@
         "district": null,
         "lat": null,
         "lng": null
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "EMBA雜誌我們學堂10月場(20251016)",
@@ -575,7 +590,9 @@
         "district": null,
         "lat": null,
         "lng": null
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "EMBA雜誌我們學堂10月場(20251016)",
@@ -591,7 +608,9 @@
         "district": null,
         "lat": null,
         "lng": null
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "《綰結同心》2024秋月七夕祭",
@@ -607,7 +626,9 @@
         "district": "中正區",
         "lat": 25.0425,
         "lng": 121.51035
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "管絃祭 X 裝束繪卷《嬿婉良緣誌》2024漢婚盛典",
@@ -623,7 +644,9 @@
         "district": "中正區",
         "lat": 25.04356,
         "lng": 121.5108
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "【國際志工】2025寒假微客國際志工，開放報名🎊",
@@ -639,7 +662,9 @@
         "district": "板橋區",
         "lat": 25.02093,
         "lng": 121.46705
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "｛素書樓講堂｝2025年度四書與品德教育講座（一）~（十二）",
@@ -655,7 +680,9 @@
         "district": "中正區",
         "lat": 25.0356,
         "lng": 121.5143
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "｛素書樓講堂｝2025年度四書與品德教育講座（一）~（十二）",
@@ -671,7 +698,9 @@
         "district": "中正區",
         "lat": 25.0356,
         "lng": 121.5143
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "｛素書樓講堂｝2025年度四書與品德教育講座（一）~（十二）",
@@ -687,7 +716,9 @@
         "district": "中正區",
         "lat": 25.0356,
         "lng": 121.5143
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "｛素書樓講堂｝2025年度四書與品德教育講座（一）~（十二）",
@@ -703,7 +734,9 @@
         "district": "中正區",
         "lat": 25.0356,
         "lng": 121.5143
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "禪@鈔經",
@@ -719,7 +752,9 @@
         "district": "大安區",
         "lat": 25.02488,
         "lng": 121.52435
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "2025歷史復活節～中正．時空旅行",
@@ -735,7 +770,9 @@
         "district": "中正區",
         "lat": 25.04403,
         "lng": 121.51268
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "歡迎光臨．大神百貨",
@@ -751,7 +788,9 @@
         "district": "中正區",
         "lat": 25.04403,
         "lng": 121.51268
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "慶祝2025國定佛誕節特展 「唯慧是業 - 王午、洪子惟、陳又寧版畫聯展 」  518國際博物館日暨教育推廣系列活動 佛誕公仔彩繪",
@@ -767,7 +806,9 @@
         "district": "信義區",
         "lat": 25.04829,
         "lng": 121.57867
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "114年「 掌藝薪傳-大師工作坊」",
@@ -783,7 +824,9 @@
         "district": "松山區",
         "lat": 25.04774,
         "lng": 121.56134
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "《自然藝想》特展",
@@ -799,7 +842,9 @@
         "district": "北區",
         "lat": 24.15746,
         "lng": 120.66643
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "《考古番仔園文化》特展",
@@ -815,7 +860,9 @@
         "district": "北區",
         "lat": 24.15629,
         "lng": 120.66704
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "悅己者容 — 纏足文化特展",
@@ -849,7 +896,9 @@
         "district": "中山區",
         "lat": 25.04852,
         "lng": 121.52268
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "臺大醫院健康大樓公共藝術計畫起跑",
@@ -865,7 +914,9 @@
         "district": "中正區",
         "lat": 25.04057,
         "lng": 121.52069
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "2025不廢藝術季",
@@ -881,7 +932,9 @@
         "district": "中正區",
         "lat": 25.02013,
         "lng": 121.52534
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "鑄匠入魂──殷周青銅器的鑄造技術展",
@@ -897,7 +950,9 @@
         "district": "南港區",
         "lat": 25.03943,
         "lng": 121.61601
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "《量力而微：量子科學特展》",
@@ -913,7 +968,9 @@
         "district": "北區",
         "lat": 24.15746,
         "lng": 120.66643
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "行天宮附設玄空圖書館敦化本館-電影享讀",
@@ -929,7 +986,9 @@
         "district": "松山區",
         "lat": 25.05376,
         "lng": 121.54769
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "《名畫3D反毒特展》",
@@ -945,7 +1004,9 @@
         "district": "北區",
         "lat": 24.15746,
         "lng": 120.66643
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "親近國寶──大理石雙鳥喙獸面管",
@@ -961,7 +1022,9 @@
         "district": "南港區",
         "lat": 25.03943,
         "lng": 121.61601
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "《鯨掘》特展",
@@ -977,7 +1040,9 @@
         "district": "北區",
         "lat": 24.15746,
         "lng": 120.66643
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "「共築之所 Grounds for Living」",
@@ -993,7 +1058,9 @@
         "district": "西屯區",
         "lat": 24.16002,
         "lng": 120.64726
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "造式：生之華｜王俠軍個展於新氣園盛大展出",
@@ -1009,7 +1076,9 @@
         "district": "北投區",
         "lat": 25.12731,
         "lng": 121.46889
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "🔥突破勁道巔峰！《陳氏太極拳砲捶研習班》開課🔥",
@@ -1025,7 +1094,9 @@
         "district": "文山區",
         "lat": 24.97969,
         "lng": 121.55647
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "🔥突破勁道巔峰！《陳氏太極拳砲捶研習班》開課🔥",
@@ -1041,7 +1112,9 @@
         "district": "中山區",
         "lat": 25.06154,
         "lng": 121.53941
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "🔥突破勁道巔峰！《陳氏太極拳砲捶研習班》開課🔥",
@@ -1057,7 +1130,9 @@
         "district": "文山區",
         "lat": 24.97969,
         "lng": 121.55647
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "FUN玩具－童玩郵票特展",
@@ -1073,7 +1148,9 @@
         "district": "中正區",
         "lat": 25.0632,
         "lng": 121.51511
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "2025遇見·臺北書院藝文美學推廣課程",
@@ -1089,7 +1166,9 @@
         "district": "中正區",
         "lat": 25.043,
         "lng": 121.5102
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": " 【新月．講座】二十世紀編舞大師．探索歐洲當代舞蹈的無限可能",
@@ -1105,7 +1184,9 @@
         "district": "中山區",
         "lat": 25.04852,
         "lng": 121.52268
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": " 【新月．講座】二十世紀編舞大師．探索歐洲當代舞蹈的無限可能",
@@ -1121,7 +1202,9 @@
         "district": "中山區",
         "lat": 25.04852,
         "lng": 121.52268
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "數學郵樂園",
@@ -1155,7 +1238,9 @@
         "district": "中山區",
         "lat": 25.04852,
         "lng": 121.52268
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "台北偶戲館「耍物仔Sńg mih-á 」物件劇場特展",
@@ -1171,7 +1256,9 @@
         "district": "松山區",
         "lat": 25.04774,
         "lng": 121.56136
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "一瞬一旅：館藏佛塔經幢特展",
@@ -1205,7 +1292,9 @@
         "district": "大安區",
         "lat": 25.02962,
         "lng": 121.52262
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "【讀書會】2025.6—12月｜童里 Bla Bla Bla 聊書會－打開話匣子，讓故事綻放，一起把繪本聊到飛起來！",
@@ -1221,7 +1310,9 @@
         "district": "大安區",
         "lat": 25.02962,
         "lng": 121.52262
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "2025微客國際志工－印度梯隊",
@@ -1237,7 +1328,9 @@
         "district": "板橋區",
         "lat": 25.02075,
         "lng": 121.467
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "北美館年度個展 「 雙鉤廓填」",
@@ -1253,7 +1346,9 @@
         "district": "中山區",
         "lat": 25.0711,
         "lng": 121.52401
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "北美館年度個展「不發音字母—翻閱165頁的厚度」",
@@ -1269,7 +1364,9 @@
         "district": "中山區",
         "lat": 25.0711,
         "lng": 121.52401
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "北美館年度個展 「未完成之作」",
@@ -1285,7 +1382,9 @@
         "district": "中山區",
         "lat": 25.0711,
         "lng": 121.52401
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "北美館年度個展「力求失真的嗓音」",
@@ -1301,7 +1400,9 @@
         "district": "中山區",
         "lat": 25.0711,
         "lng": 121.52401
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "【童里講座】2025.7—11月｜黃一文講座｜用圖像思考：從角色到風格，圖像小說的創作視角與閱讀方式",
@@ -1317,7 +1418,9 @@
         "district": "大安區",
         "lat": 25.02962,
         "lng": 121.52262
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "【童里講座】2025.7—11月｜黃一文講座｜用圖像思考：從角色到風格，圖像小說的創作視角與閱讀方式",
@@ -1333,7 +1436,9 @@
         "district": "大安區",
         "lat": 25.02962,
         "lng": 121.52262
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "神聖藝術的當代回聲｜長流美術館與宗教藝術對話的省思錄",
@@ -1349,7 +1454,9 @@
         "district": "中正區",
         "lat": 25.03866,
         "lng": 121.53033
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "tminun msbnahan．編織．復返-烏來泰博館20週年特展",
@@ -1365,7 +1472,9 @@
         "district": "烏來區",
         "lat": 24.86414,
         "lng": 121.55145
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "《門裡的說書人》街遊 Hidden Taipei｜無家者群像展",
@@ -1381,7 +1490,9 @@
         "district": "萬華區",
         "lat": 25.04,
         "lng": 121.49929
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "亂流：半睡飛行夢",
@@ -1397,7 +1508,9 @@
         "district": "大安區",
         "lat": 25.0241,
         "lng": 121.5444
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "金礦、深淵、山神廟—林彥翔個展",
@@ -1413,7 +1526,9 @@
         "district": "北投區",
         "lat": 25.13396,
         "lng": 121.46975
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "2025創作卓越獎",
@@ -1429,7 +1544,9 @@
         "district": "北投區",
         "lat": 25.13472,
         "lng": 121.47183
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "相機不見了：陳建維",
@@ -1445,7 +1562,9 @@
         "district": "松山區",
         "lat": 25.04666,
         "lng": 121.54929
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "2026 夢想成真II ．吳東興攝影贊助計畫",
@@ -1461,7 +1580,9 @@
         "district": "信義區",
         "lat": 25.039408,
         "lng": 121.566671
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "李國鼎故居2025 年「K.T.李國鼎藝術奬」比賽",
@@ -1477,7 +1598,9 @@
         "district": "中正區",
         "lat": 25.04064,
         "lng": 121.52767
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": " 2026 SKM PHOTO 新光三越國際攝影大賽 徵件募集中！",
@@ -1493,7 +1616,9 @@
         "district": "信義區",
         "lat": 25.039408,
         "lng": 121.566671
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "行天宮【北投分館】114-3家庭樂學堂 報名至7月底",
@@ -1509,7 +1634,9 @@
         "district": "北投區",
         "lat": 25.13678,
         "lng": 121.47826
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "行天宮附設玄空圖書館敦化本館家庭童樂會",
@@ -1525,7 +1652,9 @@
         "district": "松山區",
         "lat": 25.05376,
         "lng": 121.54769
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "大稻埕夜生活—商脈夜色與仕紳風華特展",
@@ -1541,7 +1670,9 @@
         "district": "大同區",
         "lat": 25.05708,
         "lng": 121.51264
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "阿德勒與故事人生",
@@ -1557,7 +1688,9 @@
         "district": "萬華區",
         "lat": 25.04127,
         "lng": 121.50664
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "文學引路--文學寫作班",
@@ -1573,7 +1706,9 @@
         "district": "中正區",
         "lat": 25.01902,
         "lng": 121.52912
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "2025 向經典文學致敬：細讀中外文學與思想",
@@ -1589,7 +1724,9 @@
         "district": "中正區",
         "lat": 25.02154,
         "lng": 121.52066
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "2025 向經典文學致敬：細讀中外文學與思想",
@@ -1605,7 +1742,9 @@
         "district": "中正區",
         "lat": 25.02154,
         "lng": 121.52066
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "2025 向經典文學致敬：細讀中外文學與思想",
@@ -1621,7 +1760,9 @@
         "district": "中正區",
         "lat": 25.02154,
         "lng": 121.52066
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "2025 向經典文學致敬：細讀中外文學與思想",
@@ -1637,7 +1778,9 @@
         "district": "中正區",
         "lat": 25.02154,
         "lng": 121.52066
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "2025 向經典文學致敬：細讀中外文學與思想",
@@ -1653,7 +1796,9 @@
         "district": "中正區",
         "lat": 25.02154,
         "lng": 121.52066
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "2025 向經典文學致敬：細讀中外文學與思想",
@@ -1669,7 +1814,9 @@
         "district": "中正區",
         "lat": 25.02154,
         "lng": 121.52066
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "2025 向經典文學致敬：細讀中外文學與思想",
@@ -1685,7 +1832,9 @@
         "district": "中正區",
         "lat": 25.02154,
         "lng": 121.52066
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "2025 向經典文學致敬：細讀中外文學與思想",
@@ -1701,7 +1850,9 @@
         "district": "中正區",
         "lat": 25.02154,
         "lng": 121.52066
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "2025 向經典文學致敬：細讀中外文學與思想",
@@ -1717,7 +1868,9 @@
         "district": "中正區",
         "lat": 25.02154,
         "lng": 121.52066
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "2025 向經典文學致敬：細讀中外文學與思想",
@@ -1733,7 +1886,9 @@
         "district": "中正區",
         "lat": 25.02154,
         "lng": 121.52066
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "2025 向經典文學致敬：細讀中外文學與思想",
@@ -1749,7 +1904,9 @@
         "district": "中正區",
         "lat": 25.02154,
         "lng": 121.52066
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "2025 向經典文學致敬：細讀中外文學與思想",
@@ -1765,7 +1922,9 @@
         "district": "中正區",
         "lat": 25.02154,
         "lng": 121.52066
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "2025 向經典文學致敬：細讀中外文學與思想",
@@ -1781,7 +1940,9 @@
         "district": "中正區",
         "lat": 25.02154,
         "lng": 121.52066
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "2025 向經典文學致敬：細讀中外文學與思想",
@@ -1797,7 +1958,9 @@
         "district": "中正區",
         "lat": 25.02154,
         "lng": 121.52066
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "2025 向經典文學致敬：細讀中外文學與思想",
@@ -1813,7 +1976,9 @@
         "district": "中正區",
         "lat": 25.02154,
         "lng": 121.52066
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "2025 向經典文學致敬：細讀中外文學與思想",
@@ -1829,7 +1994,9 @@
         "district": "中正區",
         "lat": 25.02154,
         "lng": 121.52066
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "2025 向經典文學致敬：細讀中外文學與思想",
@@ -1845,7 +2012,9 @@
         "district": "中正區",
         "lat": 25.02154,
         "lng": 121.52066
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "副歌短影音表演實戰班 _ 2025/09",
@@ -1861,7 +2030,9 @@
         "district": "中正區",
         "lat": 25.034,
         "lng": 121.51
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "間 ま MA",
@@ -1877,7 +2048,9 @@
         "district": "大同區",
         "lat": 25.06873,
         "lng": 121.51642
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "2025 大松山千人走讀",
@@ -1893,7 +2066,9 @@
         "district": "信義區",
         "lat": 25.0399,
         "lng": 121.57303
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "餐桌上的博物館–隱藏在大地的訊息",
@@ -1909,7 +2084,9 @@
         "district": "竹北市",
         "lat": 24.81549,
         "lng": 121.01933
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "青天白日滿地虹- 積吶虹光",
@@ -1925,7 +2102,9 @@
         "district": "鹿港鎮",
         "lat": 24.04631,
         "lng": 120.43868
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "青天白日滿地虹- 積吶虹光",
@@ -1941,7 +2120,9 @@
         "district": "鹿港鎮",
         "lat": 24.04631,
         "lng": 120.43868
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "青天白日滿地虹- 積吶虹光",
@@ -1957,7 +2138,9 @@
         "district": "鹿港鎮",
         "lat": 24.04635,
         "lng": 120.43867
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "輕鬆學水墨畫～閒情逸趣 奇思妙想",
@@ -1991,7 +2174,9 @@
         "district": null,
         "lat": null,
         "lng": null
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "機器之後—王連晟個展",
@@ -2007,7 +2192,9 @@
         "district": "北投區",
         "lat": 25.13472,
         "lng": 121.47183
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "編劇達人──劇本創作班",
@@ -2023,7 +2210,9 @@
         "district": "中正區",
         "lat": 25.01902,
         "lng": 121.52912
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "社會職場穿搭儀態養成班 _ 2025/09",
@@ -2039,7 +2228,9 @@
         "district": "中正區",
         "lat": 25.034,
         "lng": 121.51
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "｛錢穆故居｝第二十五期古琴傳習計畫",
@@ -2055,7 +2246,9 @@
         "district": "中正區",
         "lat": 25.03584,
         "lng": 121.51295
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "｛錢穆故居｝第二十五期古琴傳習計畫",
@@ -2071,7 +2264,9 @@
         "district": "中正區",
         "lat": 25.03584,
         "lng": 121.51295
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "｛錢穆故居｝第二十五期古琴傳習計畫",
@@ -2087,7 +2282,9 @@
         "district": "中正區",
         "lat": 25.03584,
         "lng": 121.51295
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "｛錢穆故居｝第二十五期古琴傳習計畫",
@@ -2103,7 +2300,9 @@
         "district": "中正區",
         "lat": 25.03584,
         "lng": 121.51295
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "｛錢穆故居｝第二十五期古琴傳習計畫",
@@ -2119,7 +2318,9 @@
         "district": "中正區",
         "lat": 25.03584,
         "lng": 121.51295
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "｛錢穆故居｝第二十五期古琴傳習計畫",
@@ -2135,7 +2336,9 @@
         "district": "中正區",
         "lat": 25.03584,
         "lng": 121.51295
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "｛錢穆故居｝第二十五期古琴傳習計畫",
@@ -2151,7 +2354,9 @@
         "district": "中正區",
         "lat": 25.03584,
         "lng": 121.51295
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "｛錢穆故居｝第二十五期古琴傳習計畫",
@@ -2167,7 +2372,9 @@
         "district": "中正區",
         "lat": 25.03584,
         "lng": 121.51295
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "｛錢穆故居｝第二十五期古琴傳習計畫",
@@ -2183,7 +2390,9 @@
         "district": "中正區",
         "lat": 25.03584,
         "lng": 121.51295
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "｛錢穆故居｝第二十五期古琴傳習計畫",
@@ -2199,7 +2408,9 @@
         "district": "中正區",
         "lat": 25.03584,
         "lng": 121.51295
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "第33屆視障音樂節暨第二屆國際視障音樂節",
@@ -2215,7 +2426,9 @@
         "district": "信義區",
         "lat": 25.03977,
         "lng": 121.56896
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "全方位說故事高手班",
@@ -2231,7 +2444,9 @@
         "district": "萬華區",
         "lat": 25.04127,
         "lng": 121.50664
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "2025國鼎數位學苑-「樂齡手機操作基礎班」第二期",
@@ -2247,7 +2462,9 @@
         "district": "中正區",
         "lat": 25.04064,
         "lng": 121.52767
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "和之氣 —— 覺察，器與氣之間 - 潘俊壁 陶作展 ",
@@ -2263,7 +2480,9 @@
         "district": "中正區",
         "lat": 25.01663,
         "lng": 121.53192
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "《一日之所:時間寫給空間的情書》 A Day Within a Place: A Love Letter from Time to Space",
@@ -2279,7 +2498,9 @@
         "district": "東區",
         "lat": 24.80289,
         "lng": 120.99144
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "2025震怡文化講座(下)",
@@ -2295,7 +2516,9 @@
         "district": "信義區",
         "lat": 25.03099,
         "lng": 121.56305
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "《母親小島》吳家昀個展",
@@ -2311,7 +2534,9 @@
         "district": "東區",
         "lat": 24.79942,
         "lng": 120.97503
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "台北101． Gallery 101【青天白日滿地虹 - 積吶虹光】",
@@ -2327,7 +2552,9 @@
         "district": "信義區",
         "lat": 25.0336,
         "lng": 121.56482
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "青天白日滿地虹 - 積吶虹光LEF",
@@ -2343,7 +2570,9 @@
         "district": "信義區",
         "lat": 25.03398,
         "lng": 121.56454
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "TAIPEI 101． Gallery 101【青天白日滿地虹 - 積吶虹光】",
@@ -2359,7 +2588,9 @@
         "district": "信義區",
         "lat": 25.03398,
         "lng": 121.56454
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "TAIPEI 101． Gallery 101【青天白日滿地虹 - 積吶虹光】",
@@ -2375,7 +2606,9 @@
         "district": "信義區",
         "lat": 25.03398,
         "lng": 121.56454
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "台北101． Gallery 101【青天白日滿地虹 - 積吶虹光】",
@@ -2391,7 +2624,9 @@
         "district": "信義區",
         "lat": 25.0336,
         "lng": 121.56482
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "台北 101． Gallery 101【青天白日滿地虹 - 積吶虹光】",
@@ -2407,7 +2642,9 @@
         "district": "信義區",
         "lat": 25.03398,
         "lng": 121.56454
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "台北101． Gallery 101【青天白日滿地虹 - 積吶虹光】",
@@ -2423,7 +2660,9 @@
         "district": "信義區",
         "lat": 25.0336,
         "lng": 121.56482
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "台北101． Gallery 101【青天白日滿地虹 - 積吶虹光】",
@@ -2439,7 +2678,9 @@
         "district": "信義區",
         "lat": 25.03398,
         "lng": 121.56454
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "TAIPEI 101． Gallery 101【青天白日滿地虹 - 積吶虹光】",
@@ -2455,7 +2696,9 @@
         "district": "信義區",
         "lat": 25.03398,
         "lng": 121.56454
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "青天白日滿地虹 - 積吶虹光LEF",
@@ -2471,7 +2714,9 @@
         "district": "信義區",
         "lat": 25.03398,
         "lng": 121.56454
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "台北101． Gallery 101【青天白日滿地虹 - 積吶虹光】",
@@ -2487,7 +2732,9 @@
         "district": "信義區",
         "lat": 25.0336,
         "lng": 121.56482
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "台北 101． Gallery 101【青天白日滿地虹 - 積吶虹光】",
@@ -2503,7 +2750,9 @@
         "district": "信義區",
         "lat": 25.03398,
         "lng": 121.56454
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "心象繪畫──高行健",
@@ -2519,7 +2768,9 @@
         "district": "大安區",
         "lat": 25.02746,
         "lng": 121.52854
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "女性書寫文學研習(秋季)",
@@ -2535,7 +2786,9 @@
         "district": "中正區",
         "lat": 25.01902,
         "lng": 121.52912
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "餐桌上的博物館–小米狂熱 Millet Mania",
@@ -2551,7 +2804,9 @@
         "district": "汐止區",
         "lat": 25.06195,
         "lng": 121.64838
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "【新月．建築講座】李乾朗教授談：建築畫與建築",
@@ -2567,7 +2822,9 @@
         "district": "中山區",
         "lat": 25.04852,
         "lng": 121.52268
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "【新月．建築講座】李乾朗教授談：建築畫與建築",
@@ -2583,7 +2840,9 @@
         "district": "中山區",
         "lat": 25.04852,
         "lng": 121.52268
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "2025朱宗慶打擊樂團擊樂劇場《泥巴》",
@@ -2599,7 +2858,9 @@
         "district": "西屯區",
         "lat": 24.16265,
         "lng": 120.6403
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "2025朱宗慶打擊樂團擊樂劇場《泥巴》",
@@ -2615,7 +2876,9 @@
         "district": "鳳山區",
         "lat": 22.62417,
         "lng": 120.34221
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "《午後的群影》郭奕庭 個展",
@@ -2631,7 +2894,9 @@
         "district": "安平區",
         "lat": 22.99399,
         "lng": 120.16739
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "一頁就是一個遠方｜趙宇脩冊頁個展",
@@ -2647,7 +2912,9 @@
         "district": "中山區",
         "lat": 25.05272,
         "lng": 121.52125
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "【國際志工】2026全年度微客國際志工，開放報名🔥",
@@ -2663,7 +2930,9 @@
         "district": "板橋區",
         "lat": 25.02084,
         "lng": 121.467
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "《絳》",
@@ -2679,7 +2948,9 @@
         "district": "大安區",
         "lat": 25.02423,
         "lng": 121.5279
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "《歡迎光臨神鬼動物的奇怪世界：哆啦兔噹個展》",
@@ -2695,7 +2966,9 @@
         "district": "文山區",
         "lat": 24.99836,
         "lng": 121.5552
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "印度「2026國際慶典藝術大賽暨線上展覽」",
@@ -2711,7 +2984,9 @@
         "district": null,
         "lat": null,
         "lng": null
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "印度「2026國際慶典藝術大賽暨線上展覽」",
@@ -2727,7 +3002,9 @@
         "district": null,
         "lat": null,
         "lng": null
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "《享樂時刻》",
@@ -2743,7 +3020,9 @@
         "district": "松山區",
         "lat": 25.0484,
         "lng": 121.55192
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "《享樂時刻》",
@@ -2759,7 +3038,9 @@
         "district": "松山區",
         "lat": 25.0484,
         "lng": 121.55192
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "《享樂時刻》",
@@ -2775,7 +3056,9 @@
         "district": "松山區",
         "lat": 25.0484,
         "lng": 121.55192
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "《享樂時刻》",
@@ -2791,7 +3074,9 @@
         "district": "松山區",
         "lat": 25.0484,
         "lng": 121.55192
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "《享樂時刻》",
@@ -2807,7 +3092,9 @@
         "district": "松山區",
         "lat": 25.0484,
         "lng": 121.55192
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "《享樂時刻》",
@@ -2823,7 +3110,9 @@
         "district": "松山區",
         "lat": 25.0484,
         "lng": 121.55192
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "《享樂時刻》",
@@ -2839,7 +3128,9 @@
         "district": "松山區",
         "lat": 25.0484,
         "lng": 121.55192
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "《享樂時刻》",
@@ -2855,7 +3146,9 @@
         "district": "松山區",
         "lat": 25.0484,
         "lng": 121.55192
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "《享樂時刻》",
@@ -2871,7 +3164,9 @@
         "district": "松山區",
         "lat": 25.0484,
         "lng": 121.55192
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "《享樂時刻》",
@@ -2887,7 +3182,9 @@
         "district": "松山區",
         "lat": 25.0484,
         "lng": 121.55192
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "《享樂時刻》",
@@ -2903,7 +3200,9 @@
         "district": "松山區",
         "lat": 25.0484,
         "lng": 121.55192
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "《享樂時刻》",
@@ -2919,7 +3218,9 @@
         "district": "松山區",
         "lat": 25.0484,
         "lng": 121.55192
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "《享樂時刻》",
@@ -2935,7 +3236,9 @@
         "district": "松山區",
         "lat": 25.0484,
         "lng": 121.55192
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "《享樂時刻》",
@@ -2951,7 +3254,9 @@
         "district": "松山區",
         "lat": 25.0484,
         "lng": 121.55192
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "《享樂時刻》",
@@ -2967,7 +3272,9 @@
         "district": "松山區",
         "lat": 25.0484,
         "lng": 121.55192
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "《享樂時刻》",
@@ -2983,7 +3290,9 @@
         "district": "松山區",
         "lat": 25.0484,
         "lng": 121.55192
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "《享樂時刻》",
@@ -2999,7 +3308,9 @@
         "district": "松山區",
         "lat": 25.0484,
         "lng": 121.55192
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "《享樂時刻》",
@@ -3015,7 +3326,9 @@
         "district": "松山區",
         "lat": 25.0484,
         "lng": 121.55192
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "《享樂時刻》",
@@ -3031,7 +3344,9 @@
         "district": "松山區",
         "lat": 25.0484,
         "lng": 121.55192
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "｛樂齡學堂114年10月｝手機攝影輕鬆學",
@@ -3047,7 +3362,9 @@
         "district": "中正區",
         "lat": 25.03584,
         "lng": 121.51295
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "「現代詩的多重宇宙」入門工作坊—從知識到實踐，進入現代詩之門",
@@ -3063,7 +3380,9 @@
         "district": "松山區",
         "lat": 25.05306,
         "lng": 121.54725
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "影像跨越時空能量—翁庭華攝影個展",
@@ -3079,7 +3398,9 @@
         "district": "松山區",
         "lat": 25.0484,
         "lng": 121.55192
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "2025臺北眷村文化節「開箱吧！眷村」",
@@ -3095,7 +3416,9 @@
         "district": "北投區",
         "lat": 25.13895,
         "lng": 121.50753
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "木雕修護101",
@@ -3111,7 +3434,9 @@
         "district": "金山區",
         "lat": 25.24261,
         "lng": 121.61705
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "心象外相：國際當代繪畫特展",
@@ -3127,7 +3452,9 @@
         "district": "金山區",
         "lat": 25.24261,
         "lng": 121.61705
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "2025伊勢和紙寫真交流連合展臺北展",
@@ -3143,7 +3470,9 @@
         "district": "中山區",
         "lat": 25.057,
         "lng": 121.52219
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "MSAC Art Salon 2025",
@@ -3159,7 +3488,9 @@
         "district": "內湖區",
         "lat": 25.08628,
         "lng": 121.56146
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "｢金銀島｣ 黨若洪個展",
@@ -3175,7 +3506,9 @@
         "district": "內湖區",
         "lat": 25.08628,
         "lng": 121.56146
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "雲樾晨色-塵三個展",
@@ -3191,7 +3524,9 @@
         "district": "大安區",
         "lat": 25.04025,
         "lng": 121.5452
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "大東藝術圖書館．新書推薦【積吶虹光(LEF)：TW愛與和平，青天白日滿地虹】",
@@ -3207,7 +3542,9 @@
         "district": "鳳山區",
         "lat": 22.62456,
         "lng": 120.36338
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "大東藝術圖書館．新書推薦【積吶虹光(LEF)：TW愛與和平，青天白日滿地虹】",
@@ -3223,7 +3560,9 @@
         "district": "鳳山區",
         "lat": 22.62456,
         "lng": 120.36338
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "【What am I doing? 逐夢，流動的瞬間 — Michael Vincent Manalo（MVM） 個展】",
@@ -3239,7 +3578,9 @@
         "district": "北區",
         "lat": 24.7995,
         "lng": 120.96
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "我們在蟹洞吞吐的呢喃成了潮聲",
@@ -3255,7 +3596,9 @@
         "district": "香山區",
         "lat": 24.76305,
         "lng": 120.91373
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "海底射來的光-莊明中2025油畫創作展",
@@ -3271,7 +3614,9 @@
         "district": "信義區",
         "lat": 25.04829,
         "lng": 121.57867
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "海底射來的光-莊明中2025油畫創作展",
@@ -3287,7 +3632,9 @@
         "district": "信義區",
         "lat": 25.04829,
         "lng": 121.57867
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "第四屆《構圖·臺灣》入圍者聯展",
@@ -3303,7 +3650,9 @@
         "district": "大安區",
         "lat": 25.04098,
         "lng": 121.55325
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "《韋瓦第的調色盤》巡演Oliver Charlier X Baroque Camerata",
@@ -3319,7 +3668,9 @@
         "district": "西屯區",
         "lat": 24.16265,
         "lng": 120.6403
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "鄭建昌2025回顧展Ⅱ",
@@ -3335,7 +3686,9 @@
         "district": "大安區",
         "lat": 25.03655,
         "lng": 121.54538
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "《定格微光》線上攝影展",
@@ -3351,7 +3704,9 @@
         "district": null,
         "lat": null,
         "lng": null
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "「韶光流韻三結」 三人行聯展 Trio of Flowing Grace in Time",
@@ -3367,7 +3722,9 @@
         "district": "大園區",
         "lat": 25.02185,
         "lng": 121.21974
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "與誰同坐 —— 卜茲與他的好友",
@@ -3383,7 +3740,9 @@
         "district": "大安區",
         "lat": 25.02733,
         "lng": 121.53059
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "油畫風格花藝實作與地景藝術初階班 _ 2025/10",
@@ -3399,7 +3758,9 @@
         "district": "中正區",
         "lat": 25.034,
         "lng": 121.51
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "2025國鼎數位學苑「相片編輯專修班」第三期",
@@ -3415,7 +3776,9 @@
         "district": "中正區",
         "lat": 25.04064,
         "lng": 121.52767
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "探索多元文學系列",
@@ -3431,7 +3794,9 @@
         "district": "萬華區",
         "lat": 25.04127,
         "lng": 121.50664
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "花好月圓 葉志錦石雕展",
@@ -3447,7 +3812,9 @@
         "district": "士林區",
         "lat": 25.09779,
         "lng": 121.53218
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "「昨日、今日、明日？」 宮山廣明個展",
@@ -3463,7 +3830,9 @@
         "district": "大同區",
         "lat": 25.0535,
         "lng": 121.50942
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "抽絲剝繭～拒學生態心理重構模式 父母工作坊",
@@ -3479,7 +3848,9 @@
         "district": "中山區",
         "lat": 25.04654,
         "lng": 121.53315
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "《空谷回聲》趙南開 個展 〈Echo Valley〉 CHAO, Nan-Kai Solo Exhibition",
@@ -3495,7 +3866,9 @@
         "district": "松山區",
         "lat": 25.0468,
         "lng": 121.55574
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "2025｢台灣少年華陽獎｣寫生比賽得獎作品展",
@@ -3511,7 +3884,9 @@
         "district": "松山區",
         "lat": 25.0484,
         "lng": 121.55192
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "1903 生於台灣之旅日畫家呂春成美術畫作紀念展",
@@ -3527,7 +3902,9 @@
         "district": "松山區",
         "lat": 25.0484,
         "lng": 121.55192
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "台北市人體畫學會第27屆會員作品聯展",
@@ -3543,7 +3920,9 @@
         "district": "松山區",
         "lat": 25.0484,
         "lng": 121.55192
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "間奏の景——小津 航‧台灣首個展",
@@ -3559,7 +3938,9 @@
         "district": "士林區",
         "lat": 25.11265,
         "lng": 121.5345
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": " 《古神話・拜伊酷》中川岳二寄木作品展 in 台灣",
@@ -3575,7 +3956,9 @@
         "district": "中正區",
         "lat": 25.02042,
         "lng": 121.52632
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "五位野昌也《POLYMER – Weaving Invisible Structures》攝影個展",
@@ -3591,7 +3974,9 @@
         "district": "大安區",
         "lat": 25.04041,
         "lng": 121.55466
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "【展覽】2025.10.18－11.16 ｜在瞬間停留－速寫中的風景  In the Stillness of a Moment｜何包蛋×黃一文×吳欣芷  三人聯展",
@@ -3607,7 +3992,9 @@
         "district": "大安區",
         "lat": 25.02962,
         "lng": 121.52262
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "【城南走讀】山林慢漫趣－秋季場次",
@@ -3623,7 +4010,9 @@
         "district": "大安區",
         "lat": 25.00943,
         "lng": 121.53933
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "【城南走讀】山林慢漫趣－秋季場次",
@@ -3639,7 +4028,9 @@
         "district": "大安區",
         "lat": 25.00943,
         "lng": 121.53933
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "移形．朔影-白雨｜黃立穎聯展  Transformation-Bai Yu ｜Huang Li Ying  Joint Exhibition",
@@ -3655,7 +4046,9 @@
         "district": "中正區",
         "lat": 25.03878,
         "lng": 121.52407
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "114年李國鼎故居綠手指_沈秀雀老師_臺灣原生趣味盆栽周末系列課程",
@@ -3671,7 +4064,9 @@
         "district": "中正區",
         "lat": 25.04064,
         "lng": 121.52767
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "聲音開發、調整與修復實戰基礎班 _ 2025/10",
@@ -3687,7 +4082,9 @@
         "district": "中正區",
         "lat": 25.034,
         "lng": 121.51
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "TCO【溫馨飛魔力系列】沿聲而行-TCO 市民國樂團音樂會",
@@ -3703,7 +4100,9 @@
         "district": "中正區",
         "lat": 25.043,
         "lng": 121.5102
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "【文化就在巷子裡】春美歌劇團《鐵漢》",
@@ -3719,7 +4118,9 @@
         "district": "北投區",
         "lat": 25.1344,
         "lng": 121.50466
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "114年「掌藝薪傳」布袋戲技藝推廣計畫 成果發表",
@@ -3735,7 +4136,9 @@
         "district": "大同區",
         "lat": 25.05564,
         "lng": 121.5102
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "10/19 天母工作室🕸《綠時尚魔法屋》Eco-Chic Magic House 一日工作坊",
@@ -3751,7 +4154,9 @@
         "district": "士林區",
         "lat": 25.10552,
         "lng": 121.53023
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "【2025台灣國際重唱藝術節】樂齡阿卡音樂會",
@@ -3767,7 +4172,9 @@
         "district": "中正區",
         "lat": 25.043,
         "lng": 121.5102
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "2025/10/19 (日)竹久夢二的搖籃曲",
@@ -3783,7 +4190,9 @@
         "district": "北投區",
         "lat": 25.13801,
         "lng": 121.5145
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "TCO【溫馨飛魔力系列】回首．庄稼-TCO教師國樂團音樂會",
@@ -3799,7 +4208,9 @@
         "district": "中正區",
         "lat": 25.043,
         "lng": 121.5102
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "《這次就愛自己》參與式演出+工作坊",
@@ -3815,7 +4226,9 @@
         "district": "中正區",
         "lat": 25.04464,
         "lng": 121.52681
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "《精靈的詠嘆》聽見歌樂裡的神話世界",
@@ -3831,7 +4244,9 @@
         "district": "中山區",
         "lat": 25.03713,
         "lng": 121.51934
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "【日午音樂會181】永恆的戀歌～徐以琳&李秀芬 經典二重唱🎵✨",
@@ -3847,7 +4262,9 @@
         "district": "蘆洲區",
         "lat": 25.08854,
         "lng": 121.46988
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "鳴石樂集樂壇新秀《旅途》郭明慈&吳筱甄 PianoForte 鋼琴二重奏",
@@ -3863,7 +4280,9 @@
         "district": "中正區",
         "lat": 25.03808,
         "lng": 121.52717
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "【講座】2025.10.19（日）下午｜陳沛珛 ｜關於《愛過的廢物》之養成",
@@ -3879,7 +4298,9 @@
         "district": "大安區",
         "lat": 25.02962,
         "lng": 121.52262
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "戲劇表演試鏡實戰基礎班 _ 2025/10",
@@ -3895,7 +4316,9 @@
         "district": "中正區",
         "lat": 25.034,
         "lng": 121.51
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "【文化就在巷子裡】打幫你樂團《鬥陣來唱臺灣歌》",
@@ -3911,7 +4334,9 @@
         "district": "信義區",
         "lat": 25.03857,
         "lng": 121.5785
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "弦Ｘ弦～大提琴與吉他－二重奏音樂會",
@@ -3927,7 +4352,9 @@
         "district": "中正區",
         "lat": 25.03713,
         "lng": 121.51934
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "Who is the Speaker？ 林沛瑤 個展",
@@ -3943,7 +4370,9 @@
         "district": "桃園區",
         "lat": 25.01964,
         "lng": 121.29529
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "陪伴不上學的孩子~化危機為轉機",
@@ -3959,7 +4388,9 @@
         "district": null,
         "lat": null,
         "lng": null
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "ART TAIPEI 2025",
@@ -3993,7 +4424,9 @@
         "district": "中正區",
         "lat": 25.0406,
         "lng": 121.505
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "ART TAIPEI 2025 台北國際藝術博覽會",
@@ -4009,7 +4442,9 @@
         "district": "信義區",
         "lat": 25.03326,
         "lng": 121.56232
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "【合辦講座】暖心泉恩諮商中心心理諮商所 x 臺北市諮商心理師公會：淺談正念減壓於生活中的運用與實踐",
@@ -4025,7 +4460,9 @@
         "district": null,
         "lat": null,
         "lng": null
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "同黨劇團《白色說書人》讀劇會",
@@ -4041,7 +4478,9 @@
         "district": "中正區",
         "lat": 25.0355,
         "lng": 121.52018
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "𝟐𝟎𝟐𝟓 𝐀𝐑𝐓 𝐓𝐀𝐈𝐏𝐄𝐈 台北藝博｜ 異雲書屋𝐘𝐢 𝐘𝐮𝐧 𝐀𝐫𝐭｜展位 𝗯𝗼𝗼𝘁𝗵 𝗕𝟬𝟵",
@@ -4057,7 +4496,9 @@
         "district": "信義區",
         "lat": 25.04109,
         "lng": 121.5756
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "心流：在記憶與物質間的凝視",
@@ -4073,7 +4514,9 @@
         "district": "信義區",
         "lat": 25.03296,
         "lng": 121.56712
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "2025北投小戲節Ｘ日本「52PRO！Presents 青春の会 」－《懷念的未來》",
@@ -4089,7 +4532,9 @@
         "district": "北投區",
         "lat": 25.13117,
         "lng": 121.50003
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "2025北投小戲節Ｘ日本「52PRO！Presents 青春の会 」－《懷念的未來》",
@@ -4105,7 +4550,9 @@
         "district": "北投區",
         "lat": 25.13117,
         "lng": 121.50003
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "2025北投小戲節Ｘ日本「52PRO！Presents 青春の会 」－《懷念的未來》",
@@ -4121,7 +4568,9 @@
         "district": "北投區",
         "lat": 25.13117,
         "lng": 121.50003
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "2025北投小戲節Ｘ日本「52PRO！Presents 青春の会 」－《懷念的未來》",
@@ -4137,7 +4586,9 @@
         "district": "北投區",
         "lat": 25.13117,
         "lng": 121.50003
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "2025北投小戲節Ｘ日本「52PRO！Presents 青春の会 」－《懷念的未來》",
@@ -4153,7 +4604,9 @@
         "district": "北投區",
         "lat": 25.13117,
         "lng": 121.50003
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "水面劇：象徵與隱喻的力量/成人戲劇療癒師資班",
@@ -4169,7 +4622,9 @@
         "district": "新店區",
         "lat": 24.97959,
         "lng": 121.53732
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "【2025台灣國際重唱藝術節】台灣盃現代阿卡貝拉大賽－青年組、社會組",
@@ -4185,7 +4640,9 @@
         "district": "中正區",
         "lat": 25.043,
         "lng": 121.5102
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "｛素書樓講堂｝2025年度文化系列講座─閱讀系列─呂思勉先生「史籍與史學方法」著作六種",
@@ -4201,7 +4658,9 @@
         "district": "中正區",
         "lat": 25.03584,
         "lng": 121.51295
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": " 新芳春茶行10月手作課 🌿《布球小宇宙 ∣ 烏龍茶香的療癒手作》",
@@ -4217,7 +4676,9 @@
         "district": "大同區",
         "lat": 25.05708,
         "lng": 121.51264
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "中台世界博物館「日本古代木雕造像」講座",
@@ -4233,7 +4694,9 @@
         "district": "埔里鎮",
         "lat": 24.01087250272492,
         "lng": 120.94503099416707
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "【周末輕鬆講】張宛瑩《新興糊紙文化──想不到吧？！從昭德宮到羅浮宮的傳統美學技藝之旅》",
@@ -4249,7 +4712,9 @@
         "district": "松山區",
         "lat": 25.0484,
         "lng": 121.55192
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "一生快樂閱讀的10種方法",
@@ -4265,7 +4730,9 @@
         "district": "中正區",
         "lat": 25.01292,
         "lng": 121.53485
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "2025鍾家瑋鋼琴獨奏會—天鵝之歌·系列二",
@@ -4281,7 +4748,9 @@
         "district": "中正區",
         "lat": 25.03713,
         "lng": 121.51934
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "2025鍾家瑋鋼琴獨奏會—天鵝之歌·系列二",
@@ -4297,7 +4766,9 @@
         "district": "鳳山區",
         "lat": 22.62417,
         "lng": 120.34221
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "【文化就在巷子裡】偶偶偶劇團《皇帝與夜鶯》",
@@ -4313,7 +4784,9 @@
         "district": "大安區",
         "lat": 25.02075,
         "lng": 121.52891
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "TCO【緬懷大師系列】國樂交響",
@@ -4329,7 +4802,9 @@
         "district": "中正區",
         "lat": 25.043,
         "lng": 121.5102
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "2025KDIAF關渡國際動畫節",
@@ -4345,7 +4820,9 @@
         "district": "北投區",
         "lat": 25.13192,
         "lng": 121.46653
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "2025/10/26(日)秋季重陽茶會",
@@ -4361,7 +4838,9 @@
         "district": "北投區",
         "lat": 25.13801,
         "lng": 121.5145
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "【2025台灣國際重唱藝術節】世界盃現代阿卡貝拉大賽－青年組、社會組",
@@ -4377,7 +4856,9 @@
         "district": "中正區",
         "lat": 25.043,
         "lng": 121.5102
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "【文化就在巷子裡】新象創作劇團《馬戲狂想》",
@@ -4393,7 +4874,9 @@
         "district": "松山區",
         "lat": 25.06209,
         "lng": 121.56713
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "2025南疆 探尋西域古國千年輝煌 藝文參訪",
@@ -4409,7 +4892,9 @@
         "district": "中山區",
         "lat": 25.04852,
         "lng": 121.52268
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "斜槓人生 – 系列九 蘇千芳與斜槓醇弦 弦樂五重奏之夜",
@@ -4425,7 +4910,9 @@
         "district": "中正區",
         "lat": 25.03713,
         "lng": 121.51934
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "一音萬象：馮勇智 × 巴赫無伴奏大提琴組曲",
@@ -4441,7 +4928,9 @@
         "district": "中正區",
         "lat": 25.03524,
         "lng": 121.51821
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "【2025台灣國際重唱藝術節】Gala Concert遇見國際人聲樂團-西班牙Dimensión Vocal人聲樂團",
@@ -4457,7 +4946,9 @@
         "district": "中正區",
         "lat": 25.043,
         "lng": 121.5102
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "一音萬象：馮勇智 × 巴赫無伴奏大提琴組曲",
@@ -4473,7 +4964,9 @@
         "district": "鳳山區",
         "lat": 22.62417,
         "lng": 120.34221
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "斜槓人生 – 系列九 蘇千芳與斜槓醇弦 弦樂五重奏之夜",
@@ -4489,7 +4982,9 @@
         "district": "鳳山區",
         "lat": 22.62417,
         "lng": 120.34221
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "【時代對話系列五】地緣政治的復歸：人文與社會科學的反思",
@@ -4505,7 +5000,9 @@
         "district": "大安區",
         "lat": 25.01936,
         "lng": 121.53861
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "【主辦講座】祖孫情，照顧心，相伴不相絆",
@@ -4521,7 +5018,9 @@
         "district": "中正區",
         "lat": 25.04243,
         "lng": 121.52179
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "【國史館專題演講】從平等、本土到超越價值：一位港裔新住民的思考旅程",
@@ -4537,7 +5036,9 @@
         "district": "中正區",
         "lat": 25.0406,
         "lng": 121.505
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "【上海商銀】健康樂活｜林昌平—看得清楚，活得精彩 從如何看眼科說起，兼談護眼秘訣與白內障手術大解秘",
@@ -4553,7 +5054,9 @@
         "district": "中山區",
         "lat": 25.0625,
         "lng": 121.52308
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "【歲月痕】 傅鈺 個展",
@@ -4569,7 +5072,9 @@
         "district": "中壢區",
         "lat": 24.9631,
         "lng": 121.21434
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "｛樂齡學堂114年10-11月｝博物館系列講座─歐洲美術館名作賞析",
@@ -4585,7 +5090,9 @@
         "district": "大安區",
         "lat": 25.02916,
         "lng": 121.5384
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "｛樂齡學堂114年10-11月｝博物館系列講座─歐洲美術館名作賞析",
@@ -4601,7 +5108,9 @@
         "district": "大安區",
         "lat": 25.02916,
         "lng": 121.5384
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "｛樂齡學堂114年10-11月｝博物館系列講座─歐洲美術館名作賞析",
@@ -4617,7 +5126,9 @@
         "district": "大安區",
         "lat": 25.02916,
         "lng": 121.5384
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "｛樂齡學堂114年10-11月｝博物館系列講座─歐洲美術館名作賞析",
@@ -4633,7 +5144,9 @@
         "district": "大安區",
         "lat": 25.02916,
         "lng": 121.5384
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "【主辦講座】身障照顧者的健心術：宅配安心到家裡",
@@ -4649,7 +5162,9 @@
         "district": "大同區",
         "lat": 25.05162,
         "lng": 121.51873
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "【主辦講座】助你減壓：家庭照顧者與壓力和平共處的方法",
@@ -4665,7 +5180,9 @@
         "district": "內湖區",
         "lat": 25.07917,
         "lng": 121.57517
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "【上海商銀】豐富人生｜簡媜—以情紋身的男子―李商隱",
@@ -4681,7 +5198,9 @@
         "district": "中山區",
         "lat": 25.0625,
         "lng": 121.52308
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "【文化就在巷子裡】金光布袋戲《2025雲州大儒俠-最終之戰》",
@@ -4697,7 +5216,9 @@
         "district": "松山區",
         "lat": 25.05786,
         "lng": 121.55886
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "【台積電文學沙龍—星期五的月光曲 】",
@@ -4713,7 +5234,9 @@
         "district": "中正區",
         "lat": 25.0336,
         "lng": 121.51151
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "2025吳曉貞長笛獨奏會",
@@ -4729,7 +5252,9 @@
         "district": "中正區",
         "lat": 25.03713,
         "lng": 121.51934
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "2025中國信託新舞臺藝術節 捷克夜店馬戲團《奔跑者》",
@@ -4745,7 +5270,9 @@
         "district": "士林區",
         "lat": 25.08512,
         "lng": 121.52437
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "【免費公益講座】「聽見青春的聲音」— 如何與青少年對話",
@@ -4761,7 +5288,9 @@
         "district": "松山區",
         "lat": 25.05479,
         "lng": 121.55427
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "【免費公益講座】「聽見青春的聲音」— 如何與青少年對話",
@@ -4777,7 +5306,9 @@
         "district": "松山區",
         "lat": 25.05479,
         "lng": 121.55427
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "【免費公益講座】「聽見青春的聲音」— 如何與青少年對話",
@@ -4793,7 +5324,9 @@
         "district": "松山區",
         "lat": 25.05479,
         "lng": 121.55427
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "【免費公益講座】「聽見青春的聲音」— 如何與青少年對話",
@@ -4809,7 +5342,9 @@
         "district": "松山區",
         "lat": 25.05479,
         "lng": 121.55427
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "【免費公益講座】「聽見青春的聲音」— 如何與青少年對話",
@@ -4825,7 +5360,9 @@
         "district": "松山區",
         "lat": 25.05479,
         "lng": 121.55427
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "器合香聚 金工創作聯展",
@@ -4841,7 +5378,9 @@
         "district": "中正區",
         "lat": 25.01663,
         "lng": 121.53192
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "台灣之美～2025林和杉油畫展",
@@ -4857,7 +5396,9 @@
         "district": "士林區",
         "lat": 25.09779,
         "lng": 121.53218
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "李國鼎故居2025K.T.紀念講座_張世宗-11/1(六) 玩習世紀,全齡樂育---創意遊藝體驗～～",
@@ -4873,7 +5414,9 @@
         "district": "中正區",
         "lat": 25.04064,
         "lng": 121.52767
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "【七海講堂】回顧民歌五十——從「唱自己的歌」說起",
@@ -4889,7 +5432,9 @@
         "district": "中山區",
         "lat": 25.07808,
         "lng": 121.53662
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "2025陳惠湄與她的好朋友們--陳惠湄與法曼長笛室內樂團",
@@ -4923,7 +5468,9 @@
         "district": "西屯區",
         "lat": 24.16265,
         "lng": 120.6403
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "2025陳惠湄與她的好朋友們--陳惠湄與法曼長笛室內樂團",
@@ -4957,7 +5504,9 @@
         "district": "中正區",
         "lat": 25.03713,
         "lng": 121.51934
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "【文化就在巷子裡】李宛儒中東文化藝術團《東方舞劇[王者之香]》",
@@ -4973,7 +5522,9 @@
         "district": "大同區",
         "lat": 25.05354,
         "lng": 121.51447
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "蘆笛泛樂 雅卓藝術長笛團音樂會",
@@ -4989,7 +5540,9 @@
         "district": "蘆洲區",
         "lat": 25.08137,
         "lng": 121.47065
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "臺南市政府文化局劇場行政人才培育計畫",
@@ -5005,7 +5558,9 @@
         "district": "東區",
         "lat": 22.97483,
         "lng": 120.22156
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "臺南市政府文化局劇場行政人才培育計畫",
@@ -5021,7 +5576,9 @@
         "district": "東區",
         "lat": 22.97483,
         "lng": 120.22156
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "TCO【溫馨飛魔力系列】金石之交・邦誼68—亞松森&臺北—雙城合唱樂展系列X：TCO合唱團音樂會",
@@ -5037,7 +5594,9 @@
         "district": "中正區",
         "lat": 25.043,
         "lng": 121.5102
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "雲樾晨色-塵三個展專題講座： 「雲山盡是胸中逸氣」",
@@ -5053,7 +5612,9 @@
         "district": "大安區",
         "lat": 25.04025,
         "lng": 121.5452
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "【講座】2025.11.02（日）｜Ballboss《掛蚊帳的夜晚》/《掛蠓罩的暗暝》作者巡迴沙龍【台北 • 童里】｜華、台雙語繪本｜尋根力作",
@@ -5069,7 +5630,9 @@
         "district": "大安區",
         "lat": 25.02962,
         "lng": 121.52262
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "2025女高音王秋雯獨唱會 | 樂響‧聲琴",
@@ -5085,7 +5648,9 @@
         "district": "西屯區",
         "lat": 24.16265,
         "lng": 120.6403
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "【2025 TSO大師系列】殷巴爾、李映衡與TSO",
@@ -5101,7 +5666,9 @@
         "district": "中正區",
         "lat": 25.03713,
         "lng": 121.51934
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "【免費公益講座】忘記背後，勇往「職」前",
@@ -5117,7 +5684,9 @@
         "district": "松山區",
         "lat": 25.05479,
         "lng": 121.55427
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "【免費公益講座】忘記背後，勇往「職」前",
@@ -5133,7 +5702,9 @@
         "district": "松山區",
         "lat": 25.05479,
         "lng": 121.55427
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "【免費公益講座】忘記背後，勇往「職」前",
@@ -5149,7 +5720,9 @@
         "district": "松山區",
         "lat": 25.05479,
         "lng": 121.55427
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "【免費公益講座】忘記背後，勇往「職」前",
@@ -5165,7 +5738,9 @@
         "district": "松山區",
         "lat": 25.05479,
         "lng": 121.55427
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "【國史館專題演講】桃竹苗客庄大小租的研究分析(同步線上直播)",
@@ -5181,7 +5756,9 @@
         "district": "中正區",
         "lat": 25.04214,
         "lng": 121.51987
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "《翩翩-翅膀的重量》參與式演出+工作坊",
@@ -5197,7 +5774,9 @@
         "district": "萬華區",
         "lat": 25.03335,
         "lng": 121.5015
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "【免費公益講座】婚前的理性與感性",
@@ -5213,7 +5792,9 @@
         "district": "松山區",
         "lat": 25.05479,
         "lng": 121.55427
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "【免費公益講座】婚前的理性與感性",
@@ -5229,7 +5810,9 @@
         "district": "松山區",
         "lat": 25.05479,
         "lng": 121.55427
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "【免費公益講座】婚前的理性與感性",
@@ -5245,7 +5828,9 @@
         "district": "松山區",
         "lat": 25.05479,
         "lng": 121.55427
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "【免費公益講座】婚前的理性與感性",
@@ -5261,7 +5846,9 @@
         "district": "松山區",
         "lat": 25.05479,
         "lng": 121.55427
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "【免費公益講座】照顧的路上，不只你一個人",
@@ -5277,7 +5864,9 @@
         "district": "松山區",
         "lat": 25.05479,
         "lng": 121.55427
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "【那些年被消失的音樂課】張琳琳美聲劇坊",
@@ -5293,7 +5882,9 @@
         "district": "松山區",
         "lat": 25.05376,
         "lng": 121.54769
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "【免費公益講座】照顧的路上，不只你一個人",
@@ -5309,7 +5900,9 @@
         "district": "松山區",
         "lat": 25.05479,
         "lng": 121.55427
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "【免費公益講座】照顧的路上，不只你一個人",
@@ -5325,7 +5918,9 @@
         "district": "松山區",
         "lat": 25.05479,
         "lng": 121.55427
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "【免費公益講座】照顧的路上，不只你一個人",
@@ -5341,7 +5936,9 @@
         "district": "松山區",
         "lat": 25.05479,
         "lng": 121.55427
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "《輕一點，好嗎？》",
@@ -5357,7 +5954,9 @@
         "district": "士林區",
         "lat": 25.10232,
         "lng": 121.51955
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "2025ECHO偶計劃《白，忙一場》&《2024我離開之後⋯⋯請進站》",
@@ -5373,7 +5972,9 @@
         "district": "中正區",
         "lat": 25.03174,
         "lng": 121.51534
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "《茗王》—臺灣茶業之父李春生",
@@ -5389,7 +5990,9 @@
         "district": "大安區",
         "lat": 25.01348,
         "lng": 121.53495
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "2025北投小戲節Ｘ路歧合作社－《滴答走， 送鐘去！》",
@@ -5405,7 +6008,9 @@
         "district": "北投區",
         "lat": 25.13117,
         "lng": 121.50003
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "2025北投小戲節Ｘ路歧合作社－《滴答走， 送鐘去！》",
@@ -5421,7 +6026,9 @@
         "district": "北投區",
         "lat": 25.13117,
         "lng": 121.50003
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "2025北投小戲節Ｘ路歧合作社－《滴答走， 送鐘去！》",
@@ -5437,7 +6044,9 @@
         "district": "北投區",
         "lat": 25.13117,
         "lng": 121.50003
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "2025ECHO偶計劃《白，忙一場》&《2024我離開之後⋯⋯請進站》",
@@ -5453,7 +6062,9 @@
         "district": "中正區",
         "lat": 25.03174,
         "lng": 121.51534
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "2025北投小戲節Ｘ路歧合作社－《滴答走， 送鐘去！》",
@@ -5469,7 +6080,9 @@
         "district": "北投區",
         "lat": 25.13117,
         "lng": 121.50003
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "2025ECHO偶計劃《白，忙一場》&《2024我離開之後⋯⋯請進站》",
@@ -5485,7 +6098,9 @@
         "district": "中正區",
         "lat": 25.03174,
         "lng": 121.51534
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "2025北投小戲節Ｘ路歧合作社－《滴答走， 送鐘去！》",
@@ -5501,7 +6116,9 @@
         "district": "北投區",
         "lat": 25.13117,
         "lng": 121.50003
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "2025ECHO偶計劃《白，忙一場》&《2024我離開之後⋯⋯請進站》",
@@ -5517,7 +6134,9 @@
         "district": "中正區",
         "lat": 25.03174,
         "lng": 121.51534
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "2025北投小戲節Ｘ路歧合作社－《滴答走， 送鐘去！》",
@@ -5533,7 +6152,9 @@
         "district": "北投區",
         "lat": 25.13117,
         "lng": 121.50003
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "2025北投小戲節Ｘ路歧合作社－《滴答走， 送鐘去！》",
@@ -5549,7 +6170,9 @@
         "district": "北投區",
         "lat": 25.13117,
         "lng": 121.50003
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "2025ECHO偶計劃《白，忙一場》&《2024我離開之後⋯⋯請進站》",
@@ -5565,7 +6188,9 @@
         "district": "中正區",
         "lat": 25.03174,
         "lng": 121.51534
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "時渋之色 Shibui Spectrum — 陳雲 個展",
@@ -5581,7 +6206,9 @@
         "district": "中山區",
         "lat": 25.05272,
         "lng": 121.52125
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "育秀學園-智慧生活實驗室",
@@ -5597,7 +6224,9 @@
         "district": "中正區",
         "lat": 25.04064,
         "lng": 121.52767
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "時空藝術鑒賞-宏觀微局 楊炳輝-風景油畫展",
@@ -5613,7 +6242,9 @@
         "district": "大安區",
         "lat": 25.02555,
         "lng": 121.53666
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "【文化就在巷子裡】泰雅原舞工坊《琴聲與花環的邂逅》",
@@ -5629,7 +6260,9 @@
         "district": "中正區",
         "lat": 25.03495,
         "lng": 121.50674
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "TCO【市國之星系列】四季狂想",
@@ -5645,7 +6278,9 @@
         "district": "中正區",
         "lat": 25.043,
         "lng": 121.5102
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "2025PKNxTAICHUNG#Vol.11設計師交流之夜在台中/留白之間Between tne Blanks",
@@ -5661,7 +6296,9 @@
         "district": "西屯區",
         "lat": 24.15975,
         "lng": 120.64693
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "《巴赫新聲系列音樂會》夢－女高音王亭祺獨唱會",
@@ -5670,14 +6307,16 @@
       "start_at": "2025-11-08T19:30:00",
       "end_at": "2025-11-08T21:15:00",
       "url": "https://www.yinqi.org/home/Content/?SerialNo=14",
-      "price_min": 索票,
-      "price_max": 索票,
+      "price_min":0,
+      "price_max":0,
       "venue": {
         "name": "台北巴赫廳",
         "district": "中山區",
         "lat": 25.06315,
         "lng": 121.52058
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "TCO【溫馨飛魔力系列】逐夢．初心─TCO青年國樂團音樂會",
@@ -5693,7 +6332,9 @@
         "district": "中正區",
         "lat": 25.043,
         "lng": 121.5102
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "《這次就愛自己》參與式演出+工作坊",
@@ -5709,7 +6350,9 @@
         "district": "萬華區",
         "lat": 25.03335,
         "lng": 121.5015
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "鳴石樂集樂壇新秀 鄭鉯潔鋼琴獨奏會",
@@ -5725,7 +6368,9 @@
         "district": "中正區",
         "lat": 25.03808,
         "lng": 121.52717
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "跨域的十二夜【九】行為藝術，還是行動藝術？",
@@ -5741,7 +6386,9 @@
         "district": "大安區",
         "lat": 25.03826,
         "lng": 121.54408
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "【國史館專題演講】臺北文山地區拓墾中的族群關係",
@@ -5757,7 +6404,9 @@
         "district": "中正區",
         "lat": 25.04214,
         "lng": 121.51987
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "2025ECHO偶計劃《紙與紙的生活》",
@@ -5773,7 +6422,9 @@
         "district": "中正區",
         "lat": 25.03174,
         "lng": 121.51534
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "2025ECHO偶計劃《紙與紙的生活》",
@@ -5789,7 +6440,9 @@
         "district": "中正區",
         "lat": 25.03174,
         "lng": 121.51534
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "2025ECHO偶計劃《紙與紙的生活》",
@@ -5805,7 +6458,9 @@
         "district": "中正區",
         "lat": 25.03174,
         "lng": 121.51534
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "2025ECHO偶計劃《紙與紙的生活》",
@@ -5821,7 +6476,9 @@
         "district": "中正區",
         "lat": 25.03174,
         "lng": 121.51534
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "2025ECHO偶計劃《紙與紙的生活》",
@@ -5837,7 +6494,9 @@
         "district": "中正區",
         "lat": 25.03174,
         "lng": 121.51534
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "《你說，桃花源 該是什么樣的？》—— 林宏信個展  \"Tell me, what do you think the Peach Blossom Land should be like？\" by LIN Hung-Hsin",
@@ -5853,7 +6512,9 @@
         "district": "大安區",
         "lat": 25.0382,
         "lng": 121.55012
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "李國鼎故居環境永續講座系列第4場—林殿順、許景翔--11/15(六)—我國地熱發電與碳封存發展現況",
@@ -5869,7 +6530,9 @@
         "district": "中正區",
         "lat": 25.04064,
         "lng": 121.52767
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "｛素書樓講堂｝2025年度史傳與人生─歷史人物講座（九）：一朝天子一朝臣—〈魏其武安侯列傳〉（一）（二）",
@@ -5885,7 +6548,9 @@
         "district": "中正區",
         "lat": 25.03584,
         "lng": 121.51295
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "2025北投小戲節X盜火劇團華文LAB劇本市集—出發！REMAKE戰隊！",
@@ -5901,7 +6566,9 @@
         "district": "北投區",
         "lat": 25.13117,
         "lng": 121.50003
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "2025北投小戲節X盜火劇團華文LAB劇本市集—出發！REMAKE戰隊！",
@@ -5917,7 +6584,9 @@
         "district": "北投區",
         "lat": 25.13117,
         "lng": 121.50003
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "2025北投小戲節X盜火劇團華文LAB劇本市集—出發！REMAKE戰隊！",
@@ -5933,7 +6602,9 @@
         "district": "北投區",
         "lat": 25.13117,
         "lng": 121.50003
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "2025北投小戲節X盜火劇團華文LAB劇本市集—出發！REMAKE戰隊！",
@@ -5949,7 +6620,9 @@
         "district": "北投區",
         "lat": 25.13117,
         "lng": 121.50003
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "｛素書樓講堂｝2025年度史傳與人生─歷史人物講座（九）：一朝天子一朝臣—〈魏其武安侯列傳〉（一）（二）",
@@ -5965,7 +6638,9 @@
         "district": "中正區",
         "lat": 25.03584,
         "lng": 121.51295
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "【文化就在巷子裡】原源雅集《花語季遇》",
@@ -5981,7 +6656,9 @@
         "district": "內湖區",
         "lat": 25.06899,
         "lng": 121.61278
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "《女力》",
@@ -5997,7 +6674,9 @@
         "district": "中正區",
         "lat": 25.04442,
         "lng": 121.5289
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "【2025 TSO大師系列】殷巴爾、秦立巍與TSO",
@@ -6013,7 +6692,9 @@
         "district": "中正區",
         "lat": 25.03713,
         "lng": 121.51934
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "莊明中2025油畫創作展-藝術專題講座「海底射來的光-莊明中的藝術世界」",
@@ -6029,7 +6710,9 @@
         "district": "信義區",
         "lat": 25.04829,
         "lng": 121.57867
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "【日午音樂會182】手風琴奇想意識🎵✨",
@@ -6045,7 +6728,9 @@
         "district": "蘆洲區",
         "lat": 25.08854,
         "lng": 121.46988
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "鳴石樂集樂壇新秀《記憶的深處》2025 陳經慈鋼琴獨奏會",
@@ -6061,7 +6746,9 @@
         "district": "中正區",
         "lat": 25.03808,
         "lng": 121.52717
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "又變．釉變 吳漢宗的彩瓷藝術",
@@ -6077,7 +6764,9 @@
         "district": "士林區",
         "lat": 25.09779,
         "lng": 121.53218
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "TCO【名家系列】干將・莫邪—吳珮菁X謝從馨 & TCO",
@@ -6093,7 +6782,9 @@
         "district": "中正區",
         "lat": 25.03713,
         "lng": 121.51934
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "【國史館專題演講】國家政策、人群流動與宮廟發展：為什麼臺東最大的伯公廟出現在池上？",
@@ -6109,7 +6800,9 @@
         "district": "中正區",
         "lat": 25.04214,
         "lng": 121.51987
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "【Träumerei．夢幻世界】DonSir 爵士樂團",
@@ -6125,7 +6818,9 @@
         "district": "松山區",
         "lat": 25.05376,
         "lng": 121.54769
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "享聽長笛二重奏—雙笛的呢喃",
@@ -6141,7 +6836,9 @@
         "district": "中正區",
         "lat": 25.04272,
         "lng": 121.52193
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "【聲聲漫】SSR喜劇玩咖",
@@ -6157,7 +6854,9 @@
         "district": "大安區",
         "lat": 25.03892,
         "lng": 121.53871
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "【聲聲漫】SSR喜劇玩咖",
@@ -6173,7 +6872,9 @@
         "district": "大安區",
         "lat": 25.03967,
         "lng": 121.53838
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "【聲聲漫】SSR喜劇玩咖",
@@ -6189,7 +6890,9 @@
         "district": "大安區",
         "lat": 25.03967,
         "lng": 121.53838
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "【聲聲漫】SSR喜劇玩咖",
@@ -6205,7 +6908,9 @@
         "district": "大安區",
         "lat": 25.03967,
         "lng": 121.53838
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "【聲聲漫】SSR喜劇玩咖",
@@ -6221,7 +6926,9 @@
         "district": "大安區",
         "lat": 25.03967,
         "lng": 121.53838
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "【聲聲漫】SSR喜劇玩咖",
@@ -6237,7 +6944,9 @@
         "district": "大安區",
         "lat": 25.03967,
         "lng": 121.53838
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "【聲聲漫】SSR喜劇玩咖",
@@ -6253,7 +6962,9 @@
         "district": "大安區",
         "lat": 25.03967,
         "lng": 121.53838
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "【聲聲漫】SSR喜劇玩咖",
@@ -6269,7 +6980,9 @@
         "district": "大安區",
         "lat": 25.03967,
         "lng": 121.53838
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "【聲聲漫】SSR喜劇玩咖",
@@ -6285,7 +6998,9 @@
         "district": "大安區",
         "lat": 25.03967,
         "lng": 121.53838
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "【聲聲漫】SSR喜劇玩咖",
@@ -6301,7 +7016,9 @@
         "district": "大安區",
         "lat": 25.03967,
         "lng": 121.53838
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "【聲聲漫】SSR喜劇玩咖",
@@ -6317,7 +7034,9 @@
         "district": "大安區",
         "lat": 25.03967,
         "lng": 121.53838
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "【聲聲漫】SSR喜劇玩咖",
@@ -6333,7 +7052,9 @@
         "district": "大安區",
         "lat": 25.03967,
         "lng": 121.53838
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "【聲聲漫】SSR喜劇玩咖",
@@ -6349,7 +7070,9 @@
         "district": "大安區",
         "lat": 25.03967,
         "lng": 121.53838
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "食農雙語學習營",
@@ -6365,7 +7088,9 @@
         "district": "中正區",
         "lat": 25.0336,
         "lng": 121.51151
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "114年李國鼎故居綠手指_沈秀雀老師_臺灣原生趣味盆栽周末系列課程",
@@ -6381,7 +7106,9 @@
         "district": "中正區",
         "lat": 25.04064,
         "lng": 121.52767
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "中華民國筆會季刊《譯之華》論壇：「島嶼魔幻與鬼怪奇談」",
@@ -6397,7 +7124,9 @@
         "district": "中正區",
         "lat": 25.03862,
         "lng": 121.5187
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "｛素書樓講堂｝2025年度文化系列講座─閱讀系列─呂思勉先生「國文」、「中國文學史」著作五種",
@@ -6413,7 +7142,9 @@
         "district": "中正區",
         "lat": 25.03584,
         "lng": 121.51295
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "我總是在等待",
@@ -6429,7 +7160,9 @@
         "district": "中正區",
         "lat": 25.01292,
         "lng": 121.53485
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "鳴石樂集樂壇新秀《初聲 · 拾柒》詹明敏小提琴獨奏會",
@@ -6445,7 +7178,9 @@
         "district": "中正區",
         "lat": 25.03808,
         "lng": 121.52717
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "【文化就在巷子裡】影子傳奇劇團《光影弄皮猴》",
@@ -6461,7 +7196,9 @@
         "district": "中正區",
         "lat": 25.03554,
         "lng": 121.53193
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "【TSO推廣系列】管弦交織─葉政德、劉兆哲與TSO附設青年管弦樂團",
@@ -6477,7 +7214,9 @@
         "district": "中正區",
         "lat": 25.043,
         "lng": 121.5102
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "鳴石樂集樂壇新秀《炫·麗·幻·象》張愷庭低音提琴獨奏會",
@@ -6493,7 +7232,9 @@
         "district": "中正區",
         "lat": 25.03808,
         "lng": 121.52717
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "《鴛鴦大盜》劉昱男與歐珈妏聯合音樂會",
@@ -6509,7 +7250,9 @@
         "district": "中正區",
         "lat": 25.03713,
         "lng": 121.51934
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "『完美與虔誠』～布魯克納，音樂會",
@@ -6525,7 +7268,9 @@
         "district": "中正區",
         "lat": 25.043,
         "lng": 121.5102
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "隨彩隨旅–陳淑賢師生聯展",
@@ -6541,7 +7286,9 @@
         "district": "北投區",
         "lat": 25.13796,
         "lng": 121.51012
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "【國史館專題演講】臺灣文化資產保存觀念的演變與保存不義遺址的困境",
@@ -6557,7 +7304,9 @@
         "district": "中正區",
         "lat": 25.04214,
         "lng": 121.51987
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "【TSO特別企劃】候任首席指揮里柏瑞契、蓋哈特與TSO",
@@ -6573,7 +7322,9 @@
         "district": "中正區",
         "lat": 25.03524,
         "lng": 121.51821
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "《巴黎我愛你》",
@@ -6589,7 +7340,9 @@
         "district": "萬華區",
         "lat": 25.04269,
         "lng": 121.50734
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": " 2025《最美麗的醜》 雙年演出計畫I ",
@@ -6605,7 +7358,9 @@
         "district": "萬華區",
         "lat": 25.03336,
         "lng": 121.49463
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "【台積電文學沙龍—星期五的月光曲 】",
@@ -6621,7 +7376,9 @@
         "district": "中正區",
         "lat": 25.0336,
         "lng": 121.51151
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "｛素書樓講堂｝2025年度文化與歷史系列講座─台灣書法家古典詩歌創作中的地景描寫",
@@ -6637,7 +7394,9 @@
         "district": "中正區",
         "lat": 25.03584,
         "lng": 121.51295
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "TCO【未來新星系列】聽‧繁星點點V",
@@ -6653,7 +7412,9 @@
         "district": "中正區",
         "lat": 25.043,
         "lng": 121.5102
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "【文化就在巷子裡】中華藝術舞蹈團《逐夢踏舞巷弄間》",
@@ -6669,7 +7430,9 @@
         "district": "文山區",
         "lat": 25.00218,
         "lng": 121.56849
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "鳴石樂集樂壇新秀 2025蔡雅菊長笛獨奏",
@@ -6685,7 +7448,9 @@
         "district": "中正區",
         "lat": 25.03808,
         "lng": 121.52717
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "北部場｜疼愛自己，認識情緒藝術｜一日體驗版(非師資班)",
@@ -6701,7 +7466,9 @@
         "district": "中正區",
         "lat": 25.03019,
         "lng": 121.51685
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "【日午音樂會183】戀戀中東～當西方鋼琴遇見中東詩樂舞",
@@ -6717,7 +7484,9 @@
         "district": "蘆洲區",
         "lat": 25.08854,
         "lng": 121.46988
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "離情依依・崑劇折子戲",
@@ -6733,7 +7502,9 @@
         "district": "中正區",
         "lat": 25.03252,
         "lng": 121.5122
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "【文化就在巷子裡】臺北爵士大樂隊-TEJO爵士大樂團《爵對大搖擺-爵士大樂團瘋動畫》",
@@ -6749,7 +7520,9 @@
         "district": "大安區",
         "lat": 25.03224,
         "lng": 121.52956
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "人生七章 樂聖終章 - 2025樂興之時年終祈福音樂會",
@@ -6765,7 +7538,9 @@
         "district": "中正區",
         "lat": 25.03524,
         "lng": 121.51821
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "【TSO特別企畫】從巴黎到好萊塢─亞歷山大‧戴斯培與TSO",
@@ -6781,7 +7556,9 @@
         "district": "士林區",
         "lat": 25.08512,
         "lng": 121.52437
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "【TSO特別企畫】從巴黎到好萊塢─亞歷山大‧戴斯培與TSO",
@@ -6797,7 +7574,9 @@
         "district": "士林區",
         "lat": 25.08512,
         "lng": 121.52437
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "水面劇：轉動壓力,情緒自我照顧與善意溝通/成人戲劇療癒師資班",
@@ -6813,7 +7592,9 @@
         "district": "新店區",
         "lat": 24.97959,
         "lng": 121.53732
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "【藝文講座】走讀希臘世界遺產",
@@ -6829,7 +7610,9 @@
         "district": "蘆洲區",
         "lat": 25.08854,
         "lng": 121.46988
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "【文化就在巷子裡】甄藝樂場《島嶼搖擺-SKA司卡音樂》",
@@ -6845,7 +7628,9 @@
         "district": "大同區",
         "lat": 25.04921,
         "lng": 121.51488
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "TCO【溫馨飛魔力系列】大墩風華",
@@ -6861,7 +7646,9 @@
         "district": "豐原區",
         "lat": 24.25291,
         "lng": 120.73037
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "關於牙齒你不知道的事",
@@ -6877,7 +7664,9 @@
         "district": "中正區",
         "lat": 25.0462,
         "lng": 121.51342
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "萬聖節四十周年紀念台北演唱會",
@@ -6893,7 +7682,9 @@
         "district": "新莊區",
         "lat": 25.05968,
         "lng": 121.44957
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "TCO【溫馨飛魔力系列】我們飛—新加坡國家青年華樂團與TCO學院國樂團",
@@ -6909,7 +7700,9 @@
         "district": "中正區",
         "lat": 25.043,
         "lng": 121.5102
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "【科學魔法秀~瘋狂的一天】小星星兒童劇團",
@@ -6925,7 +7718,9 @@
         "district": "松山區",
         "lat": 25.05376,
         "lng": 121.54769
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "身聲劇場《眾神的國籍》",
@@ -6941,7 +7736,9 @@
         "district": "中正區",
         "lat": 25.03713,
         "lng": 121.51934
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "身聲劇場《眾神的國籍》",
@@ -6957,7 +7754,9 @@
         "district": "中正區",
         "lat": 25.03713,
         "lng": 121.51934
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "身聲劇場《眾神的國籍》",
@@ -6973,7 +7772,9 @@
         "district": "中正區",
         "lat": 25.03713,
         "lng": 121.51934
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "身聲劇場《眾神的國籍》",
@@ -6989,7 +7790,9 @@
         "district": "中正區",
         "lat": 25.03713,
         "lng": 121.51934
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "《服妖之鑑》",
@@ -7005,7 +7808,9 @@
         "district": "中正區",
         "lat": 25.01348,
         "lng": 121.53495
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "《服妖之鑑》",
@@ -7021,7 +7826,9 @@
         "district": "鳳山區",
         "lat": 22.62417,
         "lng": 120.34221
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "【文化就在巷子裡】六藝劇團《小紅帽咇哩叭咇咘》",
@@ -7037,7 +7844,9 @@
         "district": "士林區",
         "lat": 25.08604,
         "lng": 121.51834
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "鳴石樂集樂壇新秀《愛織夢》2025巢愛梅鋼琴獨奏會",
@@ -7053,7 +7862,9 @@
         "district": "中正區",
         "lat": 25.03808,
         "lng": 121.52717
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "TCO【名家系列 】琴箏和鳴",
@@ -7069,7 +7880,9 @@
         "district": "中正區",
         "lat": 25.043,
         "lng": 121.5102
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "鳴石樂集樂壇新秀 2025不銅凡響-樂無界",
@@ -7085,7 +7898,9 @@
         "district": "中正區",
         "lat": 25.03808,
         "lng": 121.52717
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "台北邁斯納劇團《賣火柴的小女孩》",
@@ -7101,7 +7916,9 @@
         "district": "中正區",
         "lat": 25.01575,
         "lng": 121.52718
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "台北邁斯納劇團《賣火柴的小女孩》",
@@ -7117,7 +7934,9 @@
         "district": "中正區",
         "lat": 25.01575,
         "lng": 121.52718
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "台北邁斯納劇團《賣火柴的小女孩》",
@@ -7133,7 +7952,9 @@
         "district": "中正區",
         "lat": 25.01575,
         "lng": 121.52718
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "台北邁斯納劇團《賣火柴的小女孩》",
@@ -7149,7 +7970,9 @@
         "district": "中正區",
         "lat": 25.01575,
         "lng": 121.52718
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "台北邁斯納劇團《賣火柴的小女孩》",
@@ -7165,7 +7988,9 @@
         "district": "中正區",
         "lat": 25.01575,
         "lng": 121.52718
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "台北邁斯納劇團《賣火柴的小女孩》",
@@ -7181,7 +8006,9 @@
         "district": "中正區",
         "lat": 25.01575,
         "lng": 121.52718
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "台北邁斯納劇團《賣火柴的小女孩》",
@@ -7197,7 +8024,9 @@
         "district": "中正區",
         "lat": 25.01575,
         "lng": 121.52718
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "台北邁斯納劇團《賣火柴的小女孩》",
@@ -7213,7 +8042,9 @@
         "district": "中正區",
         "lat": 25.01575,
         "lng": 121.52718
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "鳴石樂集樂壇新秀 朱梓睿大提琴獨奏會",
@@ -7229,7 +8060,9 @@
         "district": "中正區",
         "lat": 25.03808,
         "lng": 121.52717
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "吉爾特伯格的蕭斯塔科維契鋼琴雙協奏曲之夜",
@@ -7245,7 +8078,9 @@
         "district": "中正區",
         "lat": 25.03524,
         "lng": 121.51821
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "閱讀慷慨的感染力--從十分鐘的閱讀開始",
@@ -7261,7 +8096,9 @@
         "district": "中正區",
         "lat": 25.01292,
         "lng": 121.53485
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "TCO【緬懷大師系列】弓弦人生─閔惠芬的二胡傳奇",
@@ -7277,7 +8114,9 @@
         "district": "中正區",
         "lat": 25.043,
         "lng": 121.5102
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "鳴石樂集樂壇新秀 何業婷小提琴獨奏會",
@@ -7293,7 +8132,9 @@
         "district": "中正區",
         "lat": 25.03808,
         "lng": 121.52717
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "南部場｜疼愛自己，認識情緒藝術｜一日體驗版",
@@ -7309,7 +8150,9 @@
         "district": "鳳山區",
         "lat": 22.62937,
         "lng": 120.3444
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "TCO【溫馨飛魔力系列】少年國樂魔法師 XIV─TCO少年國樂團音樂會",
@@ -7325,7 +8168,9 @@
         "district": "中正區",
         "lat": 25.043,
         "lng": 121.5102
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "鳴石樂集樂壇新秀《綻》2025黃柏齡小提琴演奏會",
@@ -7341,7 +8186,9 @@
         "district": "中正區",
         "lat": 25.03808,
         "lng": 121.52717
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "2026神韻台灣巡迴演出",
@@ -7357,7 +8204,9 @@
         "district": "士林區",
         "lat": 25.10232,
         "lng": 121.51955
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "2026神韻台灣巡迴演出",
@@ -7373,7 +8222,9 @@
         "district": "士林區",
         "lat": 25.10232,
         "lng": 121.51955
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "2026神韻台灣巡迴演出",
@@ -7389,7 +8240,9 @@
         "district": "士林區",
         "lat": 25.10232,
         "lng": 121.51955
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "2026神韻台灣巡迴演出",
@@ -7405,7 +8258,9 @@
         "district": "桃園區",
         "lat": 25.01751,
         "lng": 121.29867
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "2026神韻台灣巡迴演出",
@@ -7421,7 +8276,9 @@
         "district": "桃園區",
         "lat": 25.01751,
         "lng": 121.29867
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "2026神韻台灣巡迴演出",
@@ -7437,7 +8294,9 @@
         "district": "桃園區",
         "lat": 25.01751,
         "lng": 121.29867
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "2026神韻台灣巡迴演出",
@@ -7453,7 +8312,9 @@
         "district": "鳳山區",
         "lat": 22.62417,
         "lng": 120.34221
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "2026神韻台灣巡迴演出",
@@ -7469,7 +8330,9 @@
         "district": "鳳山區",
         "lat": 22.62417,
         "lng": 120.34221
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "2026神韻台灣巡迴演出",
@@ -7485,7 +8348,9 @@
         "district": "竹南鎮",
         "lat": 24.69073,
         "lng": 120.88595
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "2026神韻台灣巡迴演出",
@@ -7501,7 +8366,9 @@
         "district": "竹南鎮",
         "lat": 24.69073,
         "lng": 120.88595
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "2026神韻台灣巡迴演出",
@@ -7517,7 +8384,9 @@
         "district": "竹南鎮",
         "lat": 24.69073,
         "lng": 120.88595
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "2026神韻台灣巡迴演出",
@@ -7533,7 +8402,9 @@
         "district": "員林鎮",
         "lat": 23.94917,
         "lng": 120.57913
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "2026神韻台灣巡迴演出",
@@ -7549,7 +8420,9 @@
         "district": "員林鎮",
         "lat": 23.94917,
         "lng": 120.57913
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "2026神韻台灣巡迴演出",
@@ -7565,7 +8438,9 @@
         "district": "員林鎮",
         "lat": 23.94917,
         "lng": 120.57913
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "2026神韻台灣巡迴演出",
@@ -7581,7 +8456,9 @@
         "district": "員林鎮",
         "lat": 23.94917,
         "lng": 120.57913
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "2026神韻台灣巡迴演出",
@@ -7597,7 +8474,9 @@
         "district": "民雄鄉",
         "lat": 23.54417,
         "lng": 120.43204
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "2026神韻台灣巡迴演出",
@@ -7613,7 +8492,9 @@
         "district": "民雄鄉",
         "lat": 23.54417,
         "lng": 120.43204
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "2026神韻台灣巡迴演出",
@@ -7629,7 +8510,9 @@
         "district": "民雄鄉",
         "lat": 23.54417,
         "lng": 120.43204
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "2026神韻台灣巡迴演出",
@@ -7645,7 +8528,9 @@
         "district": "民雄鄉",
         "lat": 23.54417,
         "lng": 120.43204
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "2026神韻台灣巡迴演出",
@@ -7661,7 +8546,9 @@
         "district": "民雄鄉",
         "lat": 23.54417,
         "lng": 120.43204
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "2026神韻台灣巡迴演出",
@@ -7677,7 +8564,9 @@
         "district": "士林區",
         "lat": 25.08512,
         "lng": 121.52437
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "2026神韻台灣巡迴演出",
@@ -7693,7 +8582,9 @@
         "district": "士林區",
         "lat": 25.08512,
         "lng": 121.52437
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "2026神韻台灣巡迴演出",
@@ -7709,7 +8600,9 @@
         "district": "士林區",
         "lat": 25.08512,
         "lng": 121.52437
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "2026神韻台灣巡迴演出",
@@ -7725,7 +8618,9 @@
         "district": "士林區",
         "lat": 25.08512,
         "lng": 121.52437
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "2026神韻台灣巡迴演出",
@@ -7741,7 +8636,9 @@
         "district": "士林區",
         "lat": 25.08512,
         "lng": 121.52437
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "2026神韻台灣巡迴演出",
@@ -7757,7 +8654,9 @@
         "district": "士林區",
         "lat": 25.08512,
         "lng": 121.52437
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "2026神韻台灣巡迴演出",
@@ -7773,7 +8672,9 @@
         "district": "士林區",
         "lat": 25.08512,
         "lng": 121.52437
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "2026神韻台灣巡迴演出",
@@ -7789,7 +8690,9 @@
         "district": "士林區",
         "lat": 25.08512,
         "lng": 121.52437
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "2026神韻台灣巡迴演出",
@@ -7805,7 +8708,9 @@
         "district": "士林區",
         "lat": 25.08512,
         "lng": 121.52437
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "2026神韻台灣巡迴演出",
@@ -7821,7 +8726,9 @@
         "district": "士林區",
         "lat": 25.08512,
         "lng": 121.52437
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "2026神韻台灣巡迴演出",
@@ -7837,7 +8744,9 @@
         "district": "北區",
         "lat": 24.15481,
         "lng": 120.68219
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "2026神韻台灣巡迴演出",
@@ -7853,7 +8762,9 @@
         "district": "北區",
         "lat": 24.15481,
         "lng": 120.68219
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "2026神韻台灣巡迴演出",
@@ -7869,7 +8780,9 @@
         "district": "北區",
         "lat": 24.15481,
         "lng": 120.68219
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "TCO【溫馨飛魔力系列】青少好聲音Ⅹ─TCO青少年國樂團音樂會",
@@ -7885,7 +8798,9 @@
         "district": "中正區",
         "lat": 25.043,
         "lng": 121.5102
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "TCO【市國之星系列 】無界．旅人V",
@@ -7901,7 +8816,9 @@
         "district": "中正區",
         "lat": 25.043,
         "lng": 121.5102
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "水面劇：戲劇療癒團體的三種工作焦點/成人戲劇療癒師資班",
@@ -7917,7 +8834,9 @@
         "district": "新店區",
         "lat": 24.97959,
         "lng": 121.53732
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     },
     {
       "title": "水面劇：戲劇療癒團體的團體動力/成人戲劇療癒師資班",
@@ -7933,7 +8852,9 @@
         "district": "新店區",
         "lat": 24.97959,
         "lng": 121.53732
-      }
+      },
+      "_price_parse_reason": "used_existing_fields",
+      "_price_parsed_numbers": []
     }
   ]
 }
