@@ -1,3 +1,4 @@
+```html
 <!doctype html>
 <html lang="zh-Hant">
 <head>
@@ -117,10 +118,13 @@ dialog::backdrop{background:rgba(0,0,0,.45)}
 
 <!-- 覆寫：讓「顯示與我距離」與搜尋框同左緣，並與「最大距離」上下對齊 -->
 <style>
-.sidebar .switch{gap:6px; white-space:nowrap; margin:12px 0; padding-left:0}
+.sidebar .switch{gap:6px; white-space:nowrap; margin:8px 0 0; padding-left:0}
 .sidebar .switch input{margin:0}
 .actions{justify-content:center}
 .actions .btn{font-size:18px; padding:12px 20px}
+/* 讓「最大距離 + 兩個勾選框」同一欄位，全部左對齊 */
+.distance-field{grid-template-columns:1fr}
+.distance-field .switch{margin-top:4px}
 </style>
 </head>
 <body>
@@ -136,29 +140,18 @@ dialog::backdrop{background:rgba(0,0,0,.45)}
               <stop offset="100%" stop-color="#2563eb"/>
             </linearGradient>
           </defs>
-          <!-- 背景 -->
           <rect x="2" y="2" width="44" height="44" rx="14" fill="url(#logo-bg)"/>
-          <!-- 左上角的彩色光圈 -->
           <circle cx="10" cy="10" r="6" fill="#22c55e"/>
           <circle cx="12" cy="8" r="3" fill="#facc15"/>
-          <!-- 右上角的小星星 -->
           <path d="M33 6.5l1.1 2.3 2.5.3-1.8 1.7.5 2.4-2.3-1.2-2.3 1.2.5-2.4-1.8-1.7 2.5-.3z" fill="#fde047"/>
-          <!-- 中間的小音符 -->
           <path d="M29 17v9.5a3 3 0 1 1-1.8-2.8V15l4-1v3z" fill="#e0f2fe"/>
-          <!-- 右下的票券 -->
           <path d="M31 30h8v7.5l-2-.8-1.5 1.8-1.5-1.8-2 1z" fill="#f97316" opacity=".9"/>
-          <!-- 可愛笑臉圓 -->
           <circle cx="17" cy="32" r="7" fill="#fef9c3"/>
           <circle cx="14.5" cy="30.5" r="1.1" fill="#0f172a"/>
           <circle cx="19.5" cy="30.5" r="1.1" fill="#0f172a"/>
           <path d="M13.8 33.3c1.1 1.6 4.3 1.6 5.4 0" fill="none" stroke="#0f172a" stroke-width="1.3" stroke-linecap="round"/>
-          <!-- 「藝文」文字 -->
-          <text x="11.5" y="19" font-family="Noto Sans TC, system-ui" font-size="9.5" font-weight="900" fill="#ffffff">
-            藝
-          </text>
-          <text x="11.5" y="27.5" font-family="Noto Sans TC, system-ui" font-size="9.5" font-weight="900" fill="#ffffff">
-            文
-          </text>
+          <text x="11.5" y="19" font-family="Noto Sans TC, system-ui" font-size="9.5" font-weight="900" fill="#ffffff"> 藝 </text>
+          <text x="11.5" y="27.5" font-family="Noto Sans TC, system-ui" font-size="9.5" font-weight="900" fill="#ffffff"> 文 </text>
         </svg>
       </div>
       <div class="t1">藝文活動搜尋</div>
@@ -191,13 +184,16 @@ dialog::backdrop{background:rgba(0,0,0,.45)}
         </div>
         <div id="dateChips" class="switch" style="flex-wrap:wrap"></div>
       </label>
-      <label class="field"><span>最大距離（公里）</span>
+
+      <!-- 最大距離 + 勾選框：同一個欄位、全部左對齊 -->
+      <div class="field distance-field">
+        <span>最大距離（公里）</span>
         <input id="maxKm" type="number" min="0" step="0.5" placeholder="不限制">
-      </label>
-      <label class="switch"><input type="checkbox" id="useGeo"> 顯示與我距離</label>
-      <!-- 新增：只顯示收藏 -->
-      <label class="switch"><input type="checkbox" id="onlyFav"> 只顯示收藏</label>
-      <!-- 新增：Email 供 n8n 寄送收藏清單 -->
+        <label class="switch"><input type="checkbox" id="useGeo"> 顯示與我距離</label>
+        <label class="switch"><input type="checkbox" id="onlyFav"> 只顯示收藏</label>
+      </div>
+
+      <!-- Email -->
       <label class="field"><span>聯絡 Email（接收收藏通知）</span>
         <input id="email" type="email" placeholder="輸入您的 Email">
       </label>
@@ -235,7 +231,6 @@ dialog::backdrop{background:rgba(0,0,0,.45)}
           <a id="d-url" class="btn link" target="_blank" rel="noopener">活動頁</a>
           <a id="d-route" class="btn link" target="_blank" rel="noopener">交通路線</a>
           <button id="btnShare" class="btn">分享</button>
-          <!-- 詳細頁收藏按鈕 -->
           <button id="btnFav" class="btn" type="button">加入收藏</button>
           <button id="btnCopy" class="btn">複製連結</button>
         </div>
@@ -250,7 +245,6 @@ dialog::backdrop{background:rgba(0,0,0,.45)}
   </article>
 </dialog>
 
-<!-- 後備資料（找不到 events.json 時使用） -->
 <script type="application/json" id="seed">
 {"results":[
  {"title":"城市光影—短片巡演","desc":"精選本地創作者短片放映暨映後談。","type":"電影","start_at":"2025-10-18T19:00:00","end_at":"2025-10-18T21:00:00","url":"https://example.com/event/film","price_min":0,"price_max":200,"venue":{"name":"台北市中山堂 光點廳","district":"中正區","lat":25.0435,"lng":121.5167}},
@@ -260,7 +254,6 @@ dialog::backdrop{background:rgba(0,0,0,.45)}
 </script>
 
 <script>
-/* ===== 地圖與狀態 ===== */
 const TAIPEI_CENTER=[25.0419,121.5654];
 const TAIPEI_DISTRICTS=new Set(["中正區","大同區","中山區","松山區","大安區","萬華區","信義區","士林區","北投區","內湖區","南港區","文山區"]);
 const map=L.map('map',{scrollWheelZoom:false}).setView(TAIPEI_CENTER,12);
@@ -268,15 +261,11 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'&
 let meMarker=null,myPos=null,markers=L.layerGroup().addTo(map);
 let allEvents=[];
 
-/* 收藏狀態（使用 localStorage） */
 let favorites = new Set();
 const FAV_KEY = 'favEvents';
 const EMAIL_KEY = 'userEmail';
-
-/* 這裡填入你的 n8n Webhook URL（Production URL） */
 const N8N_WEBHOOK_URL = 'https://learning.n8n.tw/webhook/Art-and-Cultural-Activities';
 
-/* 收藏與 Email 儲存 */
 function loadFavorites(){
   try{
     const raw = localStorage.getItem(FAV_KEY);
@@ -307,7 +296,6 @@ function saveEmail(){
   }catch(e){}
 }
 
-/* 呼叫 n8n webhook，由 n8n 負責寄信 */
 async function notifyFavoriteWithN8n(ev){
   const emailInput = document.getElementById('email');
   const email = emailInput?.value.trim();
@@ -354,7 +342,6 @@ function toggleFavorite(ev){
   else favorites.add(ev.id);
   saveFavorites();
   if(!had){
-    // 只有「加入收藏」時才通知 n8n
     notifyFavoriteWithN8n(ev);
   }
 }
@@ -362,7 +349,6 @@ function isFavorite(ev){
   return ev && ev.id && favorites.has(ev.id);
 }
 
-/* 紅色定位圖示 */
 const redIcon=L.icon({
   iconUrl:'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="25" height="41" viewBox="0 0 25 41"><path fill="%23ef4444" stroke="%23b91c1c" d="M12.5 0C5.6 0 0 5.7 0 12.7c0 8.5 10.2 18.9 11.3 20 .6.6 1.7.6 2.3 0C14.9 31.6 25 21.2 25 12.7 25 5.7 19.4 0 12.5 0z"/><circle cx="12.5" cy="12.5" r="5.5" fill="%23ffffff"/></svg>',
   iconSize:[25,41],
@@ -370,7 +356,6 @@ const redIcon=L.icon({
   popupAnchor:[1,-34]
 });
 
-/* ===== 工具 ===== */
 const toRad=d=>d*Math.PI/180;
 const haversineKm=(a,b)=>{
   const R=6371,dLat=toRad(b[0]-a[0]),dLon=toRad(b[1]-a[1]);
@@ -379,10 +364,8 @@ const haversineKm=(a,b)=>{
 };
 const fmtKm=k=>k==null?'—':(k<1?`${(k*1000|0)} m`:`${k.toFixed(1)} km`);
 const pad=n=>String(n).padStart(2,'0');
-const clamp=(v,min,max)=>Math.max(min,Math.min(max,v));
 const parseNum=v=>{const n=parseFloat(v);return Number.isFinite(n)?n:null;};
 
-/* 日期與票價 */
 function fmtDateTime(iso){
   if(!iso) return '時間未定';
   const d=new Date(iso);
@@ -401,7 +384,6 @@ function extractPrices(rawMin, rawMax, rawStr){
   return {min:mn,max:mx,label:`${mn}～${mx} 元`};
 }
 
-/* 封面：無 image 則用 SVG 佔位 */
 function coverFor(ev){
   const T={展覽:'#8b5cf6', 表演:'#f97316', 講座:'#22c55e', 電影:'#0ea5e9', 市集:'#eab308', 其他:'#94a3b8'};
   const c=T[ev.type]||T['其他']; const txt=(ev.type||'活').slice(0,1);
@@ -410,7 +392,6 @@ function coverFor(ev){
   return `data:image/svg+xml;charset=UTF-8,${t(svg)}`;
 }
 
-/* ===== 載入與清洗 ===== */
 function normalizeRow(row){
   const typeMap=new Map([['演出','表演'],['音樂會','表演'],['音樂','表演'],['talk','講座']]);
   const t=(row.type||'').trim(); const type=typeMap.get(t)||t||'其他';
@@ -485,8 +466,7 @@ async function loadFromEventsJson(){
   }
 }
 
-/* ===== 日期多選狀態與工具 ===== */
-let selectedDates = new Set(); // 'YYYY-MM-DD'
+let selectedDates = new Set();
 const dateOnly = (iso)=>{
   const d = new Date(iso);
   return Number.isNaN(+d)? null : new Date(d.getFullYear(), d.getMonth(), d.getDate());
@@ -518,7 +498,6 @@ function occursOnAnySelectedDate(ev,set){
   return false;
 }
 
-/* ===== 對應呈現 ===== */
 function render(list){
   markers.clearLayers();
   const wrap=document.getElementById('list'); wrap.innerHTML='';
@@ -567,7 +546,7 @@ function render(list){
       favBtn.addEventListener('click',e=>{
         e.stopPropagation();
         toggleFavorite(ev);
-        applyFilters(); // 重新渲染列表更新收藏狀態
+        applyFilters();
       });
     }
     card.addEventListener('click',()=>openDetail(ev));
@@ -576,7 +555,6 @@ function render(list){
   });
 }
 
-/* ===== 篩選 ===== */
 function applyFilters(){
   const q=document.getElementById('q').value.trim().toLowerCase();
   const type=document.getElementById('type').value;
@@ -605,9 +583,7 @@ function applyFilters(){
   render(filtered);
 }
 
-/* ===== 建立交通路線 URL ===== */
 function buildDirectionsUrl(ev){
-  // 優先使用活動的經緯度
   if(ev.lat!=null && ev.lng!=null){
     const destLat = ev.lat;
     const destLng = ev.lng;
@@ -616,7 +592,6 @@ function buildDirectionsUrl(ev){
     }
     return `https://www.google.com/maps/dir/?api=1&destination=${destLat},${destLng}&travelmode=transit`;
   }
-  // 如果沒有經緯度，改用地址
   if(ev.venue && ev.venue.address){
     const dest = encodeURIComponent(ev.venue.address);
     if(myPos){
@@ -627,7 +602,6 @@ function buildDirectionsUrl(ev){
   return null;
 }
 
-/* ===== 詳細視窗（擴充顯示＋收藏＋交通路線） ===== */
 function openDetail(ev){
   const dlg=document.getElementById('detail');
   const img=document.getElementById('d-img');
@@ -668,7 +642,6 @@ function openDetail(ev){
   const link=document.getElementById('d-url');
   if(ev.url){ link.href=ev.url; link.style.display='inline-flex'; } else { link.style.display='none'; }
 
-  // 交通路線按鈕
   const routeBtn = document.getElementById('d-route');
   const routeUrl = buildDirectionsUrl(ev);
   if(routeUrl){
@@ -682,10 +655,9 @@ function openDetail(ev){
     const a=document.createElement('a'); a.className='btn link'; a.textContent='購票'; a.target='_blank'; a.rel='noopener'; a.href=ev.ticket_url; a.setAttribute('data-extra',''); bar.appendChild(a);
   }
   if (ev.reg_url){
-    const a=document.createElement('a'); a.className='btn link'; a.textContent='報名'; a.target='_blank'; a.rel='noopener'; a.href=ev.reg_url; a.setAttribute='data-extra',''; bar.appendChild(a);
+    const a=document.createElement('a'); a.className='btn link'; a.textContent='報名'; a.target='_blank'; a.rel='noopener'; a.href=ev.reg_url; a.setAttribute('data-extra',''); bar.appendChild(a);
   }
 
-  /* 詳細視窗收藏按鈕 */
   const favBtnDetail = document.getElementById('btnFav');
   if(favBtnDetail){
     const favNow = isFavorite(ev);
@@ -696,7 +668,7 @@ function openDetail(ev){
       const after = isFavorite(ev);
       favBtnDetail.textContent = after ? '取消收藏' : '加入收藏';
       favBtnDetail.setAttribute('aria-pressed', after);
-      applyFilters(); // 同步更新列表上的收藏狀態
+      applyFilters();
     };
   }
 
@@ -709,7 +681,6 @@ document.getElementById('detail').addEventListener('click',e=>{
   if(e.clientX<rect.left||e.clientX>rect.right||e.clientY>rect.bottom||e.clientY<rect.top) dlg.close();
 });
 
-/* 分享與複製 */
 document.getElementById('btnShare').addEventListener('click',async()=>{
   const a=document.getElementById('d-url'); const url=a?.href||location.href;
   const title=document.getElementById('d-title').textContent;
@@ -721,10 +692,9 @@ document.getElementById('btnCopy').addEventListener('click',async()=>{
   try{ await navigator.clipboard.writeText(url); alert('已複製連結'); }catch(e){ alert(url); }
 });
 
-/* 載入與綁定 */
 async function boot(){
-  loadFavorites();  // 先讀取收藏
-  loadEmail();      // 先讀取 Email
+  loadFavorites();
+  loadEmail();
   allEvents = await loadFromEventsJson();
   if(myPos) allEvents.forEach(ev=>{
     if(ev.lat!=null && ev.lng!=null) ev._distance_km=haversineKm([myPos.lat,myPos.lng],[ev.lat,ev.lng]);
@@ -732,8 +702,6 @@ async function boot(){
   render(allEvents);
   renderDateChips();
 }
-/* 藍色按鈕已移除，改為可選綁定以避免報錯 */
-document.getElementById('btnLoad')?.addEventListener('click',boot);
 document.getElementById('btnFilter').addEventListener('click',applyFilters);
 document.getElementById('useGeo').addEventListener('change',e=>{
   if(e.target.checked){
@@ -757,14 +725,10 @@ document.getElementById('useGeo').addEventListener('change',e=>{
   }
 });
 
-/* 「只顯示收藏」即時套用 */
 document.getElementById('onlyFav')?.addEventListener('change', applyFilters);
-
-/* Email 變更時即時存檔 */
 document.getElementById('email')?.addEventListener('change', saveEmail);
 document.getElementById('email')?.addEventListener('blur', saveEmail);
 
-/* 日期多選綁定 */
 document.getElementById('addDate').addEventListener('click', ()=>{
   const input=document.getElementById('pickDate');
   if(input.value){
@@ -779,8 +743,8 @@ document.getElementById('clearDates').addEventListener('click', ()=>{
   applyFilters();
 });
 
-/* 開頁即嘗試讀取 events.json */
 boot();
 </script>
 </body>
 </html>
+```
