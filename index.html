@@ -118,7 +118,7 @@ dialog::backdrop{background:rgba(0,0,0,.45)}
     <div class="brand">
       <div class="logo">
         <img alt="藝文活動圖示" style="width:48px;height:48px;border-radius:14px;display:block"
-             src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='48' height='48' viewBox='0 0 48 48'><defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='1'><stop offset='0%' stop-color='%23ff9bd3'/><stop offset='100%' stop-color='%237c8cff'/></linearGradient></defs><rect width='48' height='48' rx='14' fill='url(%23g)'/><circle cx='24' cy='26' r='14' fill='%23ffffff'/><circle cx='19' cy='24' r='2' fill='%231f2937'/><circle cx='29' cy='24' r='2' fill='%231f2937'/><path d='M18 28c2 3 10 3 12 0' stroke='%231f2937' stroke-width='2' fill='none' stroke-linecap='round'/><circle cx='16' cy='26' r='1.5' fill='%23fca5a5' opacity='.9'/><circle cx='32' cy='26' r='1.5' fill='%23fca5a5' opacity='.9'/><path d='M35 12l2 1-1 2 2 1-2 1-1 2-1-2-2-1 2-1z' fill='%23fde047'/><path d='M12 14l3 0' stroke='%23ffffff' stroke-width='2' stroke-linecap='round' opacity='.6'/></svg>">
+             src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='48' height='48' viewBox='0 0 48 48'><defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='1'><stop offset='0%' stop-color='%23ff9bd3'/><stop offset='100%' stop-color='%237c8cff'/></linearGradient></defs><rect width='48' height='48' rx='14' fill='url(%23g)'/><circle cx='24' cy='26' r='14' fill='%23ffffff'/><circle cx='19' cy='24' r='2' fill='%231f2937'/><circle cx='29' cy='24' r='2' fill='%231f2937'/><path d='M18 28c2 3 10 3 12 0' stroke='%231f2937' stroke-width='2' fill='none' stroke-linecap='round'/><circle cx='16' cy='26' r='1.5' fill='%23fca5a5' opacity='.9'/><circle cx='32' cy='26' r='1.5' fill='%23fca5a5' opacity='.9'/><path d='M35 12l2 1-1 2 2 1-2 1-1 2-1-2-2-1 2-1z' fill='%23fde047'/><path d='M12 14l3 0' stroke='%23ffffff' stroke-width='2' stroke-linecap='round' opacity='.6'/></svg>'>
       </div><div class="t1">藝文活動搜尋</div>
     </div>
     <div class="panel">
@@ -146,6 +146,8 @@ dialog::backdrop{background:rgba(0,0,0,.45)}
       </label>
       <label class="field"><span>最大距離（公里）</span><input id="maxKm" type="number" min="0" step="0.5" placeholder="不限制"></label>
       <label class="switch"><input type="checkbox" id="useGeo"> 顯示與我距離</label>
+      <!-- 新增：只顯示收藏 -->
+      <label class="switch"><input type="checkbox" id="onlyFav"> 只顯示收藏</label>
       <div class="actions"><button id="btnFilter" class="btn">套用篩選</button></div>
     </div>
     <div class="foot">© Taipei Open Culture • Leaflet + OSM</div>
@@ -177,7 +179,10 @@ dialog::backdrop{background:rgba(0,0,0,.45)}
         <p class="dline" id="d-addr"></p>
         <div class="toolbar">
           <a id="d-url" class="btn link" target="_blank" rel="noopener">活動頁</a>
-          <button id="btnShare" class="btn">分享</button><button id="btnCopy" class="btn">複製連結</button>
+          <button id="btnShare" class="btn">分享</button>
+          <!-- 新增：詳細頁收藏按鈕 -->
+          <button id="btnFav" class="btn" type="button">加入收藏</button>
+          <button id="btnCopy" class="btn">複製連結</button>
         </div>
       </div>
     </div>
@@ -204,6 +209,33 @@ const map=L.map('map',{scrollWheelZoom:false}).setView(TAIPEI_CENTER,12);
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'&copy; OpenStreetMap'}).addTo(map);
 let meMarker=null,myPos=null,markers=L.layerGroup().addTo(map);
 let allEvents=[];
+
+/* 收藏狀態（使用 localStorage） */
+let favorites = new Set();
+const FAV_KEY = 'favEvents';
+
+function loadFavorites(){
+  try{
+    const raw = localStorage.getItem(FAV_KEY);
+    if(!raw) return;
+    const arr = JSON.parse(raw);
+    if(Array.isArray(arr)) favorites = new Set(arr);
+  }catch(e){}
+}
+function saveFavorites(){
+  try{
+    localStorage.setItem(FAV_KEY, JSON.stringify([...favorites]));
+  }catch(e){}
+}
+function toggleFavorite(ev){
+  if(!ev || !ev.id) return;
+  if(favorites.has(ev.id)) favorites.delete(ev.id);
+  else favorites.add(ev.id);
+  saveFavorites();
+}
+function isFavorite(ev){
+  return ev && ev.id && favorites.has(ev.id);
+}
 
 /* 新增：紅色定位圖示 */
 const redIcon=L.icon({
@@ -269,9 +301,15 @@ function normalizeRow(row){
 
   const lat=parseNum(venue.lat), lng=parseNum(venue.lng);
 
+  /* 使用穩定 id：標題 + 開始時間 + 場館名稱 */
+  const baseTitle = (row.title||row.name||'').trim();
+  const baseStart = row.start_at||row.start||row.date||'';
+  const baseVenue = venue.name||row.venue_name||'';
+  const stableId = row.id || `${baseTitle}|${baseStart}|${baseVenue}`;
+
   const n={
-    id: row.id || `evt_${crypto.randomUUID?.()||Math.random().toString(36).slice(2)}`,
-    title: (row.title||row.name||'').trim(),
+    id: stableId,
+    title: baseTitle,
     type,
     desc: (row.desc||row.description||'').trim(),
     start_at: row.start_at||row.start||row.date||null,
@@ -370,6 +408,9 @@ function render(list){
     if (ev.series) chips.push(`系列:${ev.series}`);
 
     const card=document.createElement('article'); card.className='card'; card.tabIndex=0;
+    const favState = isFavorite(ev);
+    const favLabel = favState ? '★ 已收藏' : '☆ 收藏';
+
     card.innerHTML=`
       <img class="cover" alt="" src="${ev.image||coverFor(ev)}">
       <div class="card-body">
@@ -384,9 +425,21 @@ function render(list){
         <div class="actions-row">
           ${ev.url?`<a class="btn link" href="${ev.url}" target="_blank" rel="noopener">活動頁</a>`:''}
           <button class="btn" data-act="more">詳細</button>
+          <button class="btn" data-act="fav" aria-pressed="${favState}">${favLabel}</button>
         </div>
       </div>`;
-    card.querySelector('[data-act="more"]').addEventListener('click',e=>{ e.stopPropagation(); openDetail(ev); });
+    const moreBtn = card.querySelector('[data-act="more"]');
+    if(moreBtn){
+      moreBtn.addEventListener('click',e=>{ e.stopPropagation(); openDetail(ev); });
+    }
+    const favBtn = card.querySelector('[data-act="fav"]');
+    if(favBtn){
+      favBtn.addEventListener('click',e=>{
+        e.stopPropagation();
+        toggleFavorite(ev);
+        applyFilters(); // 重新渲染列表更新收藏狀態
+      });
+    }
     card.addEventListener('click',()=>openDetail(ev));
     card.addEventListener('keydown',e=>{ if(e.key==='Enter') openDetail(ev); });
     wrap.appendChild(card);
@@ -399,12 +452,14 @@ function applyFilters(){
   const type=document.getElementById('type').value;
   const dist=document.getElementById('district').value;
   const maxKm=parseFloat(document.getElementById('maxKm').value);
+  const onlyFav = document.getElementById('onlyFav')?.checked;
 
   const filtered=allEvents.filter(ev=>{
     if(q && !(`${ev._hay}`.includes(q))) return false;
     if(type && ev.type!==type) return false;
     if(dist && ev.venue.district!==dist) return false;
     if(!occursOnAnySelectedDate(ev, selectedDates)) return false;
+    if(onlyFav && !isFavorite(ev)) return false;
     if(!isNaN(maxKm)){
       if(ev._distance_km==null) return false;
       if(ev._distance_km>maxKm) return false;
@@ -420,7 +475,7 @@ function applyFilters(){
   render(filtered);
 }
 
-/* ===== 詳細視窗（擴充顯示） ===== */
+/* ===== 詳細視窗（擴充顯示＋收藏） ===== */
 function openDetail(ev){
   const dlg=document.getElementById('detail');
   const img=document.getElementById('d-img');
@@ -464,6 +519,21 @@ function openDetail(ev){
     const a=document.createElement('a'); a.className='btn link'; a.textContent='報名'; a.target='_blank'; a.rel='noopener'; a.href=ev.reg_url; a.setAttribute('data-extra',''); bar.appendChild(a);
   }
 
+  /* 詳細視窗收藏按鈕 */
+  const favBtnDetail = document.getElementById('btnFav');
+  if(favBtnDetail){
+    const favNow = isFavorite(ev);
+    favBtnDetail.textContent = favNow ? '取消收藏' : '加入收藏';
+    favBtnDetail.setAttribute('aria-pressed', favNow);
+    favBtnDetail.onclick = ()=>{
+      toggleFavorite(ev);
+      const after = isFavorite(ev);
+      favBtnDetail.textContent = after ? '取消收藏' : '加入收藏';
+      favBtnDetail.setAttribute('aria-pressed', after);
+      applyFilters(); // 同步更新列表上的收藏狀態
+    };
+  }
+
   dlg.showModal();
   dlg.addEventListener('keydown',e=>{ if(e.key==='Escape') dlg.close(); }, {once:true});
 }
@@ -487,6 +557,7 @@ document.getElementById('btnCopy').addEventListener('click',async()=>{
 
 /* 載入與綁定 */
 async function boot(){
+  loadFavorites();                // 先讀取收藏
   allEvents = await loadFromEventsJson();
   if(myPos) allEvents.forEach(ev=>{
     if(ev.lat!=null && ev.lng!=null) ev._distance_km=haversineKm([myPos.lat,myPos.lng],[ev.lat,ev.lng]);
@@ -516,6 +587,9 @@ document.getElementById('useGeo').addEventListener('change',e=>{
     allEvents.forEach(ev=>ev._distance_km=null); applyFilters();
   }
 });
+
+/* 「只顯示收藏」即時套用 */
+document.getElementById('onlyFav')?.addEventListener('change', applyFilters);
 
 /* 日期多選綁定 */
 document.getElementById('addDate').addEventListener('click', ()=>{
