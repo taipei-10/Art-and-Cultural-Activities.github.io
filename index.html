@@ -59,7 +59,7 @@ a{color:inherit}
 .field>span{font-size:var(--fz-12); color:var(--ink-2); letter-spacing:.4px; text-transform:uppercase}
 input,select{width:100%; padding:10px 12px; font-size:var(--fz-14); border:1px solid var(--border); border-radius:10px; background:var(--panel); color:var(--ink)}
 input::placeholder{color:#9aa3af}
-.switch{display:flex; align-items:center; gap:10px; margin-top:8px; color:var(--ink-2)}
+.switch{display:flex; align-items:center; gap:8px; margin-top:8px; color:var(--ink-2)}
 .actions{display:flex; gap:10px; margin-top:10px}
 .btn{padding:10px 14px; border-radius:10px; border:1px solid var(--border); background:var(--panel); cursor:pointer; font-weight:700; font-size:var(--fz-14)}
 .btn.primary{background:var(--brand); border-color:var(--brand); color:#fff}
@@ -115,9 +115,14 @@ dialog::backdrop{background:rgba(0,0,0,.45)}
 .leaflet-control-container .leaflet-control{border-radius:10px; overflow:hidden}
 </style>
 
-<!-- 覆寫：讓「顯示與我距離」與搜尋框同左緣，並與「最大距離」上下對齊 -->
+<!-- 覆寫：讓「顯示與我距離」與「只顯示收藏」與上方欄位左緣對齊 -->
 <style>
-.sidebar .switch{gap:6px; white-space:nowrap; margin:12px 0; padding-left:0}
+.sidebar .switch{
+  gap:8px;
+  white-space:nowrap;
+  margin:8px 0;
+  padding-left:0;
+}
 .sidebar .switch input{margin:0}
 .actions{justify-content:center}
 .actions .btn{font-size:18px; padding:12px 20px}
@@ -128,7 +133,7 @@ dialog::backdrop{background:rgba(0,0,0,.45)}
   <aside class="sidebar">
     <div class="brand">
       <div class="logo">
-        <!-- 新：可愛活潑的藝文活動 SVG 圖示 -->
+        <!-- 可愛活潑的藝文活動 SVG 圖示 -->
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" role="img" aria-label="藝文活動圖示">
           <defs>
             <linearGradient id="logo-bg" x1="0" y1="0" x2="1" y2="1">
@@ -136,29 +141,18 @@ dialog::backdrop{background:rgba(0,0,0,.45)}
               <stop offset="100%" stop-color="#2563eb"/>
             </linearGradient>
           </defs>
-          <!-- 背景 -->
           <rect x="2" y="2" width="44" height="44" rx="14" fill="url(#logo-bg)"/>
-          <!-- 左上角的彩色光圈 -->
           <circle cx="10" cy="10" r="6" fill="#22c55e"/>
           <circle cx="12" cy="8" r="3" fill="#facc15"/>
-          <!-- 右上角的小星星 -->
           <path d="M33 6.5l1.1 2.3 2.5.3-1.8 1.7.5 2.4-2.3-1.2-2.3 1.2.5-2.4-1.8-1.7 2.5-.3z" fill="#fde047"/>
-          <!-- 中間的小音符 -->
           <path d="M29 17v9.5a3 3 0 1 1-1.8-2.8V15l4-1v3z" fill="#e0f2fe"/>
-          <!-- 右下的票券 -->
           <path d="M31 30h8v7.5l-2-.8-1.5 1.8-1.5-1.8-2 1z" fill="#f97316" opacity=".9"/>
-          <!-- 可愛笑臉圓 -->
           <circle cx="17" cy="32" r="7" fill="#fef9c3"/>
           <circle cx="14.5" cy="30.5" r="1.1" fill="#0f172a"/>
           <circle cx="19.5" cy="30.5" r="1.1" fill="#0f172a"/>
           <path d="M13.8 33.3c1.1 1.6 4.3 1.6 5.4 0" fill="none" stroke="#0f172a" stroke-width="1.3" stroke-linecap="round"/>
-          <!-- 「藝文」文字 -->
-          <text x="11.5" y="19" font-family="Noto Sans TC, system-ui" font-size="9.5" font-weight="900" fill="#ffffff">
-            藝
-          </text>
-          <text x="11.5" y="27.5" font-family="Noto Sans TC, system-ui" font-size="9.5" font-weight="900" fill="#ffffff">
-            文
-          </text>
+          <text x="11.5" y="19" font-family="Noto Sans TC, system-ui" font-size="9.5" font-weight="900" fill="#ffffff">藝</text>
+          <text x="11.5" y="27.5" font-family="Noto Sans TC, system-ui" font-size="9.5" font-weight="900" fill="#ffffff">文</text>
         </svg>
       </div>
       <div class="t1">藝文活動搜尋</div>
@@ -195,13 +189,16 @@ dialog::backdrop{background:rgba(0,0,0,.45)}
         <input id="maxKm" type="number" min="0" step="0.5" placeholder="不限制">
       </label>
       <label class="switch"><input type="checkbox" id="useGeo"> 顯示與我距離</label>
-      <!-- 新增：只顯示收藏 -->
-      <label class="switch"><input type="checkbox" id="onlyFav"> 顯示我的收藏</label>
-      <!-- 新增：Email 供 n8n 寄送收藏清單 -->
-      <label class="field"><span>輸入 Gmail（接收收藏通知）</span>
+      <label class="switch"><input type="checkbox" id="onlyFav"> 只顯示收藏</label>
+      <label class="field"><span>聯絡 Email（接收收藏通知）</span>
         <input id="email" type="email" placeholder="輸入您的 Email">
       </label>
-      <div class="actions"><button id="btnFilter" class="btn">套用篩選</button></div>
+      <div class="actions">
+        <button id="btnFilter" class="btn">套用篩選</button>
+      </div>
+      <div class="actions">
+        <button id="btnSendFav" class="btn primary" type="button">寄送目前收藏</button>
+      </div>
     </div>
     <div class="foot">© Taipei Open Culture • Leaflet + OSM</div>
   </aside>
@@ -235,7 +232,6 @@ dialog::backdrop{background:rgba(0,0,0,.45)}
           <a id="d-url" class="btn link" target="_blank" rel="noopener">活動頁</a>
           <a id="d-route" class="btn link" target="_blank" rel="noopener">交通路線</a>
           <button id="btnShare" class="btn">分享</button>
-          <!-- 詳細頁收藏按鈕 -->
           <button id="btnFav" class="btn" type="button">加入收藏</button>
           <button id="btnCopy" class="btn">複製連結</button>
         </div>
@@ -307,8 +303,8 @@ function saveEmail(){
   }catch(e){}
 }
 
-/* 呼叫 n8n webhook，由 n8n 負責寄信 */
-async function notifyFavoriteWithN8n(ev){
+/* 一次把所有收藏的活動寄給 n8n（避免多封信） */
+async function sendAllFavoritesWithN8n(){
   const emailInput = document.getElementById('email');
   const email = emailInput?.value.trim();
   if(!email){
@@ -317,9 +313,17 @@ async function notifyFavoriteWithN8n(ev){
   }
   saveEmail();
 
+  const favIds = [...favorites];
+  if(favIds.length === 0){
+    alert('目前沒有任何已收藏的活動。');
+    return;
+  }
+
+  const favEvents = allEvents.filter(ev => ev.id && favorites.has(ev.id));
+
   const payload = {
     user_email: email,
-    event:{
+    events: favEvents.map(ev => ({
       id:ev.id,
       title:ev.title,
       type:ev.type,
@@ -329,7 +333,7 @@ async function notifyFavoriteWithN8n(ev){
       url:ev.url,
       price_label:ev.price_label,
       desc:ev.desc
-    },
+    })),
     created_at:new Date().toISOString()
   };
 
@@ -341,22 +345,23 @@ async function notifyFavoriteWithN8n(ev){
     });
     if(!res.ok){
       console.error('n8n webhook HTTP error', res.status, await res.text());
+      alert('寄送失敗，請稍後再試。');
+    }else{
+      alert('已將目前收藏的活動寄到您的 Email。');
     }
   }catch(e){
     console.error('n8n webhook error', e);
+    alert('寄送時發生錯誤，請稍後再試。');
   }
 }
 
+/* 收藏切換（不再每次收藏就寄信） */
 function toggleFavorite(ev){
   if(!ev || !ev.id) return;
   const had = favorites.has(ev.id);
   if(had) favorites.delete(ev.id);
   else favorites.add(ev.id);
   saveFavorites();
-  if(!had){
-    // 只有「加入收藏」時才通知 n8n
-    notifyFavoriteWithN8n(ev);
-  }
 }
 function isFavorite(ev){
   return ev && ev.id && favorites.has(ev.id);
@@ -682,7 +687,7 @@ function openDetail(ev){
     const a=document.createElement('a'); a.className='btn link'; a.textContent='購票'; a.target='_blank'; a.rel='noopener'; a.href=ev.ticket_url; a.setAttribute('data-extra',''); bar.appendChild(a);
   }
   if (ev.reg_url){
-    const a=document.createElement('a'); a.className='btn link'; a.textContent='報名'; a.target='_blank'; a.rel='noopener'; a.href=ev.reg_url; a.setAttribute='data-extra',''; bar.appendChild(a);
+    const a=document.createElement('a'); a.className='btn link'; a.textContent='報名'; a.target='_blank'; a.rel='noopener'; a.href=ev.reg_url; a.setAttribute('data-extra',''); bar.appendChild(a);
   }
 
   /* 詳細視窗收藏按鈕 */
@@ -732,9 +737,9 @@ async function boot(){
   render(allEvents);
   renderDateChips();
 }
-/* 藍色按鈕已移除，改為可選綁定以避免報錯 */
 document.getElementById('btnLoad')?.addEventListener('click',boot);
 document.getElementById('btnFilter').addEventListener('click',applyFilters);
+document.getElementById('btnSendFav')?.addEventListener('click', sendAllFavoritesWithN8n);
 document.getElementById('useGeo').addEventListener('change',e=>{
   if(e.target.checked){
     if(!navigator.geolocation){ alert('此瀏覽器不支援定位'); e.target.checked=false; return; }
