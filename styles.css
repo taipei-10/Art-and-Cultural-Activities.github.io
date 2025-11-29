@@ -169,21 +169,17 @@ input::placeholder { color: #9aa3af; }
 .leaflet-control-container .leaflet-control { border-radius: 8px; overflow: hidden; }
 
 
-/* === 覆寫 switch 樣式（放在 style.css 最底部）=== */
+/* 調整 checkbox 與文字距離，使其更緊密 */
 .sidebar .switch{
   display:flex;
   align-items:center;
-  gap:8px;
-  margin:8px 0;
-  width:100%;
-  white-space:normal;
+  gap:4px;          /* ← 原本是 8 或 10，現在調成更緊的 4px */
 }
 
-#switchGeo{ margin-bottom:4px; }
-#switchFav{ margin-top:0; }
-
-.sidebar .switch input{
+/* 讓 checkbox 本體不會擠開 */
+.sidebar .switch input[type="checkbox"]{
   margin:0;
-  flex-shrink:0;
+  transform:scale(1.05);  /* 可選：稍微放大 checkbox，看起來更接近文字 */
 }
+
 
