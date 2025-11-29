@@ -169,28 +169,21 @@ input::placeholder { color: #9aa3af; }
 .leaflet-control-container .leaflet-control { border-radius: 8px; overflow: hidden; }
 
 
-/* === 讓「顯示與我距離」「只顯示收藏」排版更美觀 === */
-
-/* 通用 switch（覆寫原本 sidebar .switch） */
+/* === 覆寫 switch 樣式（放在 style.css 最底部）=== */
 .sidebar .switch{
   display:flex;
   align-items:center;
-  gap:8px;              /* checkbox 與文字距離 */
-  margin:8px 0;         /* 每一行的上下距離 */
-  width:100%;           /* 避免文字被擠到右邊 */
-  white-space:normal;   /* 若字太長可換行，不會跑出去 */
+  gap:8px;
+  margin:8px 0;
+  width:100%;
+  white-space:normal;
 }
 
-/* 個別調整兩個 checkbox 的距離 */
-#switchGeo{
-  margin-bottom:4px;    /* 你可以依喜好調成 2px / 6px */
-}
-#switchFav{
-  margin-top:0;
-}
+#switchGeo{ margin-bottom:4px; }
+#switchFav{ margin-top:0; }
 
-/* checkbox 本身對齊微調 */
 .sidebar .switch input{
-  margin:0;             /* 清除瀏覽器預設 margin */
-  flex-shrink:0;        /* 避免縮小 checkbox */
+  margin:0;
+  flex-shrink:0;
 }
+
