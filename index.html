@@ -145,12 +145,13 @@ dialog::backdrop{background:rgba(0,0,0,.45)}
         <div id="dateChips" class="switch" style="flex-wrap:wrap"></div>
       </label>
       <label class="field"><span>最大距離（公里）</span><input id="maxKm" type="number" min="0" step="0.5" placeholder="不限制"></label>
-      <label class="switch">
-      <input type="checkbox" id="onlyFav">
-      <span class="switch-label">顯示與我距離</span>
-      </label>
+      <label class="switch"><input type="checkbox" id="useGeo"> 顯示與我距離</label>
       <!-- 新增：只顯示收藏 -->
-      <label class="switch"><input type="checkbox" id="onlyFav"> 只顯示收藏展</label>
+      <label class="switch"><input type="checkbox" id="onlyFav"> 只顯示收藏</label>
+      <!-- 新增：Email 供 n8n 寄送收藏清單 -->
+      <label class="field"><span>聯絡 Email（接收收藏通知）</span>
+        <input id="email" type="email" placeholder="輸入您的 Email">
+      </label>
       <div class="actions"><button id="btnFilter" class="btn">套用篩選</button></div>
     </div>
     <div class="foot">© Taipei Open Culture • Leaflet + OSM</div>
@@ -183,7 +184,7 @@ dialog::backdrop{background:rgba(0,0,0,.45)}
         <div class="toolbar">
           <a id="d-url" class="btn link" target="_blank" rel="noopener">活動頁</a>
           <button id="btnShare" class="btn">分享</button>
-          <!-- 新增：詳細頁收藏按鈕 -->
+          <!-- 詳細頁收藏按鈕 -->
           <button id="btnFav" class="btn" type="button">加入收藏</button>
           <button id="btnCopy" class="btn">複製連結</button>
         </div>
@@ -216,6 +217,10 @@ let allEvents=[];
 /* 收藏狀態（使用 localStorage） */
 let favorites = new Set();
 const FAV_KEY = 'favEvents';
+const EMAIL_KEY = 'userEmail';
+
+/* 這裡填入你的 n8n Webhook URL */
+const N8N_WEBHOOK_URL = 'https://your-n8n-instance.example.com/webhook/favorite-event';
 
 function loadFavorites(){
   try{
@@ -230,11 +235,64 @@ function saveFavorites(){
     localStorage.setItem(FAV_KEY, JSON.stringify([...favorites]));
   }catch(e){}
 }
+function loadEmail(){
+  try{
+    const v = localStorage.getItem(EMAIL_KEY);
+    if(!v) return;
+    const el = document.getElementById('email');
+    if(el) el.value = v;
+  }catch(e){}
+}
+function saveEmail(){
+  const el = document.getElementById('email');
+  if(!el) return;
+  const v = el.value.trim();
+  try{
+    localStorage.setItem(EMAIL_KEY, v);
+  }catch(e){}
+}
+
+/* 呼叫 n8n webhook，請由 n8n 負責寄信 */
+async function notifyFavoriteWithN8n(ev){
+  const emailInput = document.getElementById('email');
+  const email = emailInput?.value.trim();
+  if(!email) return; // 沒有 email 就不送
+
+  try{
+    await fetch(N8N_WEBHOOK_URL, {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        email,
+        event:{
+          id:ev.id,
+          title:ev.title,
+          type:ev.type,
+          start_at:ev.start_at,
+          end_at:ev.end_at,
+          venue:ev.venue,
+          url:ev.url,
+          price_label:ev.price_label,
+          desc:ev.desc
+        },
+        created_at:new Date().toISOString()
+      })
+    });
+  }catch(e){
+    console.error('n8n webhook error', e);
+  }
+}
+
 function toggleFavorite(ev){
   if(!ev || !ev.id) return;
-  if(favorites.has(ev.id)) favorites.delete(ev.id);
+  const had = favorites.has(ev.id);
+  if(had) favorites.delete(ev.id);
   else favorites.add(ev.id);
   saveFavorites();
+  if(!had){
+    // 只有「加入收藏」時才通知 n8n
+    notifyFavoriteWithN8n(ev);
+  }
 }
 function isFavorite(ev){
   return ev && ev.id && favorites.has(ev.id);
@@ -560,7 +618,8 @@ document.getElementById('btnCopy').addEventListener('click',async()=>{
 
 /* 載入與綁定 */
 async function boot(){
-  loadFavorites();                // 先讀取收藏
+  loadFavorites();  // 先讀取收藏
+  loadEmail();      // 先讀取 Email
   allEvents = await loadFromEventsJson();
   if(myPos) allEvents.forEach(ev=>{
     if(ev.lat!=null && ev.lng!=null) ev._distance_km=haversineKm([myPos.lat,myPos.lng],[ev.lat,ev.lng]);
@@ -593,6 +652,10 @@ document.getElementById('useGeo').addEventListener('change',e=>{
 
 /* 「只顯示收藏」即時套用 */
 document.getElementById('onlyFav')?.addEventListener('change', applyFilters);
+
+/* Email 變更時即時存檔 */
+document.getElementById('email')?.addEventListener('change', saveEmail);
+document.getElementById('email')?.addEventListener('blur', saveEmail);
 
 /* 日期多選綁定 */
 document.getElementById('addDate').addEventListener('click', ()=>{
