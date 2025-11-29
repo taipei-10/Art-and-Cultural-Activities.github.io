@@ -233,6 +233,7 @@ dialog::backdrop{background:rgba(0,0,0,.45)}
         <p class="dline" id="d-addr"></p>
         <div class="toolbar">
           <a id="d-url" class="btn link" target="_blank" rel="noopener">活動頁</a>
+          <a id="d-route" class="btn link" target="_blank" rel="noopener">交通路線</a>
           <button id="btnShare" class="btn">分享</button>
           <!-- 詳細頁收藏按鈕 -->
           <button id="btnFav" class="btn" type="button">加入收藏</button>
@@ -604,7 +605,29 @@ function applyFilters(){
   render(filtered);
 }
 
-/* ===== 詳細視窗（擴充顯示＋收藏） ===== */
+/* ===== 建立交通路線 URL ===== */
+function buildDirectionsUrl(ev){
+  // 優先使用活動的經緯度
+  if(ev.lat!=null && ev.lng!=null){
+    const destLat = ev.lat;
+    const destLng = ev.lng;
+    if(myPos){
+      return `https://www.google.com/maps/dir/?api=1&origin=${myPos.lat},${myPos.lng}&destination=${destLat},${destLng}&travelmode=transit`;
+    }
+    return `https://www.google.com/maps/dir/?api=1&destination=${destLat},${destLng}&travelmode=transit`;
+  }
+  // 如果沒有經緯度，改用地址
+  if(ev.venue && ev.venue.address){
+    const dest = encodeURIComponent(ev.venue.address);
+    if(myPos){
+      return `https://www.google.com/maps/dir/?api=1&origin=${myPos.lat},${myPos.lng}&destination=${dest}&travelmode=transit`;
+    }
+    return `https://www.google.com/maps/dir/?api=1&destination=${dest}&travelmode=transit`;
+  }
+  return null;
+}
+
+/* ===== 詳細視窗（擴充顯示＋收藏＋交通路線） ===== */
 function openDetail(ev){
   const dlg=document.getElementById('detail');
   const img=document.getElementById('d-img');
@@ -644,11 +667,22 @@ function openDetail(ev){
   const bar=document.querySelector('.toolbar'); bar.querySelectorAll('a[data-extra]').forEach(x=>x.remove());
   const link=document.getElementById('d-url');
   if(ev.url){ link.href=ev.url; link.style.display='inline-flex'; } else { link.style.display='none'; }
+
+  // 交通路線按鈕
+  const routeBtn = document.getElementById('d-route');
+  const routeUrl = buildDirectionsUrl(ev);
+  if(routeUrl){
+    routeBtn.href = routeUrl;
+    routeBtn.style.display = 'inline-flex';
+  }else{
+    routeBtn.style.display = 'none';
+  }
+
   if (ev.ticket_url){
     const a=document.createElement('a'); a.className='btn link'; a.textContent='購票'; a.target='_blank'; a.rel='noopener'; a.href=ev.ticket_url; a.setAttribute('data-extra',''); bar.appendChild(a);
   }
   if (ev.reg_url){
-    const a=document.createElement('a'); a.className='btn link'; a.textContent='報名'; a.target='_blank'; a.rel='noopener'; a.href=ev.reg_url; a.setAttribute('data-extra',''); bar.appendChild(a);
+    const a=document.createElement('a'); a.className='btn link'; a.textContent='報名'; a.target='_blank'; a.rel='noopener'; a.href=ev.reg_url; a.setAttribute='data-extra',''; bar.appendChild(a);
   }
 
   /* 詳細視窗收藏按鈕 */
