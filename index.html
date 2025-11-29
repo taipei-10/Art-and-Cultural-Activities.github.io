@@ -4,7 +4,8 @@
 <meta charset="utf-8" />
 <title>臺北藝文活動搜尋</title>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300..800&family=Noto+Sans+TC:wght@300;400;500;700;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
@@ -59,10 +60,13 @@ input::placeholder{color:#9aa3af}
 .help{font-size:var(--fz-12); color:var(--ink-2)}
 .foot{font-size:var(--fz-12); color:var(--ink-2)}
 .main{padding:28px min(5vw,40px)}
-.hero{position:relative; overflow:hidden; border-radius:var(--radius); padding:36px; background:
-  radial-gradient(1000px 400px at 70% -20%, #60a5fa33, transparent 60%),
-  linear-gradient(160deg, color-mix(in oklab, var(--brand), #fff 65%), var(--panel));
-  border:1px solid var(--border); box-shadow:var(--shadow); margin-bottom:24px}
+.hero{
+  position:relative; overflow:hidden; border-radius:var(--radius); padding:36px;
+  background:
+    radial-gradient(1000px 400px at 70% -20%, #60a5fa33, transparent 60%),
+    linear-gradient(160deg, color-mix(in oklab, var(--brand), #fff 65%), var(--panel));
+  border:1px solid var(--border); box-shadow:var(--shadow); margin-bottom:24px
+}
 .hero h1{margin:0 0 6px; font-size:var(--fz-40); font-weight:900; letter-spacing:.4px}
 .hero p{margin:0; font-size:var(--fz-18); color:var(--ink-2)}
 .map{width:100%; height:380px; margin:22px 0; border-radius:var(--radius); overflow:hidden; border:1px solid var(--border); box-shadow:var(--shadow)}
@@ -119,13 +123,19 @@ dialog::backdrop{background:rgba(0,0,0,.45)}
       <div class="logo">
         <img alt="藝文活動圖示" style="width:48px;height:48px;border-radius:14px;display:block"
              src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='48' height='48' viewBox='0 0 48 48'><defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='1'><stop offset='0%' stop-color='%23ff9bd3'/><stop offset='100%' stop-color='%237c8cff'/></linearGradient></defs><rect width='48' height='48' rx='14' fill='url(%23g)'/><circle cx='24' cy='26' r='14' fill='%23ffffff'/><circle cx='19' cy='24' r='2' fill='%231f2937'/><circle cx='29' cy='24' r='2' fill='%231f2937'/><path d='M18 28c2 3 10 3 12 0' stroke='%231f2937' stroke-width='2' fill='none' stroke-linecap='round'/><circle cx='16' cy='26' r='1.5' fill='%23fca5a5' opacity='.9'/><circle cx='32' cy='26' r='1.5' fill='%23fca5a5' opacity='.9'/><path d='M35 12l2 1-1 2 2 1-2 1-1 2-1-2-2-1 2-1z' fill='%23fde047'/><path d='M12 14l3 0' stroke='%23ffffff' stroke-width='2' stroke-linecap='round' opacity='.6'/></svg>'>
-      </div><div class="t1">藝文活動搜尋</div>
+      </div>
+      <div class="t1">藝文活動搜尋</div>
     </div>
     <div class="panel">
       <div class="h2">搜尋與篩選</div>
-      <label class="field"><span>關鍵字</span><input id="q" type="search" placeholder="輸入活動、主辦、標籤、場館…"></label>
+      <label class="field"><span>關鍵字</span>
+        <input id="q" type="search" placeholder="輸入活動、主辦、標籤、場館…">
+      </label>
       <label class="field"><span>類型</span>
-        <select id="type"><option value="">全部</option><option>展覽</option><option>表演</option><option>講座</option><option>電影</option><option>市集</option><option>其他</option></select>
+        <select id="type">
+          <option value="">全部</option><option>展覽</option><option>表演</option>
+          <option>講座</option><option>電影</option><option>市集</option><option>其他</option>
+        </select>
       </label>
       <label class="field"><span>行政區</span>
         <select id="district">
@@ -144,7 +154,9 @@ dialog::backdrop{background:rgba(0,0,0,.45)}
         </div>
         <div id="dateChips" class="switch" style="flex-wrap:wrap"></div>
       </label>
-      <label class="field"><span>最大距離（公里）</span><input id="maxKm" type="number" min="0" step="0.5" placeholder="不限制"></label>
+      <label class="field"><span>最大距離（公里）</span>
+        <input id="maxKm" type="number" min="0" step="0.5" placeholder="不限制">
+      </label>
       <label class="switch"><input type="checkbox" id="useGeo"> 顯示與我距離</label>
       <!-- 新增：只顯示收藏 -->
       <label class="switch"><input type="checkbox" id="onlyFav"> 只顯示收藏</label>
@@ -159,7 +171,8 @@ dialog::backdrop{background:rgba(0,0,0,.45)}
 
   <main class="main">
     <section class="hero">
-      <h1>發現臺北的藝文靈感</h1><p>搜尋更多資訊，地圖導覽，詳情一鍵到位。</p>
+      <h1>發現臺北的藝文靈感</h1>
+      <p>搜尋更多資訊，地圖導覽，詳情一鍵到位。</p>
     </section>
     <div id="map" class="map"></div>
     <section id="list" class="grid" aria-live="polite"></section>
@@ -190,9 +203,12 @@ dialog::backdrop{background:rgba(0,0,0,.45)}
         </div>
       </div>
     </div>
-    <div class="detail-body"><div class="prose">
-      <p id="d-desc"></p><p class="price" id="d-price"></p>
-    </div></div>
+    <div class="detail-body">
+      <div class="prose">
+        <p id="d-desc"></p>
+        <p class="price" id="d-price"></p>
+      </div>
+    </div>
   </article>
 </dialog>
 
@@ -219,9 +235,10 @@ let favorites = new Set();
 const FAV_KEY = 'favEvents';
 const EMAIL_KEY = 'userEmail';
 
-/* 這裡填入你的 n8n Webhook URL */
+/* 這裡填入你的 n8n Webhook URL（Production URL） */
 const N8N_WEBHOOK_URL = 'https://learning.n8n.tw/webhook/Art-and-Cultural-Activities';
 
+/* 收藏與 Email 儲存 */
 function loadFavorites(){
   try{
     const raw = localStorage.getItem(FAV_KEY);
@@ -252,32 +269,41 @@ function saveEmail(){
   }catch(e){}
 }
 
-/* 呼叫 n8n webhook，請由 n8n 負責寄信 */
+/* 呼叫 n8n webhook，由 n8n 負責寄信 */
 async function notifyFavoriteWithN8n(ev){
   const emailInput = document.getElementById('email');
   const email = emailInput?.value.trim();
-  if(!email) return; // 沒有 email 就不送
+  if(!email){
+    alert('請先輸入 Email，才能將收藏的活動寄給您。');
+    return;
+  }
+  saveEmail();
+
+  const payload = {
+    user_email: email,
+    event:{
+      id:ev.id,
+      title:ev.title,
+      type:ev.type,
+      start_at:ev.start_at,
+      end_at:ev.end_at,
+      venue:ev.venue,
+      url:ev.url,
+      price_label:ev.price_label,
+      desc:ev.desc
+    },
+    created_at:new Date().toISOString()
+  };
 
   try{
-    await fetch(N8N_WEBHOOK_URL, {
+    const res = await fetch(N8N_WEBHOOK_URL, {
       method:'POST',
       headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({
-        email,
-        event:{
-          id:ev.id,
-          title:ev.title,
-          type:ev.type,
-          start_at:ev.start_at,
-          end_at:ev.end_at,
-          venue:ev.venue,
-          url:ev.url,
-          price_label:ev.price_label,
-          desc:ev.desc
-        },
-        created_at:new Date().toISOString()
-      })
+      body:JSON.stringify(payload)
     });
+    if(!res.ok){
+      console.error('n8n webhook HTTP error', res.status, await res.text());
+    }
   }catch(e){
     console.error('n8n webhook error', e);
   }
@@ -298,7 +324,7 @@ function isFavorite(ev){
   return ev && ev.id && favorites.has(ev.id);
 }
 
-/* 新增：紅色定位圖示 */
+/* 紅色定位圖示 */
 const redIcon=L.icon({
   iconUrl:'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="25" height="41" viewBox="0 0 25 41"><path fill="%23ef4444" stroke="%23b91c1c" d="M12.5 0C5.6 0 0 5.7 0 12.7c0 8.5 10.2 18.9 11.3 20 .6.6 1.7.6 2.3 0C14.9 31.6 25 21.2 25 12.7 25 5.7 19.4 0 12.5 0z"/><circle cx="12.5" cy="12.5" r="5.5" fill="%23ffffff"/></svg>',
   iconSize:[25,41],
@@ -308,7 +334,11 @@ const redIcon=L.icon({
 
 /* ===== 工具 ===== */
 const toRad=d=>d*Math.PI/180;
-const haversineKm=(a,b)=>{const R=6371,dLat=toRad(b[0]-a[0]),dLon=toRad(b[1]-a[1]);const s=Math.sin(dLat/2)**2+Math.cos(toRad(a[0]))*Math.cos(toRad(b[0]))*Math.sin(dLon/2)**2;return 2*R*Math.asin(Math.sqrt(s));};
+const haversineKm=(a,b)=>{
+  const R=6371,dLat=toRad(b[0]-a[0]),dLon=toRad(b[1]-a[1]);
+  const s=Math.sin(dLat/2)**2+Math.cos(toRad(a[0]))*Math.cos(toRad(b[0]))*Math.sin(dLon/2)**2;
+  return 2*R*Math.asin(Math.sqrt(s));
+};
 const fmtKm=k=>k==null?'—':(k<1?`${(k*1000|0)} m`:`${k.toFixed(1)} km`);
 const pad=n=>String(n).padStart(2,'0');
 const clamp=(v,min,max)=>Math.max(min,Math.min(max,v));
@@ -337,11 +367,12 @@ function extractPrices(rawMin, rawMax, rawStr){
 function coverFor(ev){
   const T={展覽:'#8b5cf6', 表演:'#f97316', 講座:'#22c55e', 電影:'#0ea5e9', 市集:'#eab308', 其他:'#94a3b8'};
   const c=T[ev.type]||T['其他']; const txt=(ev.type||'活').slice(0,1);
-  const t=encodeURIComponent; const svg=`<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 675'><defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='1'><stop offset='0%' stop-color='${c}'/><stop offset='100%' stop-color='#111827'/></linearGradient></defs><rect fill='url(#g)' width='1200' height='675'/><circle cx='980' cy='-40' r='260' fill='#ffffff22'/><text x='60' y='520' font-family='Inter, Noto Sans TC' font-weight='900' font-size='520' fill='#ffffffdd'>${txt}</text></svg>`;
+  const t=encodeURIComponent;
+  const svg=`<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 675'><defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='1'><stop offset='0%' stop-color='${c}'/><stop offset='100%' stop-color='#111827'/></linearGradient></defs><rect fill='url(#g)' width='1200' height='675'/><circle cx='980' cy='-40' r='260' fill='#ffffff22'/><text x='60' y='520' font-family='Inter, Noto Sans TC' font-weight='900' font-size='520' fill='#ffffffdd'>${txt}</text></svg>`;
   return `data:image/svg+xml;charset=UTF-8,${t(svg)}`;
 }
 
-/* ===== 載入與清洗（擴充版） ===== */
+/* ===== 載入與清洗 ===== */
 function normalizeRow(row){
   const typeMap=new Map([['演出','表演'],['音樂會','表演'],['音樂','表演'],['talk','講座']]);
   const t=(row.type||'').trim(); const type=typeMap.get(t)||t||'其他';
@@ -362,7 +393,6 @@ function normalizeRow(row){
 
   const lat=parseNum(venue.lat), lng=parseNum(venue.lng);
 
-  /* 使用穩定 id：標題 + 開始時間 + 場館名稱 */
   const baseTitle = (row.title||row.name||'').trim();
   const baseStart = row.start_at||row.start||row.date||'';
   const baseVenue = venue.name||row.venue_name||'';
@@ -489,6 +519,7 @@ function render(list){
           <button class="btn" data-act="fav" aria-pressed="${favState}">${favLabel}</button>
         </div>
       </div>`;
+
     const moreBtn = card.querySelector('[data-act="more"]');
     if(moreBtn){
       moreBtn.addEventListener('click',e=>{ e.stopPropagation(); openDetail(ev); });
@@ -561,7 +592,10 @@ function openDetail(ev){
   if (ev.organizers?.length) extra.push(`主辦：${ev.organizers.join('、')}`);
   if (ev.performers?.length) extra.push(`講者/演出：${ev.performers.join('、')}`);
   if (ev.age_limit) extra.push(`年齡：${ev.age_limit}`);
-  if (ev.accessibility){ const arr=Array.isArray(ev.accessibility)?ev.accessibility:[ev.accessibility]; if(arr.length) extra.push(`無障礙：${arr.join('、')}`); }
+  if (ev.accessibility){
+    const arr=Array.isArray(ev.accessibility)?ev.accessibility:[ev.accessibility];
+    if(arr.length) extra.push(`無障礙：${arr.join('、')}`);
+  }
   if (ev.opening_hours) extra.push(`開放：${ev.opening_hours}`);
   if (ev.source) extra.push(`來源：${ev.source}`);
   if (ev.updated_at) extra.push(`更新：${ev.updated_at}`);
@@ -636,7 +670,6 @@ document.getElementById('useGeo').addEventListener('change',e=>{
     navigator.geolocation.getCurrentPosition(pos=>{
       myPos={lat:pos.coords.latitude,lng:pos.coords.longitude};
       if(meMarker) map.removeLayer(meMarker);
-      /* 修改：我的位置使用紅色標記 */
       meMarker=L.marker([myPos.lat,myPos.lng],{title:'我的位置',icon:redIcon}).addTo(map).bindPopup('我的位置');
       map.setView([myPos.lat,myPos.lng],13);
       allEvents.forEach(ev=>{
